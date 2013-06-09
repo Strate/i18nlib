@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<!--
+ilibTutorial.html - a demo of the ilib features
+
+Copyright © 2012-2013, JEDLSoft
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<title>JEDLSoft iLib Demo</title>
+<link rel="stylesheet" type="text/css" href="styles/core.css">
+<link rel="stylesheet" type="text/css" href="themes/cupertino/jquery-ui-1.8.custom.css">
+<script type="text/javascript" src="scripts/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="scripts/jquery-ui-1.8.custom.min.js"></script>
+<script type="text/javascript" src="scripts/jqia2.support.js"></script>
+<script type="text/javascript" src="scripts/ilib-demo.js"></script>
+<script type="text/javascript" src="scripts/demo-date.js"></script>
+<script type="text/javascript" src="scripts/resources.js"></script>
+<script type="text/javascript">
+
+$(function() {
+	$('#labForm').submit(function() { return false; } );
+        
+    var preFmtData;
+    var postFmtData;
+    var fmt;
+    var rangeFmt;
+	var durFmt;
+    var rangeData;
+    var durationData;
+    var localeName;
+    var convertName;
+    var localeInfo;
+    var res;
+    var pseudorb;
+    var psudoStr;
+    var localeElement = $('#localeControl');
+    
+    var localeMap = [],
+        locales = ilib.Locale.getAvailableLocales();
+    
+    // assume localized text display by default
+    res = new ilib.ResBundle({
+        name: "ilibTutorial"
+    });
+
+    $.each(locales, function(i,locale) {
+        localeMap.push({id: locale, name: res.getString(locale)});
+    });
+    
+    localeMap.sort(function (left, right) {
+        // sort by name instead of id
+        return left.name < right.name ? -1 : (right.name < left.name ? 1 : 0);
+    });
+
+    localeElement.append($("<option></option>").attr({
+        "value": 'none'
+    }).text(res.getString("choose one")));
+    
+    $.each(localeMap, function(i,locale) {
+        localeElement.append($("<option></option>").attr({
+            "value": locale.id
+        }).text(locale.name));
+    });
+    
+    $('#conversionCtl,#localeControl').change(function() {
+        convertName = $('#conversionCtl').val();
+        if (convertName == '') {
+            alert('No conversion selected');
+            return;
+        }
+        
+		localeName = localeElement.val();
+	    if (localeName == '') {
+            localeName = "en-US";
+        }
+
+        hideAllPickers();
+        
+        switch (convertName) {
+        case 'DateFmt':
+            setupFormatPicker();
+            setupCalendarPicker();
+            break;
+        case 'CalendarConv':
+        case 'DayOfWeek':
+        case 'ISOWeek':
+        case 'ISOWeekOfMonth':
+        case 'DayOfYear':
+            setupCalendarPicker();
+            break;
+        case 'DateFmtRange':
+            setupRangePicker(res.getString("Start"), res.getString("End"), res.getString("Julian Day"));
+            break;
+        case 'RelativeDate':
+            setupRangePicker(res.getString("Reference Date"), res.getString("Relative Date"));
+            break;
+        case 'DateFmtDuration':
+            setupDurationPicker();
+            break;
+        case 'WorldTime':
+            setupCalendarPicker();
+            setupTargetTZPicker();
+            break;
+        case 'TimeZone':
+            setupTargetTZPicker();
+            break;
+        case 'LocaleInfo':
+    		// don't need any special UI for these ones
+            break;
+        case 'CurrencyInfo':
+    		setupCurrencyPicker();
+            break;
+        case 'CalendarInfo':
+        	setupCalendarInfoPicker();
+            break;
+        case 'ScriptInfo':
+            setupScriptInfoPicker();
+            break;
+        case 'PseudoTranslation':
+            setupTextPicker(res);
+            break;
+        case 'CType':
+            setupCTypePicker(res);
+            break;
+        case 'NumFmt':
+            setupNumPicker();
+            break;
+        case 'NumPrs':
+            setupNumParsingPicker(res);
+            break;
+        case 'NamePrs':
+            setupNameParsingPicker(res);
+            break;
+        case 'NameFmt':
+            setupNamePicker();
+            break;
+        case 'AddressPrs':
+            setupAddressParsingPicker(res);
+            break;
+        case 'AddressFmt':
+            setupAddressPicker();
+            break;
+        default:
+			alert(convertName + ": to be implemented");
+            break;
+		}
+	});
+
+	$('#applyButton').click(function() {
+		var data = parseInt($('#dataValue').val());
+		if (isNaN(data) || (data < 0)) {
+			data = undefined;
+		}
+
+		var options = {};
+		$.collectOptions(options);
+		options.locale = localeName;
+		// assume localized text display by default
+		res = new ilib.ResBundle({
+			   locale: localeName,
+			   name: "ilibTutorial"
+	    });
+		
+        switch (convertName) {
+		case 'DateFmt':
+			var dateLength = $('[name="dateLength"]:checked').val(),
+    			dateType = $('[name="dateType"]:checked').val(),
+    			dateFmt = $('[name="dateFmt"]:checked').val(),
+    			timeFmt = $('[name="timeFmt"]:checked').val(),
+                clockFmt = $('[name="clockFmt"]:checked').val(),
+                timezone = $('#timezone').val(),
+                calendar = $('#calendarName').val();
+                        
+            var options = {
+                locale : localeName,
+                length : dateLength,
+                type : dateType,
+                date : dateFmt,
+                time : timeFmt
+            };
+            
+            var date,
+                cal = ilib.Cal.newInstance({
+                    locale: localeName,
+                    type: (calendar === "julianday") ? "gregorian" : calendar
+                });
+                
+            if (calendar === 'julianday') {
+                date = cal.newDateInstance({
+                    julianday: $('#julianday').val()
+                });
+            } else {
+                date = cal.newDateInstance({
+                    year: $('#year').val(),
+                    month: $('#month').val(),
+                    day: $('#day').val(),
+                    hour: $('#hour').val(),
+                    minute: $('#minute').val(),
+                    second: $('#second').val(),
+                    millisecond: $('#millisecond').val()
+                });
+            }
+            
+            if (timezone !== 'none') {
+                options.timezone = timezone;
+            }
+            if (clockFmt !== 'none') {
+                options.clock = clockFmt;
+            }
+            
+            switch (calendar) {
+                case "julianday":
+                case "gregorian":
+                    break;
+                    
+                default:
+                    options.calendar = calendar;
+                    break;
+            }
+            
+            fmt = new ilib.DateFmt(options);
+            postFmtData = fmt.format(date);
+			var str1;
+			str1 = res.getString("The date is {date}");
+			str1 = str1.format({
+				date: fmt.format(date)
+			});
+			
+			//
+			// Apply conversion
+			//   
+			$('.testSubject').html("<b>" + postFmtData + "</b><br />"
+					// + res.getString("The date range is ") + "<b>" + rangeData + "</b><br />"
+					// + res.getString("The duration is ") + "<b>" + durationData + "</b><hr />"
+					// + str1 + "<br />"
+					//+ str2 + "<br />"
+					//+ str3
+                    );
+            break;
+        
+        case 'CalendarConv':
+            var calendar = $('#calendarName').val(),
+                jd,
+                cal,
+                date,
+                calendarList,
+                fmt,
+                output;
+            
+            if (calendar === 'julianday') {
+                jd = parseInt($('#julianday').val());
+            } else {
+                cal = ilib.Cal.newInstance({
+                    locale: localeName,
+                    type: calendar
+                });
+                date = cal.newDateInstance({
+                    year: $('#year').val(),
+                    month: $('#month').val(),
+                    day: $('#day').val(),
+                    hour: $('#hour').val(),
+                    minute: $('#minute').val(),
+                    second: $('#second').val(),
+                    millisecond: $('#millisecond').val()
+                });
+                
+                jd = date.getJulianDay();
+            }
+            
+            
+            calendarList = ilib.Cal.getCalendars();
+            calendarList.sort();
+        
+            output = res.getString('Julian Day: {jd} <br/>').format({
+                jd: jd
+            });
+            output += res.getString('Unix time: {t} <br/>').format({
+            	 t: date.getTime()
+            });
+            
+            $.each(calendarList, function(key, calendar) {
+                cal = ilib.Cal.newInstance({
+                    locale: localeName,
+                    type: calendar
+                });
+                fmt = new ilib.DateFmt({
+                    type: "datetime",
+                    calendar: calendar,
+                    locale: localeName,
+                    length: "full",
+                    date: "wmdy",
+                    time: "hms"
+                });
+                date = cal.newDateInstance({
+                    julianday: jd
+                });
+                
+                output += res.getString('Calendar {cal}: {formattedDate} <br/>').format({
+                    cal: calendar,
+                    formattedDate: fmt.format(date)
+                });
+            });
+
+            //
+            // Apply conversion
+            //   
+            $('.testSubject').html('<b>' + output + '</b><br />');
+            break;
+
+        case 'DayOfWeek':
+            var calendar = $('#calendarName').val(),
+                cal = ilib.Cal.newInstance({
+                    locale: localeName,
+                    type: calendar
+                }),
+                timezone = $('#timezone').val(),
+                date,
+                fmt,
+                output;
+            
+            if (calendar === 'julianday') {
+                date = cal.newDateInstance({
+                    julianday: $('#julianday').val()
+                });
+            } else {
+                date = cal.newDateInstance({
+                    year: $('#year').val(),
+                    month: $('#month').val(),
+                    day: $('#day').val(),
+                    hour: $('#hour').val(),
+                    minute: $('#minute').val(),
+                    second: $('#second').val(),
+                    millisecond: $('#millisecond').val()
+                });
+            }
+            
+            options = {
+                calendar: calendar,
+                //locale: localeName,
+                length: "full",
+                template: "EEEE" 
+            };
+            
+            if (timezone !== 'none') {
+                options.timezone = timezone;
+            }
+            
+            fmt = new ilib.DateFmt(options);
+            output = res.getString('The date is a {dayofweek}').format({
+                dayofweek: fmt.format(date)
+            });
+
+            //
+            // Apply conversion
+            //   
+            $('.testSubject').html('<b>' + output + '</b><br />');
+            break;
+
+        case 'DateFmtRange':
+            var calendar = $('#calendarName').val(),
+                cal = ilib.Cal.newInstance({
+                    locale: localeName,
+                    type: calendar
+                }),
+                sdate,
+                edate,
+                fmt,
+                output,
+                dateLength = $('[name="dateLength"]:checked').val();
+            
+            if (calendar === 'julianday') {
+                sdate = cal.newDateInstance({
+                    julianday: $('#sjulianday').val()
+                });
+                edate = cal.newDateInstance({
+                    julianday: $('#ejulianday').val()
+                });
+            } else {
+                sdate = cal.newDateInstance({
+                    year: $('#syear').val(),
+                    month: $('#smonth').val(),
+                    day: $('#sday').val(),
+                    hour: $('#shour').val(),
+                    minute: $('#sminute').val(),
+                    second: $('#ssecond').val(),
+                    millisecond: $('#smillisecond').val()
+                });
+                edate = cal.newDateInstance({
+                    year: $('#eyear').val(),
+                    month: $('#emonth').val(),
+                    day: $('#eday').val(),
+                    hour: $('#ehour').val(),
+                    minute: $('#eminute').val(),
+                    second: $('#esecond').val(),
+                    millisecond: $('#emillisecond').val()
+                });
+            }
+            
+            options = {
+                calendar: calendar,
+                locale: localeName,
+                length: dateLength 
+            };
+            
+            fmt = new ilib.DateRngFmt(options);
+            output = res.getString('The date range is "{range}"').format({
+                range: fmt.format(sdate, edate)
+            });
+
+            //
+            // Apply conversion
+            //   
+            $('.testSubject').html('<b>' + output + '</b><br />');
+            break;
+
+        case 'RelativeDate':
+            var calendar = $('#calendarName').val(),
+                cal = ilib.Cal.newInstance({
+                    locale: localeName,
+                    type: calendar
+                }),
+                sdate,
+                edate,
+                fmt,
+                output;
+            
+            if (calendar === 'julianday') {
+                sdate = cal.newDateInstance({
+                    julianday: $('#sjulianday').val()
+                });
+                edate = cal.newDateInstance({
+                    julianday: $('#ejulianday').val()
+                });
+            } else {
+                sdate = cal.newDateInstance({
+                    year: $('#syear').val(),
+                    month: $('#smonth').val(),
+                    day: $('#sday').val(),
+                    hour: $('#shour').val(),
+                    minute: $('#sminute').val(),
+                    second: $('#ssecond').val(),
+                    millisecond: $('#smillisecond').val()
+                });
+                edate = cal.newDateInstance({
+                    year: $('#eyear').val(),
+                    month: $('#emonth').val(),
+                    day: $('#eday').val(),
+                    hour: $('#ehour').val(),
+                    minute: $('#eminute').val(),
+                    second: $('#esecond').val(),
+                    millisecond: $('#emillisecond').val()
+                });
+            }
+            
+            options = {
+                calendar: calendar,
+                locale: localeName,
+                length: "full" 
+            };
+            
+            fmt = new ilib.DateFmt(options);
+            output = res.getString('The relative date is "{rel}"').format({
+                rel: fmt.formatRelative(sdate, edate)
+            });
+
+            //
+            // Apply conversion
+            //   
+            $('.testSubject').html('<b>' + output + '</b><br />');
+            break;
+            
+        case 'DateFmtDuration':
+            var dateLength = $('[name="ddateLength"]:checked').val();
+                        
+            var options = {
+                locale : localeName,
+                length : dateLength
+            };
+            
+            var duration;
+            
+            duration = {
+                year: $('#dyear').val(),
+                month: $('#dmonth').val(),
+                week: $('#dweek').val(),
+                day: $('#dday').val(),
+                hour: $('#dhour').val(),
+                minute: $('#dminute').val(),
+                second: $('#dsecond').val(),
+                millisecond: $('#dmillisecond').val()
+            }
+            
+            fmt = new ilib.DurFmt(options);
+            postFmtData = fmt.format(duration);
+            var str1 = res.getString("The duration is {duration}");
+            output = str1.format({
+                duration: fmt.format(duration)
+            });
+            
+            $('.testSubject').html('<b>' + output + '</b><br />');
+            break;
+            
+		case 'LocaleInfo':
+            var output = "",
+                dowFmt = new ilib.DateFmt({
+                    template: "EEEE"
+                }),
+                date;
+			li = new ilib.LocaleInfo(localeName);
+            
+            output += res.getString("Clock: ") + li.getClock() + "<br/>";
+            output += res.getString("Locale: ") + li.getLocale().getSpec() + "<br/>";
+            output += res.getString("Units: ") + li.getUnits() + "<br/>";
+            output += res.getString("Calendar: ") + li.getCalendar() + "<br/>";
+            date = new ilib.Date.GregDate().onOrAfter(li.getFirstDayOfWeek());
+            output += res.getString("First Day of Week: ") + dowFmt.format(date) + "<br/>";
+            output += res.getString("Default Time Zone: ") + li.getTimeZone() + "<br/>";
+            output += res.getString("Decimal Char: ") + li.getDecimalSeparator() + "<br/>";
+            output += res.getString("Digits Group Char: ") + li.getGroupingSeparator() + "<br/>";
+            output += res.getString("Digit Group Size: ") + li.getGroupingDigits() + "<br/>";
+            output += res.getString("Percentage format: ") + li.getPercentageFormat() + "<br/>";
+            output += res.getString("Percentage symbol: ") + li.getPercentageSymbol() + "<br/>";
+            output += res.getString("Currency format common: ") + li.getCurrencyFormats().common + "<br/>";
+            output += res.getString("Currency format ISO: ") + li.getCurrencyFormats().iso + "<br/>";
+            output += res.getString("Currency: ") + li.getCurrency() + "<br/>";
+            output += res.getString("Rounding Mode: ") + li.getRoundingMode() + "<br/>";
+            
+			$('.testSubject').html(output);
+            break;
+
+		case 'CurrencyInfo':
+            var output = "",
+            	currency = $('#currency').val(),
+            	ci;
+            
+            options = {
+            	code: currency
+            };
+
+            ci = new ilib.Currency(options);
+            
+            output += res.getString("Code: ") + ci.getCode() + "<br/>";
+            output += res.getString("Name in English: ") + ci.getName() + "<br/>";
+            output += res.getString("Fraction Digits: ") + ci.getFractionDigits() + "<br/>";
+            output += res.getString("Common Sign/Symbol: ") + ci.getSign() + "<br/>";
+            
+			$('.testSubject').html(output);
+            break;
+
+        case 'WorldTime':
+            var calendar = $('#calendarName').val(),
+                cal = ilib.Cal.newInstance({
+                    locale: localeName,
+                    type: calendar
+                }),
+                timezone = $('#timezone').val(),
+                targettz = $('#targettz').val(),
+                date,
+                sourceFmt,
+                targetFmt,
+                output;
+            
+            if (timezone === 'none' || targettz === 'none') {
+                alert(res.getString('You must pick both a time zone and a target time zone in order to convert between time zones!'));
+                break;
+            }
+            
+            if (calendar === 'julianday') {
+                date = cal.newDateInstance({
+                    julianday: $('#julianday').val(),
+                    timezone: timezone
+                });
+            } else {
+                date = cal.newDateInstance({
+                    year: $('#year').val(),
+                    month: $('#month').val(),
+                    day: $('#day').val(),
+                    hour: $('#hour').val(),
+                    minute: $('#minute').val(),
+                    second: $('#second').val(),
+                    millisecond: $('#millisecond').val(),
+                    timezone: timezone
+                });
+            }
+            
+            sourceFmt = new ilib.DateFmt({
+                calendar: calendar,
+                locale: localeName,
+                length: "full",
+                type: "datetime",
+                timezone: timezone
+            });
+            targetFmt = new ilib.DateFmt({
+                calendar: calendar,
+                locale: localeName,
+                length: "full",
+                type: "datetime",
+                timezone: targettz
+            });
+            output = res.getString('{sourceZone}: {source}<br>{targetZone}: {target}').format({
+                source: sourceFmt.format(date),
+                target: targetFmt.format(date),
+                sourceZone: timezone,
+                targetZone: targettz
+            });
+
+            $('.testSubject').html('<b>' + output + '</b><br />');
+            break;
+            
+        case 'TimeZone':
+            var targettz = $('#targettz').val(),
+                tz = new ilib.TimeZone({
+                    locale: localeName,
+                    id: targettz
+                }),
+                today = new ilib.Date.GregDate(),
+                startDate,
+                endDate,
+                fmt = new ilib.DateFmt({
+                    locale: localeName,
+                    type: "date",
+                    length: "full"
+                }),
+                str,
+                output;
+            
+            output = "<p>" +
+                res.getString("true#This time zone uses daylight savings time.|false#This time zone does not use daylight savings time.").formatChoice(tz.useDaylightTime());
+            if (tz.useDaylightTime()) {
+                var offset = tz.getDSTSavings();
+                output += res.getString(" When daylight savings time is in effect, the time changes by {hours} and {minutes}.").format({
+                    hours: res.getString("1#1 hour|#{h} hours").formatChoice(offset.h || 0, {h: offset.h || 0}),
+                    minutes: res.getString("1#1 minute|#{m} minutes").formatChoice(offset.m || 0, {m: offset.m || 0})
+                });
+                startDate = new ilib.Date.GregDate({
+                    rd: tz._calcRuleStart(tz.zone.s, today.year)
+                })
+				endDate = new ilib.Date.GregDate({
+                	rd: tz._calcRuleStart(tz.zone.e, today.year)
+                });
+
+	            output += "</p>";
+
+    	        str = res.getString('<p>DST starts on {date}:<br>Offset: {offset}<br>RFC 822 Abbreviation: {rfc822}<br>Standard Abbreviation: {standard}</p>');
+        	    output += str.format({
+            	    date: fmt.format(startDate),
+                	offset: tz.getOffsetStr(startDate),
+	                standard: tz.getDisplayName(startDate, "standard"),
+    	            rfc822: tz.getDisplayName(startDate, "rfc822")
+        	    });
+        	    
+        	    str = res.getString('<p>DST ends on {date}:<br>Offset: {offset}<br>RFC 822 Abbreviation: {rfc822}<br>Standard Abbreviation: {standard}</p>');
+            	output += str.format({
+                	date: fmt.format(endDate),
+	                offset: tz.getOffsetStr(endDate),
+    	            standard: tz.getDisplayName(endDate, "standard"),
+        	        rfc822: tz.getDisplayName(endDate, "rfc822")
+            	}); 
+            } else {
+            	output += "</p>";
+            
+            	str = res.getString('<p>Offset: {offset}<br>RFC 822 Abbreviation: {rfc822}<br>Standard Abbreviation: {standard}</p>');
+        	    
+        	    startDate = new ilib.Date.GregDate({
+                    year: today.year,
+                    month: 1,
+                    day: 1
+                }),
+                
+                output += str.format({
+    	            offset: tz.getOffsetStr(startDate),
+	                standard: tz.getDisplayName(startDate, "standard"),
+               		rfc822: tz.getDisplayName(startDate, "rfc822")
+            	});
+            }
+            $('.testSubject').html('<b>' + output + '</b><br />');
+            break;
+            
+		case 'PseudoTranslation':
+			var type = $('[name="resType"]:checked').val();
+			var str = $('#sampleText').val();
+			
+			options = {
+				locale: "xx-XX",
+				name: "resources",
+				type: type
+			};
+			
+			if (!pseudorb || pseudorb.getType() !== type) {
+	        	pseudorb = new ilib.ResBundle(options);
+			}
+			pseudoStr = pseudorb.getString(str);
+			pseudoStr = pseudorb.escape(pseudoStr.toString());
+			$('.testSubject').html(str + " -> " + pseudoStr);
+            break;
+            
+        case 'CType':
+            var str = $('#sampleText').val();
+            
+            $('.testSubject').html(
+                "is alpha numeric: " + ilib.CType.isAlnum(str) + "<br>" +
+                "is alphabetic: " + ilib.CType.isAlpha(str) + "<br>" +
+                "is ASCII: " + ilib.CType.isAscii(str) + "<br>" +
+                "is blank: " + ilib.CType.isBlank(str) + "<br>" +
+                "is control: " + ilib.CType.isCntrl(str) + "<br>" +
+                "is digit: " + ilib.CType.isDigit(str) + "<br>" +
+                "is graphical: " + ilib.CType.isGraph(str) + "<br>" +
+                "is ideographic: " + ilib.CType.isIdeo(str) + "<br>" +
+                "is lower case: " + ilib.CType.isLower(str) + "<br>" +
+                "is printable: " +  ilib.CType.isPrint(str) + "<br>" +
+                "is punctuation: " + ilib.CType.isPunct(str) + "<br>" +
+                "is whitespace char: " + ilib.CType.isSpace(str) + "<br>" +
+                "is upper case: " + ilib.CType.isUpper(str) + "<br>" +
+                "is hex digit: " + ilib.CType.isXdigit(str)
+            );
+            break;
+            
+        case 'ISOWeek':
+            var calendar = $('#calendarName').val(),
+                cal = ilib.Cal.newInstance({
+                    locale: localeName,
+                    type: calendar
+                }),
+                timezone = $('#timezone').val(),
+                date,
+                output;
+            
+            if (calendar === 'julianday') {
+                date = cal.newDateInstance({
+                    julianday: $('#julianday').val()
+                });
+            } else {
+                date = cal.newDateInstance({
+                    year: $('#year').val(),
+                    month: $('#month').val(),
+                    day: $('#day').val(),
+                    hour: $('#hour').val(),
+                    minute: $('#minute').val(),
+                    second: $('#second').val(),
+                    millisecond: $('#millisecond').val()
+                });
+            }
+            
+            options = {
+                calendar: calendar,
+                locale: localeName,
+                length: "full",
+                type: "date" 
+            };
+            
+            if (timezone !== 'none') {
+                options.timezone = timezone;
+            }
+            
+            fmt = new ilib.DateFmt(options);
+            output = res.getString('The date {date} is in ISO week {week}').format({
+                date: fmt.format(date),
+                week: date.getWeekOfYear()
+            });
+            
+            $('.testSubject').html('<b>' + output + '</b><br />');
+            break;
+        case 'ISOWeekOfMonth':
+            var calendar = $('#calendarName').val(),
+                cal = ilib.Cal.newInstance({
+                    locale: localeName,
+                    type: calendar
+                }),
+                timezone = $('#timezone').val(),
+                date,
+                output;
+            
+            if (calendar === 'julianday') {
+                date = cal.newDateInstance({
+                    julianday: $('#julianday').val()
+                });
+            } else {
+                date = cal.newDateInstance({
+                    year: $('#year').val(),
+                    month: $('#month').val(),
+                    day: $('#day').val(),
+                    hour: $('#hour').val(),
+                    minute: $('#minute').val(),
+                    second: $('#second').val(),
+                    millisecond: $('#millisecond').val()
+                });
+            }
+            
+            options = {
+                calendar: calendar,
+                locale: localeName,
+                length: "full",
+                type: "date" 
+            };
+            
+            if (timezone !== 'none') {
+                options.timezone = timezone;
+            }
+            
+            fmt = new ilib.DateFmt(options);
+            output = res.getString('The date {date} is in ISO week {week} of the month').format({
+                date: fmt.format(date),
+                week: date.getWeekOfMonth(localeName)
+            });
+            
+            $('.testSubject').html('<b>' + output + '</b><br />');
+            break;
+        case 'DayOfYear':
+            var calendar = $('#calendarName').val(),
+                cal = ilib.Cal.newInstance({
+                    locale: localeName,
+                    type: calendar
+                }),
+                timezone = $('#timezone').val(),
+                date,
+                output;
+            
+            if (calendar === 'julianday') {
+                date = cal.newDateInstance({
+                    julianday: $('#julianday').val()
+                });
+            } else {
+                date = cal.newDateInstance({
+                    year: $('#year').val(),
+                    month: $('#month').val(),
+                    day: $('#day').val(),
+                    hour: $('#hour').val(),
+                    minute: $('#minute').val(),
+                    second: $('#second').val(),
+                    millisecond: $('#millisecond').val()
+                });
+            }
+            
+            options = {
+                calendar: calendar,
+                locale: localeName,
+                length: "full",
+                type: "date" 
+            };
+            
+            if (timezone !== 'none') {
+                options.timezone = timezone;
+            }
+            
+            fmt = new ilib.DateFmt(options);
+            output = res.getString('The date {date} is day {day} of the year').format({
+                date: fmt.format(date),
+                day: date.getDayOfYear()
+            });
+            
+            $('.testSubject').html('<b>' + output + '</b><br />');
+            break;
+        
+        case 'NumFmt':
+            var num = new ilib.Number($('#sampleText').val()),
+            	type = $('[name="numFmtType"]:checked').val(),
+                max = $('#maxFrac').val(),
+                min = $('#minFrac').val(),
+                rounding = $('[name="roundingMode"]:checked').val(),
+                style = $('#numStyle').val(),
+                currency = $('#currency').val(),
+                fmt;
+            
+            options = {
+            	locale: localeName,
+                type: type,
+                roundingMode: rounding
+            };
+            
+            if (max && parseInt(max) !== 0) {
+            	options.maxFractionDigits = parseInt(max);
+            }
+            if (min && parseInt(min) !== 0) {
+            	options.minFractionDigits = parseInt(min);
+            }
+            
+            switch (type) {
+            case 'number':
+            	options.style = style;
+            	break;
+            case 'percentage':
+            	break;
+            case 'currency':
+            	options.style = style;
+            	options.currency = currency;
+            	break;
+            }
+            
+            fmt = new ilib.NumFmt(options);
+            
+            output = fmt.format(num);
+            
+            $('.testSubject').html('<b>' + output + '</b><br />');
+            break;
+
+        case 'NumPrs':
+            var numStr = $('#sampleText').val(),
+            	type = $('[name="numFmtType"]:checked').val();
+            
+            options = {
+            	locale: localeName,
+                type: type
+            };
+            
+            var num = new ilib.Number(numStr, options);
+            output = res.getString("Number is: ");
+            output += num;
+            output += '<br />';
+            
+            $('.testSubject').html(output);
+            break;
+
+        case 'NamePrs':
+            var nameStr = $('#sampleText').val();
+            
+            options = {
+            	locale: localeName
+            };
+            
+            var name = new ilib.Name(nameStr, options);
+            output = res.getString("Parsed name is:") + "<br>";
+            if (name.prefix) {
+            	output += res.getString("Prefix: ") + name.prefix + "<br>";
+            }
+            if (name.givenName) {
+            	output += res.getString("Given name: ") + name.givenName + "<br>";
+            }
+            if (name.middleName) {
+            	output += res.getString("Middle name: ") + name.middleName + "<br>";
+            }
+            if (name.familyName) {
+            	output += res.getString("Family name: ") + name.familyName + "<br>";
+            }
+            if (name.suffix) {
+            	output += res.getString("Suffix: ") + name.suffix + "<br>";
+            } 
+            output += '<br />';
+            
+            $('.testSubject').html(output);
+            break;
+            
+		case 'NameFmt':
+            var nameLength = $('[name="nameLength"]:checked').val();
+            var parts = [];
+            var nameparts = $('.namepart:checked').each(function() {
+            	parts.push(this.value);
+            });
+                        
+            options = {
+                locale : localeName
+            };
+            
+            if (nameLength) {
+                options.style = nameLength;
+            }
+            
+            if (nameparts) {
+            	options.components = parts.join('');
+            }
+                
+            var n = {
+                prefix: $('#prefix').val(),
+                givenName: $('#given').val(),
+                middleName: $('#middle').val(),
+                familyName: $('#family').val(),
+                suffix: $('#suffix').val(),
+                locale: localeName
+            }
+            
+            var name = new ilib.Name(n);
+            var fmt = new ilib.NameFmt(options);
+            
+            var str1 = res.getString("The name is {name}");
+            output = str1.format({name: fmt.format(name)});
+            
+            $('.testSubject').html('<b>' + output + '</b><br />');
+            break;
+
+        case 'AddressPrs':
+            var addressStr = $('#textBox').val();
+            
+            options = {
+            	locale: localeName
+            };
+            
+            var address = new ilib.Address(addressStr, options);
+            output = res.getString("Parsed address is:") + "<br>";
+            if (address.streetAddress) {
+            	output += res.getString("streetAddress: ") + address.streetAddress + "<br>";
+            }
+            if (address.locality) {
+            	output += res.getString("Locality: ") + address.locality + "<br>";
+            }
+            if (address.postalCode) {
+            	output += res.getString("Postal code: ") + address.postalCode + "<br>";
+            }
+            if (address.region) {
+            	output += res.getString("Region: ") + address.region + "<br>";
+            }
+            if (address.country) {
+            	output += res.getString("Country: ") + address.country + "<br>";
+            } 
+            if (address.countryCode) {
+            	output += res.getString("Country code: ") + address.countryCode + "<br>";
+            } 
+            output += '<br />';
+            
+            $('.testSubject').html(output);
+            break;
+            
+		case 'AddressFmt':
+            options = {
+                locale : localeName
+            };
+            
+            var n = {
+            	streetAddress: $('#streetAddress').val(),
+                locality: $('#locality').val(),
+                postalCode: $('#postalCode').val(),
+                region: $('#region').val(),
+                country: $('#country').val(),
+                locale: localeName
+            }
+            
+            var address = new ilib.Address(n);
+            var fmt = new ilib.AddressFmt(options);
+            
+            var str1 = res.getString("The address is:<p>{address}");
+            output = str1.format({address: fmt.format(address)});
+            output = output.replace(/\n/g, "<br>");
+            $('.testSubject').html('<b>' + output + '</b><br />');
+            break;
+
+		case 'CalendarInfo':
+            var output = "",
+            	calName = $('#calendarName').val(),
+            	month = parseInt($('#month').val()),
+            	year = parseInt($('#year').val()),
+            	ci;
+            
+            options = {
+            	locale: localeName,
+            	type: calName
+            };
+
+            ci = ilib.Cal.newInstance(options);
+            
+            output += res.getString("Name: ") + ci.getType() + "<br/>";
+			output += res.getString("Number of Months in {y}: ").format({y: year}) + ci.getNumMonths(year) + "<br/>";
+            output += res.getString("Number of Days in month {m} of year {y}: ").format({y: year, m: month}) + ci.getMonLength(month, year) + "<br/>";
+            output += res.getString("Is {y} a leap year? ").format({y: year}) + ci.isLeapYear(year) + "<br/>";
+            
+			$('.testSubject').html(output);
+            break;
+
+        case 'ScriptInfo':
+            var output = "",
+                script = $('#script').val(),
+                si = new ilib.ScriptInfo(script);
+            
+            options = {
+                locale: localeName,
+                script: script
+            };
+
+            output += res.getString("ISO 4-letter Code: ") + si.getCode() + "<br/>";
+            output += res.getString("ISO Code Number: ") + si.getCodeNumber() + "<br/>";
+            output += res.getString("Long code: ") + si.getLongCode() + "<br/>";
+            output += res.getString("Name: ") + si.getName() + "<br/>";
+            
+            $('.testSubject').html(output);
+            break;
+
+		default: ;
+		}
+
+		//
+		// Display the command
+		//
+		$('#commandDisplay').html(
+			"$('.testSubject').convert('" + convertName + "'," + $.forDisplay(options) + ");");	
+	});
+
+	$('#labForm').bind('reset', function() {
+		if ($('#localeControl option[value=""]').length == 0)
+			$('<option>', {value : ''}).insertBefore($('#localeControl option:first')).html(
+				'&mdash;choose one&mdash;');
+		if ($('#conversionCtl option[value=""]').length == 0)
+			$('<option>', {value : ''}).insertBefore($('#conversionCtl option:first')).html(
+				'&mdash;choose one&mdash;');
+		this.reset();
+		restoreTestSubjects();
+		$('#commandDisplay').empty();
+	});
+
+	function restoreTestSubjects() {
+		$('.testSubject,.testSubject *').empty();
+		$('.testSubject,.testSubject *').removeAttr('style');
+	}
+});
+
+$(document).ready(function () {
+    $('#ilibVersion').text(ilib.getVersion());
+});
+</script>
+
+<style>
+#optionsPane>div {
+	display: none;
+}
+#buttonBar {
+	clear: both;
+	padding-top: 12px;
+}
+#testSubjectContainer {
+	height: 268px;
+}
+.testSubject {
+	width: 480px;
+	padding: 12px;
+	border: 1px solid black;
+}
+#controlPanel label {
+	float: left;
+	text-align: right;
+	width: 10em;
+	font-weight: bold;
+}
+[type="number"] {
+	width: 4em;
+}
+.ui-effects-transfer {
+	border: 4px #deb887 solid;
+}
+</style>
+</head>
+
+<body class="fancy">
+
+	<div id="pageContainer">
+		<div id="pageContent">
+
+			<h1>JEDLSoft iLib Demo <span id="ilibVersion"></span></h1>
+
+			<div id="controlPanel" data-module="Internationalization Format Demo">
+				<form action="" id="labForm">
+					<h3>Locale &amp; Format Settings:</h3>
+                    <div>
+                        <label for="conversionCtl">Function:</label> 
+                        <select id="conversionCtl">
+                            <option value="">&mdash;choose one&mdash;</option>
+                            <option value="">-------- Dates and Times -------</option>
+                            <option value="DateFmt">Date Formatting</option>
+                            <option value="DateFmtRange">Date Range Formatting</option>
+                            <option value="DateFmtDuration">Duration Formatting</option>
+                            <option value="RelativeDate">Relative Date Determination</option>
+                            <option value="CalendarConv">Convert Dates to Other Calendars</option>
+                            <option value="DayOfWeek">Find the day of the week for a date</option>
+                            <option value="WorldTime">World Time Zone Converter</option>
+                            <option value="ISOWeek">ISO Week Number Determination</option>
+                            <option value="ISOWeekOfMonth">Week of Month Determination</option>
+                            <option value="DayOfYear">Day of Year Determination</option>
+                            <option value="">-------- Info Classes --------</option>
+                            <option value="CurrencyInfo">Currency Info</option>
+                            <option value="LocaleInfo">Locale Info</option>
+                            <option value="TimeZone">Time Zone Info</option>
+                            <option value="CalendarInfo">Calendar Info</option>
+                            <option value="ScriptInfo">Script Info</option>
+                            <option value="">-------- String Classes --------</option>
+                            <option value="PseudoTranslation">Pseudo Translation</option>
+                            <option value="CType">Character Type</option>
+                            <option value="">-------- Parsing Classes --------</option>
+                            <option value="NumPrs">Number Parsing</option>
+                            <option value="NamePrs">Name Parsing</option>
+                            <option value="AddressPrs">Address Parsing</option>
+                            <option value="">-------- Formatting Classes --------</option>
+                            <option value="NumFmt">Number Formatting</option>
+                            <option value="NameFmt">Name Formatting</option>
+                            <option value="AddressFmt">Address Formatting</option>
+<!--
+                            <option value="ShowCalendar">Show Calendar</option>
+                            <option value="GetString">Translation</option>
+                            <option value="StringFmt">String Formatting</option>
+                            <option value="FormatChoice">Choice Formatting</option>
+-->            
+                        </select>
+                    </div>
+
+					<div>
+						<label for="localeControl">Locale:</label> 
+                        <select id="localeControl"></select>
+					</div>
+
+					<div id="dataPane">
+                        <div id="calendarPane" style="display: none">
+                            <label>Input Calendar:</label>
+                            <select id="calendarName"></select>
+                        </div>
+                        <div id="lengthPane" style="display: none">
+                            <label>Length:</label>
+                            <input type="radio" name="dateLength" id="dateShort" value="short"/>Short
+                            <input type="radio" name="dateLength" id="dateMedium" value="medium"/>Medium
+                            <input type="radio" name="dateLength" id="dateLong" value="long"/>Long
+                            <input type="radio" name="dateLength" id="dateFull" value="full" checked="checked"/>Full
+                        </div>
+                        <div id="formatPane" style="display: none">
+                            <div id="typePane">
+                                <label>Type:</label>
+                                <input type="radio" name="dateType" id="dt_date" value="date"/>Date only
+                                <input type="radio" name="dateType" id="dt_time" value="time"/>Time only
+                                <input type="radio" name="dateType" id="dt_datetime" value="datetime" checked="checked"/>Date &amp; Time
+                            </div>
+                            <div id="datePane">
+                                <label>Date:</label>
+                                <input type="radio" name="dateFmt" id="dateFmt" value="dmwy"/>dmwy
+                                <input type="radio" name="dateFmt" id="dateFmt" value="dmy" checked="checked"/>dmy
+                                <input type="radio" name="dateFmt" id="dateFmt" value="dmw"/>dmw
+                                <input type="radio" name="dateFmt" id="dateFmt" value="dm"/>dm
+                                <input type="radio" name="dateFmt" id="dateFmt" value="my"/>my
+                                <input type="radio" name="dateFmt" id="dateFmt" value="dw"/>dw
+                                <input type="radio" name="dateFmt" id="dateFmt" value="d"/>d
+                                <input type="radio" name="dateFmt" id="dateFmt" value="m"/>m
+                                <input type="radio" name="dateFmt" id="dateFmt" value="n"/>n
+                                <input type="radio" name="dateFmt" id="dateFmt" value="y"/>y
+                            </div>
+                            <div id="timePane">
+                                <label>Time:</label>
+                                <div>
+                                <input type="radio" name="timeFmt" id="timeFmt" value="ahmsz"/>ahmsz
+                                <input type="radio" name="timeFmt" id="timeFmt" value="ahms"/>ahms
+                                <input type="radio" name="timeFmt" id="timeFmt" value="hmsz"/>hmsz
+                                <input type="radio" name="timeFmt" id="timeFmt" value="hms"/>hms
+                                <input type="radio" name="timeFmt" id="timeFmt" value="ahmz"/>ahmz
+                                <input type="radio" name="timeFmt" id="timeFmt" value="ahm"/>ahm
+                                <input type="radio" name="timeFmt" id="timeFmt" value="hmz" checked="checked"/>hmz
+                                <input type="radio" name="timeFmt" id="timeFmt" value="ah"/>ah
+                                <input type="radio" name="timeFmt" id="timeFmt" value="hm"/>hm
+                                <input type="radio" name="timeFmt" id="timeFmt" value="ms"/>ms
+                                <input type="radio" name="timeFmt" id="timeFmt" value="h"/>h
+                                <input type="radio" name="timeFmt" id="timeFmt" value="m"/>m
+                                <input type="radio" name="timeFmt" id="timeFmt" value="s"/>s
+                                </div>
+                            </div>
+                            <div id="clockPane">
+                                <label>Clock:</label>
+                                <div>
+                                <input type="radio" name="clockFmt" id="clockFmt" value="12"/>12-hour clock
+                                <input type="radio" name="clockFmt" id="clockFmt" value="24"/>24-hour clock
+                                <input type="radio" name="clockFmt" id="clockFmt" value="none" checked="checked"/>Default to locale settings
+                                </div>
+                            </div>
+                        </div>
+                        <div id='yearMonthPicker' style="display: none">
+                            <div>
+                                <label for="year">Year:</label>
+                                <input type="text" name="year" id="year"/>
+                            </div>
+                            <div>
+                                <label for="month">Month:</label>
+                                <select name="month" id="month"></select>
+                            </div>
+                        </div>
+                        <div id='calendarPicker' style="display: none">
+                            <div>
+                                <label for="day">Day:</label>
+                                <select name="day" id="day"></select>
+                            </div>
+                            <div>
+                                <label for="hour">Hour:</label>
+                                <select name="hour" id="hour"></select>
+                            </div>
+                            <div>
+                                <label for="minute">Minute:</label>
+                                <select name="minute" id="minute"></select>
+                            </div>
+                            <div>
+                                <label for="second">Second:</label>
+                                <select name="second" id="second"></select>
+                            </div>
+                            <div>
+                                <label for="millisecond">Millisecond:</label>
+                                <input type="text" name="millisecond" id="millisecond"/>
+                            </div>
+                            <div id="tzpicker">
+                                <label for="timezone">Time Zone:</label>
+                                <select name="timezone" id="timezone"></select>
+                            </div>
+                        </div>
+                        <div id="targetTZPicker" style="display: none">
+                            <div>
+                                <label for="targettz">Target Time Zone:</label>
+                                <select name="targettz" id="targettz"></select>
+                            </div>
+                        </div>
+                        <div id="jdpicker" style="display: none">
+                            <div>
+                                <label for="julianday">Julian Day:</label>
+                                <input type="text" name="julianday" id="julianday"/>
+                            </div>
+                        </div>
+                        <div id="rangePicker" style="display: none">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>&nbsp;</th>
+                                        <th id='startname'>Start</th>
+                                        <th id='endname'>End</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Year</td>
+                                        <td><input type="text" name="syear" id="syear"/></td>
+                                        <td><input type="text" name="eyear" id="eyear"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Month</td>
+                                        <td><select name="smonth" id="smonth"></select></td>
+                                        <td><select name="emonth" id="emonth"></select></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Day</td>
+                                        <td><select name="sday" id="sday"></select></td>
+                                        <td><select name="eday" id="eday"></select></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hour</td>
+                                        <td><select name="shour" id="shour"></select></td>
+                                        <td><select name="ehour" id="ehour"></select></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Minute</td>
+                                        <td><select name="sminute" id="sminute"></select></td>
+                                        <td><select name="eminute" id="eminute"></select></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Second</td>
+                                        <td><select name="ssecond" id="ssecond"></select></td>
+                                        <td><select name="esecond" id="esecond"></select></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Millisecond</td>
+                                        <td><input type="text" name="smillisecond" id="smillisecond"/></td>
+                                        <td><input type="text" name="emillisecond" id="emillisecond"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="jdRangepicker" style="display: none">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>&nbsp;</th>
+                                        <th>Start</th>
+                                        <th>End</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Julian Day:</td>
+                                        <td><input type="text" name="sjulianday" id="sjulianday"/></td>
+                                        <td><input type="text" name="ejulianday" id="ejulianday"/></td>
+                                   </tr>
+                               </tbody>
+                           </table>
+                        </div>
+                    </div>
+                    <div id='durationPicker' style="display: none">
+                        <div id="dlengthPane">
+                            <label>Length:</label>
+                            <input type="radio" name="ddateLength" id="ddateShort" value="short"/>Short
+                            <input type="radio" name="ddateLength" id="ddateMedium" value="medium"/>Medium
+                            <input type="radio" name="ddateLength" id="ddateLong" value="long"/>Long
+                            <input type="radio" name="ddateLength" id="ddateFull" value="full" checked="checked"/>Full
+                        </div>
+                        <div>
+                            <label for="dyear">Years:</label>
+                            <input type="text" name="dyear" id="dyear"/>
+                        </div>
+                        <div>
+                            <label for="dmonth">Months:</label>
+                            <input type="text" name="dmonth" id="dmonth"/>
+                        </div>
+                        <div>
+                            <label for="dweek">Weeks:</label>
+                            <input type="text" name="dweek" id="dweek"/>
+                        </div>
+                        <div>
+                            <label for="dday">Days:</label>
+                            <input type="text" name="dday" id="dday"/>
+                        </div>
+                        <div>
+                            <label for="dhour">Hours:</label>
+                            <input type="text" name="dhour" id="dhour"/>
+                        </div>
+                        <div>
+                            <label for="dminute">Minutes:</label>
+                            <input type="text" name="dminute" id="dminute"/>
+                        </div>
+                        <div>
+                            <label for="dsecond">Seconds:</label>
+                            <input type="text" name="dsecond" id="dsecond"/>
+                        </div>
+                        <div>
+                            <label for="dmillisecond">Milliseconds:</label>
+                            <input type="text" name="dmillisecond" id="dmillisecond"/>
+                        </div>
+                    </div>
+                    <div id="resTypePicker" style="display: none">
+                        <label>Resource Type:</label>
+                        <input type="radio" name="resType" id="resType" value="html"/>HTML
+                        <input type="radio" name="resType" id="resType" value="xml"/>XML
+                        <input type="radio" name="resType" id="resType" value="text" checked="checked"/>text
+                        <input type="radio" name="resType" id="resType" value="raw"/>raw
+                    </div>
+                    <div id="numTypePicker" style="display: none">
+	                    <label>Type:</label>
+	                    <input type="radio" name="numFmtType" id="numFmtType" value="number" checked="checked"/>number
+	                    <input type="radio" name="numFmtType" id="numFmtType" value="percentage"/>percentage
+                    	<input type="radio" name="numFmtType" id="numFmtType" value="currency"/>currency
+                    </div>
+                    <div id="numFmtPicker" style="display: none">
+                         <div>
+                            <label for="maxFrac">Max Frac Digits:</label>
+                            <input type="text" name="maxFrac" id="maxFrac"/>
+                        </div>
+                        <div>
+                            <label for="minFrac">Min Frac Digits:</label>
+                            <input type="text" name="minFrac" id="minFrac"/>
+                        </div>
+                        <div>
+                        	<label>Rounding Mode:</label>
+                            <input type="radio" name="roundingMode" id="roundingMode" value="up"/>up
+                            <input type="radio" name="roundingMode" id="roundingMode" value="down"/>down
+                            <input type="radio" name="roundingMode" id="roundingMode" value="ceiling"/>ceiling
+                            <input type="radio" name="roundingMode" id="roundingMode" value="floor"/>floor
+                            <input type="radio" name="roundingMode" id="roundingMode" value="halfup"/>half up
+                            <input type="radio" name="roundingMode" id="roundingMode" value="halfdown" checked="checked"/>half down
+                            <input type="radio" name="roundingMode" id="roundingMode" value="halfeven"/>half even
+                            <input type="radio" name="roundingMode" id="roundingMode" value="halfodd"/>half odd
+                      	</div>
+                        <div id='numStylePicker'>
+                             <label for="numStyle">Style:</label>
+                             <select name="numStyle" id="numStyle"></select>
+                        </div>
+                    </div>
+                    <div id="currencyPicker" style="display: none">
+                        <label for="currency">Currency:</label>
+                        <select name="currency" id="currency"></select>
+                    </div>
+                    <div id="scriptPicker" style="display: none">
+                        <label for="script">Script:</label>
+                        <select name="script" id="script"></select>
+                    </div>
+                    <div id='sampleTextPicker' style="display: none">
+                    	<label id="sampleTextLabel" for="sample">Text:</label>
+                    	<input type="text" size="40" id="sampleText"/>
+                    </div>
+                    <div id='namePicker' style="display: none">
+                        <div id="nlengthPane">
+                            <label>Length:</label>
+                            <input type="radio" name="nameLength" id="nameShort" value="short" class="nameLength"/>Short
+                            <input type="radio" name="nameLength" id="nameMedium" value="medium" class="nameLength"/>Medium
+                            <input type="radio" name="nameLength" id="nameLong" value="long" class="nameLength"/>Long
+                        </div>
+                        <div id="nameParts">
+                        	<label>(or) Parts:</label>
+                        	<input type="checkbox" id="partsp" value="p" class="namepart"/>Prefix
+                            <input type="checkbox" id="partsg" value="g" class="namepart"/>Given
+                            <input type="checkbox" id="partsm" value="m" class="namepart"/>Middle
+                            <input type="checkbox" id="partsf" value="f" class="namepart"/>Family
+                            <input type="checkbox" id="partss" value="s" class="namepart"/>Suffix
+                        </div>
+                        <div>
+                            <label for="prefix">Prefix:</label>
+                            <input type="text" name="prefix" id="prefix"/>
+                        </div>
+                        <div>
+                            <label for="given">Given name:</label>
+                            <input type="text" name="given" id="given"/>
+                        </div>
+                        <div>
+                            <label for="middle">Middle names:</label>
+                            <input type="text" name="middle" id="middle"/>
+                        </div>
+                        <div>
+                            <label for="family">Family names:</label>
+                            <input type="text" name="family" id="family"/>
+                        </div>
+                        <div>
+                            <label for="suffix">Suffix:</label>
+                            <input type="text" name="suffix" id="suffix"/>
+                        </div>
+                    </div>
+                    <div id='textBoxPicker' style="display: none">
+                        <label id="textBoxLabel" for="textBox">Free-form Address:</label>
+                        <textarea rows="5" cols="60" id="textBox"></textarea>
+                    </div>
+                    <div id='addressPicker' style="display: none">
+                        <div>
+                            <label for="streetAddress">Street address:</label>
+                            <input type="text" name="streetAddress" id="streetAddress" size="60"/>
+                        </div>
+                        <div>
+                            <label for="locality">City/Locality:</label>
+                            <input type="text" name="locality" id="locality"/>
+                        </div>
+                        <div>
+                            <label for="postalCode">Postal code/Zip:</label>
+                            <input type="text" name="postalCode" id="postalCode"/>
+                        </div>
+                        <div>
+                            <label for="region">State/Province:</label>
+                            <input type="text" name="region" id="region"/>
+                        </div>
+                        <div>
+                            <label for="country">Country:</label>
+                            <input type="text" name="country" id="country"/>
+                        </div>
+                    </div>
+                    
+					<div id="buttonBar">
+						<button type="button" id="applyButton" class="green90x24">Apply</button>
+						<button type="reset" id="resetButton" class="green90x24">Cancel</button>
+					</div>
+				</form>
+				<div>
+					<h3>Executed command:</h3>
+					<div id="commandDisplay">---</div>
+				</div>
+			</div>
+			<div id="testSubjectContainer" data-module="Format Result">
+				<div class="testSubject"></div>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>
