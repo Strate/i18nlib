@@ -122,6 +122,7 @@ strings.js
 ilib.NumFmt = function (options) {
 	var sync = true;
 	this.locale = new ilib.Locale();
+	/** @type {string} */
 	this.type = "number";
 	
 	if (options) {
@@ -138,29 +139,39 @@ ilib.NumFmt = function (options) {
 		}
 		
 		if (options.currency) {
+			/** @type {string} */
 			this.currency = options.currency;
 		}
 		
 		if (typeof(options.maxFractionDigits) === 'number') {
+			/** @type {number|undefined} */
 			this.maxFractionDigits = this._toPrimitive(options.maxFractionDigits);
 		}
 		if (typeof(options.minFractionDigits) === 'number') {
+			/** @type {number|undefined} */
 			this.minFractionDigits = this._toPrimitive(options.minFractionDigits);
 		}
 		if (options.style) {
+			/** @type {string} */
 			this.style = options.style;
 		}
 		
+		/** @type {string} */
 		this.roundingMode = options.roundingMode;
 
 		if (typeof(options.sync) !== 'undefined') {
+			/** @type {boolean} */
 			sync = (options.sync == true);
 		}
 	}
 	
+	/** @type {ilib.LocaleInfo|undefined} */
+	this.localeInfo = undefined;
+	
 	new ilib.LocaleInfo(this.locale, {
 		sync: sync,
-		onLoad: ilib.bind(this, function (li) {
+		onLoad: ilib.bind(this, /** @type {function(this:this, ilib.LocaleInfo|undefined):?} */ function (li) {
+			/** @type {ilib.LocaleInfo|undefined} */
 			this.localeInfo = li;
 
 			if (this.type === "currency") {
@@ -175,34 +186,20 @@ ilib.NumFmt = function (options) {
 					locale: this.locale,
 					code: this.currency,
 					sync: sync,
-					onLoad: ilib.bind(this, function (cur) {
+					onLoad: ilib.bind(this, /** @type {function(this:this, ilib.Currency|undefined):?} */ function (cur) {
 						this.currencyInfo = cur;
 						if (this.style !== "common" && this.style !== "iso") {
 							this.style = "common";
 						}
-				
 						
 						if (typeof(this.maxFractionDigits) !== 'number' && typeof(this.minFractionDigits) !== 'number') {
 							this.minFractionDigits = this.maxFractionDigits = this.currencyInfo.getFractionDigits();
 						}
 						
-						templates = this.localeInfo.getCurrencyFormat();
-						if(this.style ===  "iso"){
-							templates=this.localeInfo.getCurrencyFormats();
-							this.template = new ilib.String(templates[this.style]);
-							this.sign = (this.style === "iso") ? this.currencyInfo.getCode() : this.currencyInfo.getSign();
-						}
-						else if(typeof(templates) === 'undefined'){
-							
-							templates=this.localeInfo.getCurrencyFormats();
-							this.template = new ilib.String(templates[this.style]);
-							this.sign = (this.style === "iso") ? this.currencyInfo.getCode() : this.currencyInfo.getSign();
-						}
-						else{
-					
-						this.template = new ilib.String(templates);
+						templates = this.localeInfo.getCurrencyFormats();
+						this.template = new ilib.String(templates[this.style]);
 						this.sign = (this.style === "iso") ? this.currencyInfo.getCode() : this.currencyInfo.getSign();
-					}	
+
 						if (!this.roundingMode) {
 							this.roundingMode = this.currencyInfo && this.currencyInfo.roundingMode;
 						}
@@ -216,11 +213,8 @@ ilib.NumFmt = function (options) {
 				});
 				return;
 			} else if (this.type === "percentage") {
-			
 				this.template = new ilib.String(this.localeInfo.getPercentageFormat());
-					
 			}
-
 
 			this._init();
 			
@@ -344,7 +338,7 @@ ilib.NumFmt.prototype = {
 	 */ 
 	_formatStandard: function (num) {
 		var i;
-		var j,k;
+		var k;
 		// console.log("_formatNumberStandard: formatting number " + num);
 		if (typeof(this.maxFractionDigits) !== 'undefined' && this.maxFractionDigits > -1) {
 			var factor = Math.pow(10, this.maxFractionDigits);
