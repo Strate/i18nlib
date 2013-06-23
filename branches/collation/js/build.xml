@@ -347,6 +347,14 @@ limitations under the License.
 		</exec>
 	</target>
 
+	<target name="test.core.debug" depends="assemble.unittest" description="run the tests with a debugger">
+		<echo>Testing the core classes</echo>
+		<exec executable="node" dir="${build.src}" failifexecutionfails="true" failonerror="true">
+			<arg line="--debug-brk"/>
+			<arg line="testSuite.js"/>
+		</exec>
+	</target>
+
 	<target name="core.junit.report" description="Generate a report on the junit tests">
 		<mkdir dir="${build.output.reports}/junit"/>
 	</target>
