@@ -23,6 +23,8 @@
 
 /**
  * @class
+ * @constructor
+ * 
  * A class that implements a locale-sensitive comparator function 
  * for use with sorting function. The comparator function
  * assumes that the strings it is comparing contain Unicode characters
@@ -44,19 +46,20 @@
  * <li><i>locale</i> - String|Locale. The locale which the comparator function 
  * will collate with. Default: the current iLib locale.
  * 
- * <li><i>level</i> - String. Strength of collator. This is one of "primary", "secondary", 
- * "tertiary", or "quaternary". Default: "primary"
+ * <li><i>sensitivity</i> - String. Sensitivity or strength of collator. This is one of 
+ * "primary", "base", "secondary", "accent", "tertiary", "case", "quaternary", or 
+ * "variant". Default: "primary"
  *   <ol>
- *   <li>primary - Only the primary distinctions between characters are significant.
+ *   <li>base or primary - Only the primary distinctions between characters are significant.
  *   Another way of saying that is that the collator will be case-, accent-, and 
  *   variation-insensitive, and only distinguish between the base characters
- *   <li>secondary - Both the primary and secondary distinctions between characters
+ *   <li>accent or secondary - Both the primary and secondary distinctions between characters
  *   are significant. That is, the collator will be accent- and variation-insensitive
  *   and will distinguish between base characters and character case.
- *   <li>tertiary - The primary, secondary, and tertiary distinctions between
+ *   <li>case or tertiary - The primary, secondary, and tertiary distinctions between
  *   characters are all significant. That is, the collator will be 
  *   variation-insensitive, but accent-, case-, and base-character-sensitive. 
- *   <li>quaternary - All distinctions between characters are significant. That is,
+ *   <li>variant or quaternary - All distinctions between characters are significant. That is,
  *   the algorithm is base character-, case-, accent-, and variation-sensitive.
  *   </ol>
  *   
@@ -86,6 +89,12 @@
  * currently knows about for any given locale. If the value of the style option is 
  * not recognized for a locale, it will be ignored. Default style is "standard".<p>
  * 
+ * <li><i>numeric</i> - Treat the left and right strings as if they started with
+ * numbers and sort them numerically rather than lexically.
+ * 
+ * <li><i>ignorePunctuation</i> - Skip punctuation characters when comparing the
+ * strings.
+ *  
  * <li>onLoad - a callback function to call when the collator object is fully 
  * loaded. When the onLoad option is given, the collator object will attempt to
  * load any missing locale data using the ilib loader callback.
@@ -240,10 +249,115 @@
  * function will operate
  */
 ilib.Collator = function(options) {
-	// TODO: fill in the collator constructor function
+	var sync = true,
+		loadParams = undefined;
+
+	/** @type ilib.Locale */
+	this.locale = new ilib.Locale(ilib.getLocale());
+	
+	if (options) {
+		if (options.locale) {
+			this.locale = (typeof(options.locale) === 'string') ? new ilib.Locale(options.locale) : options.locale;
+		}
+		if (options.sensitivity) {
+			switch (options.sensitivity) {
+				case 'primary':
+				case 'base':
+					/** @type string */
+					this.sensitivity = "base"; 
+					break;
+				case 'secondary':
+				case 'accent':
+					this.sensitivity = "accent"; 
+					break;
+				case 'tertiary':
+				case 'case':
+					this.sensitivity = "case"; 
+					break;
+				case 'quaternary':
+				case 'variant':
+					this.sensitivity = "variant";
+					break;
+			}
+		}
+		if (typeof(options.upperFirst) !== 'undefined') {
+			/** @type string */
+			this.caseFirst = options.upperFirst ? "upper" : "lower"; 
+		}
+		
+		if (typeof(options.ignorePunctuation) !== 'undefined') {
+			/** @type boolean */
+			this.ignorePunctuation = options.ignorePunctuation;
+		}
+		if (typeof(options.sync) !== 'undefined') {
+			sync = (options.sync == true);
+		}
+		
+		loadParams = options.loadParams;
+	}
+
+	if ((typeof(window) !== 'undefined' && typeof(window.Intl) !== 'undefined') ||
+		((typeof(global) !== 'undefined' && typeof(global.Intl) !== 'undefined'))) {
+		// this engine is modern and supports the new Intl object!
+		//console.log("implemented natively");
+		/** @type {{compare: function(string,string)}} */
+		this.collator = new Intl.Collator(this.locale.getSpec(), this);
+		
+		if (options && typeof(options.onLoad) === 'function') {
+			options.onLoad(this);
+		}
+	} else {
+		//console.log("implemented in pure JS");
+		if (!ilib.Collator.cache) {
+			ilib.Collator.cache = {};
+		}
+
+		// else implement in pure Javascript
+		ilib.loadData(ilib.Collator, this.locale, "collation", sync, loadParams, ilib.bind(this, function (collation) {
+			/*
+			// TODO: fill in the collator constructor function
+			if (!collation) {
+				collation = ilib.data.ducet;
+				var spec = this.locale.getSpec().replace(/-/g, '_');
+				ilib.Collator.cache[spec] = collation;
+			}
+			console.log("this is " + JSON.stringify(this));
+			this._init(collation);
+			if (options && typeof(options.onLoad) === 'function') {
+				options.onLoad(this);
+			}
+			*/
+		}));
+	}
 };
 
 ilib.Collator.prototype = {
+    /**
+     * @private
+     */
+    init: function(rules) {
+    	
+    },
+    
+	/**
+	 * Compare two strings together according to the rules of this 
+	 * collator instance. Do not use this function directly with 
+	 * Array.sort, as it will not have its collation data available
+	 * and therefore will not function properly. Use the function
+	 * returned by getComparator() instead.
+	 * 
+	 * @param {string} left the left string to compare
+	 * @param {string} right the right string to compare
+	 * @return {number} a negative number if left comes before right, a
+	 * positive number if right comes before left, and zero if left and 
+	 * right are equivalent according to this collator
+	 */
+	compare: function (left, right) {
+		// TODO: fill in the full comparison algorithm here
+		// last resort: use the "C" locale
+		return (left < right) ? -1 : ((left > right) ? 1 : 0);
+	},
+	
 	/**
 	 * Return a comparator function that can compare two strings together
 	 * according to the rules of this collator instance. The function 
@@ -262,25 +376,14 @@ ilib.Collator.prototype = {
 	getComparator: function() {
 		// bind the function to this instance so that we have the collation
 		// rules available to do the work
-		return /** @type function(string,string):number */ ilib.bind(this, this.compare);
-	},
-	
-	/**
-	 * Compare two strings together according to the rules of this 
-	 * collator instance. Do not use this function directly with 
-	 * Array.sort, as it will not have its collation data available
-	 * and therefore will not function properly. Use the function
-	 * returned by getComparator() instead.
-	 * 
-	 * @param {string} left the left string to compare
-	 * @param {string} right the right string to compare
-	 * @return {number} a negative number if left comes before right, a
-	 * positive number if right comes before left, and zero if left and 
-	 * right are equivalent according to this collator
-	 */
-	compare: function (left, right) {
-		// TODO: fill in the full comparison algorithm here
-		return (left < right) ? -1 : ((left > right) ? 1 : 0);
+		if (this.collator) {
+			// implemented by the core engine
+			/** @type function(string,string):number */
+			return this.collator.compare;
+		}
+		
+		return /** @type function(string,string):number */ ilib.bind(this, 
+			/** @type function(?):? */ this.compare);
 	},
 	
 	/**
