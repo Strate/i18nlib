@@ -100,17 +100,24 @@ ilib.LocaleInfo = function(locale, options) {
 		ilib.LocaleInfo.cache = {};
 	}
 
-	ilib.loadData(ilib.LocaleInfo, this.locale, "localeinfo", sync, this.loadParams, ilib.bind(this, function (info) {
-		if (!info) {
-			info = ilib.data.localeinfo;
-			var spec = this.locale.getSpec().replace(/-/g, "_");
-			ilib.LocaleInfo.cache[spec] = info;
-		}
-		this.info = info;
-		if (options && typeof(options.onLoad) === 'function') {
-			options.onLoad(this);
-		}
-	}));
+	ilib.loadData({
+		object: ilib.LocaleInfo, 
+		locale: this.locale, 
+		name: "localeinfo.json", 
+		sync: sync, 
+		loadParams: this.loadParams, 
+		callback: ilib.bind(this, function (info) {
+			if (!info) {
+				info = ilib.data.localeinfo;
+				var spec = this.locale.getSpec().replace(/-/g, "_");
+				ilib.LocaleInfo.cache[spec] = info;
+			}
+			this.info = info;
+			if (options && typeof(options.onLoad) === 'function') {
+				options.onLoad(this);
+			}
+		})
+	});
 };
 
 ilib.LocaleInfo.prototype = {
@@ -192,15 +199,35 @@ ilib.LocaleInfo.prototype = {
 	},
 	
 	/**
-	 * Return the minimum number of digits grouped together on the integer side. 
+	 * Return the minimum number of digits grouped together on the integer side 
+	 * for the first (primary) group. 
 	 * In western European cultures, groupings are in 1000s, so the number of digits
-	 * is 3. In other cultures, the groupings are in 10000s so the number is 4.
-	 * @returns {number} the number of digits in a grouping, or 0 for no grouping
+	 * is 3. 
+	 * @returns {number} the number of digits in a primary grouping, or 0 for no grouping
 	 */
-	getGroupingDigits: function () {
-		return this.info.numfmt.groupSize;
+	getPrimaryGroupingDigits: function () {
+		return (typeof(this.info.numfmt.prigroupSize) !== 'undefined' ?  this.info.numfmt.prigroupSize : this.info.numfmt.groupSize) || 0;
 	},
-	
+
+	/**
+	 * Return the minimum number of digits grouped together on the integer side
+	 * for the second or more (secondary) group.<p>
+	 *   
+	 * In western European cultures, all groupings are by 1000s, so the secondary
+	 * size should be 0 because there is no secondary size. In general, if this 
+	 * method returns 0, then all groupings are of the primary size.<p> 
+	 * 
+	 * For some other cultures, the first grouping (primary)
+	 * is 3 and any subsequent groupings (secondary) are two. So, 100000 would be
+	 * written as: "1,00,000".
+	 * 
+	 * @returns {number} the number of digits in a secondary grouping, or 0 for no 
+	 * secondary grouping. 
+	 */
+	getSecondaryGroupingDigits: function () {
+		return this.info.numfmt.secgroupSize || 0;
+	},
+
 	/**
 	 * Return the format template used to format percentages in this locale.
 	 * @returns {string} the format template for formatting percentages
@@ -208,7 +235,10 @@ ilib.LocaleInfo.prototype = {
 	getPercentageFormat: function () {
 		return this.info.numfmt.pctFmt;
 	},
-	
+
+	getCurrencyFormat: function () {
+		return this.info.numfmt.curFmt;
+	},
 	/**
 	 * Return the symbol used for percentages in this locale.
 	 * @returns {string} the symbol used for percentages in this locale
