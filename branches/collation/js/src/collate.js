@@ -296,11 +296,10 @@ ilib.Collator = function(options) {
 		loadParams = options.loadParams;
 	}
 
-	if ((typeof(window) !== 'undefined' && typeof(window.Intl) !== 'undefined') ||
-		((typeof(global) !== 'undefined' && typeof(global.Intl) !== 'undefined'))) {
+	if (ilib._isGlobal("Intl")) {
 		// this engine is modern and supports the new Intl object!
 		//console.log("implemented natively");
-		/** @type {{compare: function(string,string)}} */
+		/** @type {{compare:function(string,string)}} */
 		this.collator = new Intl.Collator(this.locale.getSpec(), this);
 		
 		if (options && typeof(options.onLoad) === 'function') {
@@ -313,33 +312,40 @@ ilib.Collator = function(options) {
 		}
 
 		// else implement in pure Javascript
-		ilib.loadData(ilib.Collator, this.locale, "collation", sync, loadParams, ilib.bind(this, function (collation) {
-			/*
-			// TODO: fill in the collator constructor function
-			if (!collation) {
-				collation = ilib.data.ducet;
-				var spec = this.locale.getSpec().replace(/-/g, '_');
-				ilib.Collator.cache[spec] = collation;
-			}
-			console.log("this is " + JSON.stringify(this));
-			this._init(collation);
-			if (options && typeof(options.onLoad) === 'function') {
-				options.onLoad(this);
-			}
-			*/
-		}));
+		ilib.loadData({
+			object: ilib.Collator, 
+			locale: this.locale, 
+			name: "collrules.json", 
+			sync: sync, 
+			loadParams: loadParams, 
+			callback: ilib.bind(this, function (collation) {
+				/*
+				// TODO: fill in the collator constructor function
+				if (!collation) {
+					collation = ilib.data.ducet;
+					var spec = this.locale.getSpec().replace(/-/g, '_');
+					ilib.Collator.cache[spec] = collation;
+				}
+				console.log("this is " + JSON.stringify(this));
+				this._init(collation);
+				if (options && typeof(options.onLoad) === 'function') {
+					options.onLoad(this);
+				}
+				*/
+			})
+		});
 	}
 };
 
 ilib.Collator.prototype = {
-    /**
+    /*
      * @private
      */
     init: function(rules) {
     	
     },
     
-	/**
+	/*
 	 * Compare two strings together according to the rules of this 
 	 * collator instance. Do not use this function directly with 
 	 * Array.sort, as it will not have its collation data available
@@ -369,7 +375,7 @@ ilib.Collator.prototype = {
 	 * switch the sign of those values to cause sorting to happen in the
 	 * reverse order.
 	 * 
-	 * @return {function(string,string):number} a comparator function that 
+	 * @return {function(...)|undefined} a comparator function that 
 	 * can compare two strings together according to the rules of this 
 	 * collator instance
 	 */
@@ -378,15 +384,16 @@ ilib.Collator.prototype = {
 		// rules available to do the work
 		if (this.collator) {
 			// implemented by the core engine
-			/** @type function(string,string):number */
 			return this.collator.compare;
 		}
 		
-		return /** @type function(string,string):number */ ilib.bind(this, 
+		var comp = /** @type function(string,string):number */ ilib.bind(this, 
 			/** @type function(?):? */ this.compare);
+		
+		return comp;
 	},
 	
-	/**
+	/*
 	 * Return a sort key string for the given string. The sort key
 	 * string is a list of values that represent each character 
 	 * in the original string. The sort key
