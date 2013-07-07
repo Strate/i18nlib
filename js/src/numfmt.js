@@ -170,7 +170,7 @@ ilib.NumFmt = function (options) {
 	
 	new ilib.LocaleInfo(this.locale, {
 		sync: sync,
-		onLoad: ilib.bind(this, /** @type {function(this:this, ilib.LocaleInfo|undefined):?} */ function (li) {
+		onLoad: ilib.bind(this, function (li) {
 			/** @type {ilib.LocaleInfo|undefined} */
 			this.localeInfo = li;
 
@@ -186,7 +186,7 @@ ilib.NumFmt = function (options) {
 					locale: this.locale,
 					code: this.currency,
 					sync: sync,
-					onLoad: ilib.bind(this, /** @type {function(this:this, ilib.Currency|undefined):?} */ function (cur) {
+					onLoad: ilib.bind(this, function (cur) {
 						this.currencyInfo = cur;
 						if (this.style !== "common" && this.style !== "iso") {
 							this.style = "common";

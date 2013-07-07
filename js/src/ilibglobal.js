@@ -57,6 +57,7 @@ if (typeof(exports) !== 'undefined') {
  * @private
  * @static
  * Return the name of the platform
+ * @return {string} string naming the platform
  */
 ilib._getPlatform = function () {
 	if (!ilib._platform) {
@@ -73,6 +74,31 @@ ilib._getPlatform = function () {
 		}
 	}	
 	return ilib._platform;
+};
+
+/**
+ * @private
+ * @static
+ * Return true if the global variable is defined on this platform.
+ * @return {boolean} true if the global variable is defined on this platform, false otherwise
+ */
+ilib._isGlobal = function(name) {
+	if (typeof(window) !== 'undefined') {
+		return typeof(window[name]) !== undefined;
+	}
+	
+	if (ilib._getPlatform() === "rhino") {
+		var top = (function() {
+		  return (typeof global === 'object') ? global : this
+		})();
+		return typeof(top[name]) !== undefined;
+	}
+	
+	if (typeof(global) !== 'undefined') {
+		return typeof(global[name]) !== undefined;
+	}
+	
+	return false;
 };
 
 /**
