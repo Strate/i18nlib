@@ -206,7 +206,7 @@ ilib.LocaleInfo.prototype = {
 	 * @returns {number} the number of digits in a primary grouping, or 0 for no grouping
 	 */
 	getPrimaryGroupingDigits: function () {
-		return (typeof(this.info.numfmt.prigroupSize) !== 'undefined' ?  this.info.numfmt.prigroupSize : this.info.numfmt.groupSize) || 0;
+		return this.info.numfmt.prigroupSize || 0;
 	},
 
 	/**
