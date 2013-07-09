@@ -252,8 +252,11 @@ ilib.Collator = function(options) {
 	var sync = true,
 		loadParams = undefined;
 
+	// defaults
 	/** @type ilib.Locale */
 	this.locale = new ilib.Locale(ilib.getLocale());
+	this.caseFirst = "upper";
+	this.sensitivity = "base";
 	
 	if (options) {
 		if (options.locale) {
@@ -361,6 +364,11 @@ ilib.Collator.prototype = {
 	compare: function (left, right) {
 		// TODO: fill in the full comparison algorithm here
 		// last resort: use the "C" locale
+		if (this.collator) {
+			// implemented by the core engine
+			return this.collator.compare(left, right);
+		}
+		
 		return (left < right) ? -1 : ((left > right) ? 1 : 0);
 	},
 	

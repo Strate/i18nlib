@@ -43,7 +43,7 @@ function testCollatorDefaultCase() {
     // should compare upper-case first
     assertEquals("A < a", -1, col.compare("A", "a"));
     assertEquals("B < b", -1, col.compare("B", "b"));
-    assertEquals("B < a", -1, col.compare("B", "a"));
+    assertEquals("B < a", 1, col.compare("B", "a"));
 }
 
 function testCollatorGetComparator() {
@@ -83,7 +83,7 @@ function testCollatorGetComparatorWorksWithCase() {
     // should compare upper-case first
     assertEquals("A < a", -1, func("A", "a"));
     assertEquals("B < b", -1, func("B", "b"));
-    assertEquals("B < a", -1, func("B", "a"));
+    assertEquals("B < a", 1, func("B", "a"));
 }
 
 function testCollatorGetSortKey() {
@@ -140,21 +140,22 @@ function testCollatorGetAvailableStyles() {
     assertArrayEquals(["standard"], ilib.Collator.getAvailableStyles());
 }
 
-/*
 function testCollatorDefaultExtendedChars() {
-    var col = new ilib.Collator();
-    
-    assertNotUndefined(col);
-
-    // should compare in English
-    assertEquals("e = ë", 0, col.compare("e", "ë"));
-    assertEquals("o = ø", 0, col.compare("o","ø"));
+	// only test on platforms that support the new Intl class natively
+	if (typeof(Intl) !== 'undefined') {
+	    var col = new ilib.Collator();
+	    
+	    assertNotUndefined(col);
+	
+	    // should compare in English
+	    assertEquals("e = ë", 0, col.compare("e", "ë"));
+	    assertEquals("o = ø", 0, col.compare("o","ø"));
+	}
 }
-*/
 
 function testCollatorNativeIsNative() {
 	// only test on platforms that support the new Intl class natively
-	if (typeof(window.Intl) !== 'undefined' || (typeof(global) !== 'undefined' && typeof(global.Intl) !== 'undefined')) {
+	if (typeof(Intl) !== 'undefined') {
 		var col = new ilib.Collator();
 		assertNotUndefined(col);
 	    assertNotUndefined(col.collator);
@@ -163,7 +164,7 @@ function testCollatorNativeIsNative() {
 
 function testCollatorNativefrFRBase() {
 	// only test on platforms that support the new Intl class natively
-	if (typeof(window.Intl) !== 'undefined' || (typeof(global) !== 'undefined' && typeof(global.Intl) !== 'undefined')) {
+	if (typeof(Intl) !== 'undefined') {
 		var col = new ilib.Collator({
 			locale: "fr-FR",
 			sensitivity: "base"
@@ -218,7 +219,7 @@ function testCollatorNativefrFRBase() {
 
 function testCollatorNativefrFRAccent() {
 	// only test on platforms that support the new Intl class natively
-	if (typeof(window.Intl) !== 'undefined' || (typeof(global) !== 'undefined' && typeof(global.Intl) !== 'undefined')) {
+	if (typeof(Intl) !== 'undefined') {
 		var col = new ilib.Collator({
 			locale: "fr-FR",
 			sensitivity: "accent"
@@ -273,7 +274,7 @@ function testCollatorNativefrFRAccent() {
 
 function testCollatorNativefrFRCase() {
 	// only test on platforms that support the new Intl class natively
-	if (typeof(window.Intl) !== 'undefined' || (typeof(global) !== 'undefined' && typeof(global.Intl) !== 'undefined')) {
+	if (typeof(Intl) !== 'undefined') {
 		var col = new ilib.Collator({
 			locale: "fr-FR",
 			sensitivity: "case"
@@ -328,7 +329,7 @@ function testCollatorNativefrFRCase() {
 
 function testCollatorNativefrFRVariant() {
 	// only test on platforms that support the new Intl class natively
-	if (typeof(window.Intl) !== 'undefined' || (typeof(global) !== 'undefined' && typeof(global.Intl) !== 'undefined')) {
+	if (typeof(Intl) !== 'undefined') {
 		var col = new ilib.Collator({
 			locale: "fr-FR",
 			sensitivity: "variant"
