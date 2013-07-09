@@ -296,7 +296,7 @@ ilib.Collator = function(options) {
 		loadParams = options.loadParams;
 	}
 
-	if (ilib._isGlobal("Intl")) {
+	if (typeof(Intl) !== 'undefined' && Intl) {
 		// this engine is modern and supports the new Intl object!
 		//console.log("implemented natively");
 		/** @type {{compare:function(string,string)}} */
@@ -338,14 +338,14 @@ ilib.Collator = function(options) {
 };
 
 ilib.Collator.prototype = {
-    /*
+    /**
      * @private
      */
     init: function(rules) {
     	
     },
     
-	/*
+	/**
 	 * Compare two strings together according to the rules of this 
 	 * collator instance. Do not use this function directly with 
 	 * Array.sort, as it will not have its collation data available
@@ -387,13 +387,10 @@ ilib.Collator.prototype = {
 			return this.collator.compare;
 		}
 		
-		var comp = /** @type function(string,string):number */ ilib.bind(this, 
-			/** @type function(?):? */ this.compare);
-		
-		return comp;
+		return /** @type function(string,string):number */ ilib.bind(this, this.compare);
 	},
 	
-	/*
+	/**
 	 * Return a sort key string for the given string. The sort key
 	 * string is a list of values that represent each character 
 	 * in the original string. The sort key

@@ -168,7 +168,7 @@ limitations under the License.
 
 	<target name="testilibut" description="test whether or not the ilib-ut single file needs to be rebuilt">
 		<uptodate property="ilib-ut.not.needed" targetfile="${build.src}/ilib-ut-compiled.js">
-			<srcfiles dir="${build.src}" includes="**/*.js" excludes="iliball.js,ilib-*.js,*-compiled.js,**/test/**,testcli/**"/>
+			<srcfiles dir="${build.src}" includes="**/*.js" excludes="iliball.js,ilib-*.js,*-compiled.js,**/test/**,**/testcli/**"/>
 			<srcfiles dir="${build.src}" includes="ilib-ut-inc.js"/>
 			<srcfiles dir="${build.locale}" includes="**/*.json"/>
 		</uptodate>

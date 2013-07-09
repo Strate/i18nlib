@@ -196,10 +196,32 @@ ilib.NumFmt = function (options) {
 							this.minFractionDigits = this.maxFractionDigits = this.currencyInfo.getFractionDigits();
 						}
 						
+						/*
 						templates = this.localeInfo.getCurrencyFormats();
 						this.template = new ilib.String(templates[this.style]);
 						this.sign = (this.style === "iso") ? this.currencyInfo.getCode() : this.currencyInfo.getSign();
 
+						if (!this.roundingMode) {
+							this.roundingMode = this.currencyInfo && this.currencyInfo.roundingMode;
+						}
+						*/
+						templates = this.localeInfo.getCurrencyFormat();
+						if(this.style ===  "iso"){
+							templates=this.localeInfo.getCurrencyFormats();
+							this.template = new ilib.String(templates[this.style]);
+							this.sign = (this.style === "iso") ? this.currencyInfo.getCode() : this.currencyInfo.getSign();
+						}
+						else if(typeof(templates) === 'undefined'){
+							
+							templates=this.localeInfo.getCurrencyFormats();
+							this.template = new ilib.String(templates[this.style]);
+							this.sign = (this.style === "iso") ? this.currencyInfo.getCode() : this.currencyInfo.getSign();
+						}
+						else{
+					
+						this.template = new ilib.String(templates);
+						this.sign = (this.style === "iso") ? this.currencyInfo.getCode() : this.currencyInfo.getSign();
+					}	
 						if (!this.roundingMode) {
 							this.roundingMode = this.currencyInfo && this.currencyInfo.roundingMode;
 						}
