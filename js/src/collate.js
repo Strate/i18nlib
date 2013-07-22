@@ -256,7 +256,7 @@ ilib.Collator = function(options) {
 	/** @type ilib.Locale */
 	this.locale = new ilib.Locale(ilib.getLocale());
 	this.caseFirst = "upper";
-	this.sensitivity = "base";
+	this.sensitivity = "case";
 	
 	if (options) {
 		if (options.locale) {
@@ -266,7 +266,6 @@ ilib.Collator = function(options) {
 			switch (options.sensitivity) {
 				case 'primary':
 				case 'base':
-					/** @type string */
 					this.sensitivity = "base"; 
 					break;
 				case 'secondary':

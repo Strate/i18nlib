@@ -120,14 +120,16 @@ function testCollatorWithSort() {
 }
 
 function testCollatorWithSortUpperFirst() {
-    var col = new ilib.Collator();
+    var col = new ilib.Collator({
+    	upperFirst: true
+    });
     assertNotUndefined(col);
     
-    var input = ["q", "W", "e", "r", "T", "Y", "U", "i", "o", "p"];
+    var input = ["q", "I", "e", "r", "T", "U", "i", "E", "o", "p"];
     
     input.sort(col.getComparator());
     
-    var expected = ["T", "U", "W", "Y", "e", "i", "o", "p", "q", "r"];
+    var expected = ["E", "e", "I", "i", "o", "p", "q", "r", "T", "U"];
     
     assertArrayEquals(expected, input);
 }
@@ -162,116 +164,6 @@ function testCollatorNativeIsNative() {
 	}
 }
 
-function testCollatorNativefrFRBase() {
-	// only test on platforms that support the new Intl class natively
-	if (typeof(Intl) !== 'undefined') {
-		var col = new ilib.Collator({
-			locale: "fr-FR",
-			sensitivity: "base"
-		});
-	    assertNotUndefined(col);
-	    
-	    var input = [
-	        "déjà",
-			"Meme",
-			"deja",
-			"même",
-			"dejà",
-			"bpef",
-			"bœg",
-			"Boef",
-			"Mémé",
-			"bœf",
-			"boef",
-			"bnef",
-			"pêche",
-			"pèché",
-			"pêché",
-			"pêche",
-			"pêché"
-		];
-	    
-	    input.sort(col.getComparator());
-	    
-	    var expected = [
-            "bnef",
-            "Boef",
-            "bœf",
-            "boef",
-            "bœg",
-            "bpef",
-            "déjà",
-            "deja",
-            "dejà",
-            "Meme",
-            "même",
-            "Mémé",
-            "pêche",
-            "pèché",
-            "pêché",
-            "pêche",
-            "pêché"
-		];
-	    
-	    assertArrayEquals(expected, input);
-	}
-}
-
-function testCollatorNativefrFRAccent() {
-	// only test on platforms that support the new Intl class natively
-	if (typeof(Intl) !== 'undefined') {
-		var col = new ilib.Collator({
-			locale: "fr-FR",
-			sensitivity: "accent"
-		});
-	    assertNotUndefined(col);
-	    
-	    var input = [
-	        "déjà",
-			"Meme",
-			"deja",
-			"même",
-			"dejà",
-			"bpef",
-			"bœg",
-			"Boef",
-			"Mémé",
-			"bœf",
-			"boef",
-			"bnef",
-			"pêche",
-			"pèché",
-			"pêché",
-			"pêche",
-			"pêché"
-		];
-	    
-	    input.sort(col.getComparator());
-	    
-	    var expected = [
-			"bnef",
-			"Boef",
-			"boef",
-			"bœf",
-			"bœg",
-			"bpef",
-			"deja",
-			"dejà",
-			"déjà",
-			"Meme",
-			"même",
-			"Mémé",
-			"pêche",
-			"pêche",
-			"pèché",
-			"pêché",
-			"pêché"
-		];
-	    
-	    assertArrayEquals(expected, input);
-	}
-}
-
 function testCollatorNativefrFRCase() {
 	// only test on platforms that support the new Intl class natively
 	if (typeof(Intl) !== 'undefined') {
@@ -291,7 +183,6 @@ function testCollatorNativefrFRCase() {
 			"bœg",
 			"Boef",
 			"Mémé",
-			"bœf",
 			"boef",
 			"bnef",
 			"pêche",
@@ -305,9 +196,8 @@ function testCollatorNativefrFRCase() {
 	    
 	    var expected = [
 			"bnef",
-			"boef",
 			"Boef",
-			"bœf",
+			"boef",
 			"bœg",
 			"bpef",
 			"deja",
@@ -360,8 +250,8 @@ function testCollatorNativefrFRVariant() {
 	    
 	    var expected = [
 			"bnef",
-			"boef",
 			"Boef",
+			"boef",
 			"bœf",
 			"bœg",
 			"bpef",
@@ -376,6 +266,208 @@ function testCollatorNativefrFRVariant() {
 			"pèché",
 			"pêché",
 			"pêché"
+		];
+	    
+	    assertArrayEquals(expected, input);
+	}
+}
+
+function testCollatorNativefrCACase() {
+	// only test on platforms that support the new Intl class natively
+	if (typeof(Intl) !== 'undefined') {
+		var col = new ilib.Collator({
+			locale: "fr-CA",
+			sensitivity: "case"
+		});
+	    assertNotUndefined(col);
+	    
+	    var input = [
+	        "déjà",
+			"Meme",
+			"deja",
+			"même",
+			"dejà",
+			"bpef",
+			"bœg",
+			"Boef",
+			"Mémé",
+			"boef",
+			"bnef",
+			"pêche",
+			"pèché",
+			"pêché",
+			"pêche",
+			"pêché"
+		];
+	    
+	    input.sort(col.getComparator());
+	    
+	    var expected = [
+			"bnef",
+			"Boef",
+			"boef",
+			"bœg",
+			"bpef",
+			"deja",
+			"dejà",
+			"déjà",
+			"Meme",
+			"même",
+			"Mémé",
+			"pêche",
+			"pêche",
+			"pèché",
+			"pêché",
+			"pêché"
+		];
+	    
+	    assertArrayEquals(expected, input);
+	}
+}
+
+function testCollatorNativefrCAVariant() {
+	// only test on platforms that support the new Intl class natively
+	if (typeof(Intl) !== 'undefined') {
+		var col = new ilib.Collator({
+			locale: "fr-CA",
+			sensitivity: "variant"
+		});
+	    assertNotUndefined(col);
+	    
+	    var input = [
+	        "déjà",
+			"Meme",
+			"deja",
+			"même",
+			"dejà",
+			"bpef",
+			"bœg",
+			"Boef",
+			"Mémé",
+			"bœf",
+			"boef",
+			"bnef",
+			"pêche",
+			"pèché",
+			"pêché",
+			"pêche",
+			"pêché"
+		];
+	    
+	    input.sort(col.getComparator());
+	    
+	    var expected = [
+			"bnef",
+			"Boef",
+			"boef",
+			"bœf",
+			"bœg",
+			"bpef",
+			"deja",
+			"dejà",
+			"déjà",
+			"Meme",
+			"même",
+			"Mémé",
+			"pêche",
+			"pêche",
+			"pèché",
+			"pêché",
+			"pêché"
+		];
+	    
+	    assertArrayEquals(expected, input);
+	}
+}
+
+function testCollatorNativedeDECase() {
+	// only test on platforms that support the new Intl class natively
+	if (typeof(Intl) !== 'undefined') {
+		var col = new ilib.Collator({
+			locale: "de-DE",
+			sensitivity: "case"
+		});
+	    assertNotUndefined(col);
+	    
+	    var input = [
+  			"Sonntag",
+ 			"Montag",
+ 			"Dienstag",
+ 			"Januar",
+ 			"Februar",
+ 			"März",
+ 			"Fuße",
+ 			"Fluße",
+ 			"Flusse",
+ 			"flusse",
+ 			"fluße",
+ 			"flüße",
+ 			"flüsse"
+ 		];
+	    
+	    input.sort(col.getComparator());
+	    
+	    var expected = [
+			"Dienstag",
+			"Februar",
+			"flusse",
+			"Flusse",
+			"fluße",
+			"Fluße",
+			"flüsse",
+			"flüße",
+			"Fuße",
+			"Januar",
+			"März",
+			"Montag",
+			"Sonntag"	                    
+		];
+	    
+	    assertArrayEquals(expected, input);
+	}
+}
+
+function testCollatorNativedeDEVariant() {
+	// only test on platforms that support the new Intl class natively
+	if (typeof(Intl) !== 'undefined') {
+		var col = new ilib.Collator({
+			locale: "de-DE",
+			sensitivity: "variant"
+		});
+	    assertNotUndefined(col);
+	    
+	    var input = [
+  			"Sonntag",
+ 			"Montag",
+ 			"Dienstag",
+ 			"Januar",
+ 			"Februar",
+ 			"März",
+ 			"Fuße",
+ 			"Fluße",
+ 			"Flusse",
+ 			"flusse",
+ 			"fluße",
+ 			"flüße",
+ 			"flüsse"
+ 		];
+	    
+	    input.sort(col.getComparator());
+	    
+	    var expected = [
+			"Dienstag",
+			"Februar",
+			"flusse",
+			"Flusse",
+			"fluße",
+			"Fluße",
+			"flüsse",
+			"flüße",
+			"Fuße",
+			"Januar",
+			"März",
+			"Montag",
+			"Sonntag"	                    
 		];
 	    
 	    assertArrayEquals(expected, input);
