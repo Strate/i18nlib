@@ -1,0 +1,13 @@
+{
+    "generated": true,
+    "numfmt": {
+        "script": "Mymr",
+        "decimalChar": ".",
+        "groupChar": ",",
+        "exponential": "E",
+        "currencyFormats": {
+            "common": "{s} {n}"
+        },
+        "digits": "၀၁၂၃၄၅၆၇၈၉"
+    }
+}
