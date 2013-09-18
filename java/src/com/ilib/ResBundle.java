@@ -41,6 +41,7 @@ public class ResBundle
 	protected boolean lengthen;
     
 	static Properties pseudoMap;
+	/*
 	static {
 		pseudoMap = new Properties();
 		ClassLoader cl = ResBundle.class.getClassLoader();
@@ -55,6 +56,7 @@ public class ResBundle
 			e.printStackTrace();
 		}
 	}
+	*/
 
     /**
      * 
@@ -96,7 +98,8 @@ public class ResBundle
 		try {
 		    // TODO: switch this to loading in a json file resource
 	        java.util.Locale jl = new java.util.Locale(this.locale.getLanguage(), this.locale.getRegion());
-			map = ResourceBundle.getBundle(name, jl);
+			// TODO fix this!
+	        // map = ResourceBundle.getBundle(name, jl);
 		} catch ( MissingResourceException e ) {}
     }
 
