@@ -51,16 +51,24 @@ limitations under the License.
 	<target name="all" description="Build everything. This is the target that the build should run.">
 		<iterate target="all"/>
 	</target>
-		
+
+	<target name="prepare" description="Prepare to build build.">
+		<mkdir dir="${build.export}" description="Dir to contain all the exported outputs"/>
+		<mkdir dir="${build.dist}" description="Dir to contain all the distribution outputs"/>
+		<iterate target="prepare"/>
+	</target>
+
+	<target name="export" depends="prepare" description="Build and export everything.">
+		<iterate target="export"/>
+	</target>
+
 	<target name="clean" description="Remove all generated files to start from scratch">
 		<iterate target="clean"/>
 		<delete dir="${build.dist}"/>
 		<delete dir="${build.export}"/>
 	</target>
 
-	<target name="dist" description="Build the distribution package.">
-		<mkdir dir="${build.dist}" description="Dir to contain all the distribution outputs"/>
-		<iterate target="export"/>
+	<target name="dist" depends="export" description="Build the distribution package.">
 		<zip destfile="${build.dist}/ilib-${version}.zip"
 			basedir="${build.export}"
 			includes="js/**,java/**,locale/**"/>
@@ -95,7 +103,7 @@ limitations under the License.
 		</checksum>
 	</target>
 
-	<target name="test" description="Run all tests and build all reports">
+	<target name="test" depends="export" description="Run all tests and build all reports">
 		<iterate target="test"/>
 	</target>
 	

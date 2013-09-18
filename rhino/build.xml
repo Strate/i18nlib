@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+build.xml - get and build the rhino engine for use in unit testing
+
+Copyright © 2013, JEDLSoft
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<project name="ilib-rhino" default="all">
+	<!-- =================================================================== -->
+	<!-- properties                                                          -->
+	<!-- =================================================================== -->
+
+	<!-- Give user a chance to override properties without editing this file -->
+	<!-- (and without typing -D each time it compiles it)                    -->
+	<property file="../build.properties"/>
+	<property file="build.properties"/>
+	
+	<!-- Properties that can be overridden -->
+	<!-- directories -->
+	<property name="build.base"						value="${basedir}"/>
+
+	<property name="build.rhino"					value="${basedir}/rhino"/>
+
+	<property name="build.dist"						value="${build.base}/../dist"/>
+	<property name="build.export"					value="${build.base}/../export"/>
+	<property name="build.demo"						value="${build.base}/../doc/demo"/>
+	<property name="build.tools"					value="${build.base}/../tools"/>
+	
+	<property name="log4j.config.file"				value="${build.config}/log4j.properties"/>
+
+	<property name="build.bin"						value="${build.base}/../bin"/>
+
+	<macrodef name="git">
+	    <attribute name="command" />
+	    <attribute name="dir" default="" />
+	    <element name="args" optional="true" />
+	    <sequential>
+	        <echo message="git @{command}" />
+	        <exec executable="git" dir="@{dir}">
+	            <arg value="@{command}" />
+	            <args/>
+	        </exec>
+	    </sequential>
+	</macrodef>
+
+	<!-- =================================================================== -->
+	<!-- Class paths                                                         -->
+	<!-- =================================================================== -->
+	
+	<!-- =================================================================== -->
+	<!-- Implement the standard targets                                      -->
+	<!-- =================================================================== -->
+	<target name="all" depends="dist" description="Build everything. This is the target that the build should run."/>
+
+	<target name="clean" description="Remove all generated files to start from scratch">
+		<delete dir="${build.rhino}"/>
+		<delete dir="${build.export}/rhino"/>
+	</target>
+
+	<target name="compile" depends="prepare">
+		<subant buildpath="${build.rhino}" target="compile">
+		</subant>
+	</target>
+	
+	<target name="check.rhino">
+		<available file="${build.rhino}" property="rhino.exists"></available>
+	</target>
+	
+	<target name="prepare.clone" depends="check.rhino" unless="rhino.exists">
+		<git command="clone">
+			<args>
+				<arg value="--recursive"/>
+				<arg value="--branch"/>
+				<arg value="Rhino1_7R4_RELEASE"/>
+		        <arg value="https://github.com/mozilla/rhino.git"/>
+		    </args>
+		</git>
+	</target>
+
+	<target name="prepare.pull" depends="check.rhino" if="rhino.exists">
+		<git command="pull" dir="${build.rhino}"/>
+	</target>
+
+	<target name="prepare" depends="prepare.clone,prepare.pull" description="Prepare all directories that are needed before the project can be built">
+	</target>
+
+	<target name="export" depends="compile">
+		<mkdir dir="${build.export}/rhino"/>
+		<copy todir="${build.export}/rhino">
+			<fileset dir="${build.rhino}/lib">
+				<include name="*.jar"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="doc" />
+
+	<target name="dist" depends="export,doc" description="Distribute all built objects in preparation for running">
+	</target>
+
+	<target name="test" depends="" description="Run all tests and build all reports"/>
+</project>
