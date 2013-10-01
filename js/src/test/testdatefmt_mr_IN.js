@@ -100,7 +100,7 @@ function testDateFmtINSimpleFull_mr_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न", fmt.format(date));
+    assertEquals("1:45 p.m.", fmt.format(date));
 }
 
 function testDateFmtINSimpleTimeShort_mr_IN1() {
@@ -116,7 +116,7 @@ function testDateFmtINSimpleTimeShort_mr_IN1() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न", fmt.format(date));
+    assertEquals("1:45 p.m.", fmt.format(date));
 }
 
 function testDateFmtINSimpleTimeMedium_mr_IN() {
@@ -132,7 +132,7 @@ function testDateFmtINSimpleTimeMedium_mr_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न", fmt.format(date));
+    assertEquals("1:45 p.m.", fmt.format(date));
 }
 
 function testDateFmtINSimpleTimeLong_mr_IN() {
@@ -148,7 +148,7 @@ function testDateFmtINSimpleTimeLong_mr_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न", fmt.format(date));
+    assertEquals("1:45 p.m.", fmt.format(date));
 }
 
 function testDateFmtINSimpleTimeFull_mr_IN() {
@@ -164,7 +164,7 @@ function testDateFmtINSimpleTimeFull_mr_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न", fmt.format(date));
+    assertEquals("1:45 p.m.", fmt.format(date));
 }
 
 function testDateFmtINDateTimeSimpleShort_mr_IN() {
@@ -180,7 +180,7 @@ function testDateFmtINDateTimeSimpleShort_mr_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न 29/9/11", fmt.format(date));
+    assertEquals("1:45 p.m. 29/9/11", fmt.format(date));
 }
 
 function testDateFmtINDateTimeSimpleMedium_mr_IN() {
@@ -196,7 +196,7 @@ function testDateFmtINDateTimeSimpleMedium_mr_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न 29 सेप्टें 11", fmt.format(date));
+    assertEquals("1:45 p.m. 29 सेप्टें 11", fmt.format(date));
 }
 
 function testDateFmtINDateTimeSimpleLong_mr_IN() {
@@ -212,7 +212,7 @@ function testDateFmtINDateTimeSimpleLong_mr_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न 29 सेप्टें 2011", fmt.format(date));
+    assertEquals("1:45 p.m. 29 सेप्टें 2011", fmt.format(date));
 }
 
 function testDateFmtINDateTimeSimpleFull_mr_IN() {
@@ -228,7 +228,7 @@ function testDateFmtINDateTimeSimpleFull_mr_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न 29 सप्टेंबर 2011", fmt.format(date));
+    assertEquals("1:45 p.m. 29 सप्टेंबर 2011", fmt.format(date));
 }
 */
 
@@ -408,7 +408,7 @@ function testDateFmtINTypeDate_mr_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न", fmt.format(date));
+    assertEquals("1:45 p.m.", fmt.format(date));
 }
 
 function testDateFmtINTypeDateTime_mr_IN() {
@@ -424,7 +424,7 @@ function testDateFmtINTypeDateTime_mr_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न 29/9/11", fmt.format(date));
+    assertEquals("1:45 p.m. 29/9/11", fmt.format(date));
 }*/
 
 
@@ -764,7 +764,7 @@ function testDateFmtINShortTimeComponentsH_mr_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न", fmt.format(date));
+    assertEquals("1:45 p.m.", fmt.format(date));
 }
 
 function testDateFmtINShortTimeComponentsHMS_mr_IN() {
@@ -780,7 +780,7 @@ function testDateFmtINShortTimeComponentsHMS_mr_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45:37 अपराह्न", fmt.format(date));
+    assertEquals("1:45:37 p.m.", fmt.format(date));
 }
 
 function testDateFmtINShortTimeComponentsHMA_mr_IN() {
@@ -796,7 +796,7 @@ function testDateFmtINShortTimeComponentsHMA_mr_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न", fmt.format(date));
+    assertEquals("1:45 p.m.", fmt.format(date));
 }
 
 function testDateFmtINShortTimeComponentsHMZ_mr_IN() {
@@ -816,7 +816,7 @@ function testDateFmtINShortTimeComponentsHMZ_mr_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45:37 अपराह्न IST", fmt.format(date));
+    assertEquals("1:45:37 p.m. IST", fmt.format(date));
 }
 
 function testDateFmtINShortTimeComponentsHMAZ_mr_IN() {
@@ -837,7 +837,7 @@ function testDateFmtINShortTimeComponentsHMAZ_mr_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45:37 अपराह्न IST", fmt.format(date));
+    assertEquals("1:45:37 p.m. IST", fmt.format(date));
 }
 
 function testDateFmtINShortTimeComponentsHMSA_mr_IN() {
@@ -853,7 +853,7 @@ function testDateFmtINShortTimeComponentsHMSA_mr_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45:37 अपराह्न", fmt.format(date));
+    assertEquals("1:45:37 p.m.", fmt.format(date));
 }
 
 function testDateFmtINShortTimeComponentsHMSZ_mr_IN() {
@@ -874,7 +874,7 @@ function testDateFmtINShortTimeComponentsHMSZ_mr_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45:37 अपराह्न IST", fmt.format(date));
+    assertEquals("1:45:37 p.m. IST", fmt.format(date));
 }
 
 function testDateFmtINShortTimeComponentsHMSAZ_mr_IN() {
@@ -895,7 +895,7 @@ function testDateFmtINShortTimeComponentsHMSAZ_mr_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45:37 अपराह्न IST", fmt.format(date));
+    assertEquals("1:45:37 p.m. IST", fmt.format(date));
 }
 
 
@@ -962,7 +962,7 @@ function testDateFmtINFullTimeComponentsHM_mr_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न", fmt.format(date));
+    assertEquals("1:45 p.m.", fmt.format(date));
 }
 
 function testDateFmtINFullTimeComponentsHMS_mr_IN() {
@@ -978,7 +978,7 @@ function testDateFmtINFullTimeComponentsHMS_mr_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45:37 अपराह्न", fmt.format(date));
+    assertEquals("1:45:37 p.m.", fmt.format(date));
 }
 
 function testDateFmtINFullTimeComponentsHMA_mr_IN() {
@@ -994,7 +994,7 @@ function testDateFmtINFullTimeComponentsHMA_mr_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न", fmt.format(date));
+    assertEquals("1:45 p.m.", fmt.format(date));
 }
 
 
@@ -1018,7 +1018,7 @@ function testDateFmtINFullTimeComponentsHMAZ_mr_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45:37 अपराह्न IST", fmt.format(date));
+    assertEquals("1:45:37 p.m. IST", fmt.format(date));
 }
 
 function testDateFmtINFullTimeComponentsHMSA_mr_IN() {
@@ -1034,7 +1034,7 @@ function testDateFmtINFullTimeComponentsHMSA_mr_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45:37 अपराह्न", fmt.format(date));
+    assertEquals("1:45:37 p.m.", fmt.format(date));
 }
 
 function testDateFmtINFullTimeComponentsHMSZ_mr_IN() {
@@ -1056,7 +1056,7 @@ function testDateFmtINFullTimeComponentsHMSZ_mr_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45:37 अपराह्न IST", fmt.format(date));
+    assertEquals("1:45:37 p.m. IST", fmt.format(date));
 }
 
 function testDateFmtINFullTimeComponentsHMSAZ_mr_IN() {
@@ -1078,7 +1078,7 @@ function testDateFmtINFullTimeComponentsHMSAZ_mr_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45:37 अपराह्न IST", fmt.format(date));
+    assertEquals("1:45:37 p.m. IST", fmt.format(date));
 }
 
 function testDateFmtINWithTimeZoneAndNoDST_mr_IN() {
@@ -1100,7 +1100,7 @@ function testDateFmtINWithTimeZoneAndNoDST_mr_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45:37 अपराह्न IST", fmt.format(date));
+    assertEquals("1:45:37 p.m. IST", fmt.format(date));
 }
 
 function testDateFmtFormatRelativeWithinMinuteAfter_mr_IN() {
