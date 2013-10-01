@@ -43,7 +43,7 @@ function testCollatorDefaultCase() {
     // should compare upper-case first
     assertEquals("A < a", -1, col.compare("A", "a"));
     assertEquals("B < b", -1, col.compare("B", "b"));
-    assertEquals("B < a", 1, col.compare("B", "a"));
+    assertEquals("Z < a", 1, col.compare("a", "Z"));
 }
 
 function testCollatorGetComparator() {
@@ -83,7 +83,7 @@ function testCollatorGetComparatorWorksWithCase() {
     // should compare upper-case first
     assertEquals("A < a", -1, func("A", "a"));
     assertEquals("B < b", -1, func("B", "b"));
-    assertEquals("B < a", 1, func("B", "a"));
+    assertEquals("Z < a", -1, func("Z", "a"));
 }
 
 function testCollatorGetSortKey() {
@@ -129,7 +129,7 @@ function testCollatorWithSortUpperFirst() {
     
     input.sort(col.getComparator());
     
-    var expected = ["E", "e", "I", "i", "o", "p", "q", "r", "T", "U"];
+    var expected = ["E", "I", "T", "U", "e", "i", "o", "p", "q", "r"];
     
     assertArrayEquals(expected, input);
 }
@@ -391,17 +391,15 @@ function testCollatorNativedeDECase() {
 	    
 	    var input = [
   			"Sonntag",
+  			"Flüsse",
  			"Montag",
  			"Dienstag",
  			"Januar",
  			"Februar",
  			"März",
  			"Fuße",
- 			"Fluße",
  			"Flusse",
  			"flusse",
- 			"fluße",
- 			"flüße",
  			"flüsse"
  		];
 	    
@@ -410,12 +408,10 @@ function testCollatorNativedeDECase() {
 	    var expected = [
 			"Dienstag",
 			"Februar",
-			"flusse",
 			"Flusse",
-			"fluße",
-			"Fluße",
+			"flusse",
+			"Flüsse",
 			"flüsse",
-			"flüße",
 			"Fuße",
 			"Januar",
 			"März",
@@ -457,10 +453,10 @@ function testCollatorNativedeDEVariant() {
 	    var expected = [
 			"Dienstag",
 			"Februar",
-			"flusse",
 			"Flusse",
-			"fluße",
+			"flusse",
 			"Fluße",
+			"fluße",
 			"flüsse",
 			"flüße",
 			"Fuße",
