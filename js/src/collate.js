@@ -266,15 +266,15 @@ ilib.Collator = function(options) {
 			switch (options.sensitivity) {
 				case 'primary':
 				case 'base':
-					this.sensitivity = "base"; 
+					this.sensitivity = "base";
 					break;
 				case 'secondary':
 				case 'accent':
-					this.sensitivity = "accent"; 
+					this.sensitivity = "accent";
 					break;
 				case 'tertiary':
 				case 'case':
-					this.sensitivity = "case"; 
+					this.sensitivity = "case";
 					break;
 				case 'quaternary':
 				case 'variant':
