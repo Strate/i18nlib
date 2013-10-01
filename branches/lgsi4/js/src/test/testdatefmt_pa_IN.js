@@ -1102,8 +1102,7 @@ function testDateFmtINWithTimeZoneAndNoDST_pa_IN() {
 	});
     assertEquals("1:45:37 ਬਾਅਦ ਦੁਪਹਿਰ IST", fmt.format(date));
 }
-//should be uncommented after getting the transalations for punjabi
-/*function testDateFmtFormatRelativeWithinMinuteAfter_pa_IN() {
+function testDateFmtFormatRelativeWithinMinuteAfter_pa_IN() {
     var fmt = new ilib.DateFmt({locale: "pa-IN", length: "full"});
     assertNotNull(fmt);
     
@@ -1125,7 +1124,7 @@ function testDateFmtINWithTimeZoneAndNoDST_pa_IN() {
 		second: 30,
 		millisecond: 0
 	});
-    assertEquals("30 सेकंड में", fmt.formatRelative(reference, date));
+    assertEquals("30 ਸੇਕੋੰਡ ਇਨ", fmt.formatRelative(reference, date));
 }
 function testDateFmtFormatRelativeWithinMinuteBefore_pa_IN() {
     var fmt = new ilib.DateFmt({locale: "pa-IN", length: "full"});
@@ -1149,7 +1148,7 @@ function testDateFmtFormatRelativeWithinMinuteBefore_pa_IN() {
 		second: 30,
 		millisecond: 0
 	});
-    assertEquals("30 सेकंड पहले", fmt.formatRelative(reference, date));
+    assertEquals("30 ਸੇਕੋੰਡ ਅਗੋ", fmt.formatRelative(reference, date));
 }
 function testDateFmtFormatRelativeWithinHourAfter_pa_IN() {
     var fmt = new ilib.DateFmt({locale: "pa-IN", length: "full"});
@@ -1173,7 +1172,7 @@ function testDateFmtFormatRelativeWithinHourAfter_pa_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("10 मिनट में", fmt.formatRelative(reference, date));
+    assertEquals("10 ਮਿਨੁਤੇਸ ਇਨ", fmt.formatRelative(reference, date));
 }
 function testDateFmtFormatRelativeWithinHourBefore_pa_IN() {
     var fmt = new ilib.DateFmt({locale: "pa-IN", length: "full"});
@@ -1197,7 +1196,7 @@ function testDateFmtFormatRelativeWithinHourBefore_pa_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("10 मिनट पहले", fmt.formatRelative(reference, date));
+    assertEquals("10 ਮਿਨੁਤੇਸ ਅਗੋ", fmt.formatRelative(reference, date));
 }
 function testDateFmtFormatRelativeWithinDayAfter_pa_IN() {
     var fmt = new ilib.DateFmt({locale: "pa-IN", length: "full"});
@@ -1221,7 +1220,7 @@ function testDateFmtFormatRelativeWithinDayAfter_pa_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("4 घंटे में", fmt.formatRelative(reference, date));
+    assertEquals("4 ਹੋਉਰ੍ਸ ਇਨ", fmt.formatRelative(reference, date));
 }
 function testDateFmtFormatRelativeWithinDayBefore_pa_IN() {
     var fmt = new ilib.DateFmt({locale: "pa-IN", length: "full"});
@@ -1245,7 +1244,7 @@ function testDateFmtFormatRelativeWithinDayBefore_pa_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("4 घंटे पहले", fmt.formatRelative(reference, date));
+    assertEquals("4 ਹੋਉਰ੍ਸ ਅਗੋ", fmt.formatRelative(reference, date));
 }
 
 function testDateFmtFormatRelativeWithinFortnightAfter_pa_IN() {
@@ -1270,7 +1269,7 @@ function testDateFmtFormatRelativeWithinFortnightAfter_pa_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("4 दिन में", fmt.formatRelative(reference, date));
+    assertEquals("4 ਦੇਸ ਇਨ", fmt.formatRelative(reference, date));
 }
 function testDateFmtFormatRelativeWithinFortnightBefore_pa_IN() {
     var fmt = new ilib.DateFmt({locale: "pa-IN", length: "full"});
@@ -1294,7 +1293,7 @@ function testDateFmtFormatRelativeWithinFortnightBefore_pa_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("4 दिन पहले", fmt.formatRelative(reference, date));
+    assertEquals("4 ਦੇਸ ਅਗੋ", fmt.formatRelative(reference, date));
 }
 
 function testDateFmtFormatRelativeWithinQuarterAfter_pa_IN() {
@@ -1319,7 +1318,7 @@ function testDateFmtFormatRelativeWithinQuarterAfter_pa_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("9 सप्ताह में", fmt.formatRelative(reference, date));
+    assertEquals("9 ਵੀਕਸ ਇਨ", fmt.formatRelative(reference, date));
 }
 function testDateFmtFormatRelativeWithinQuarterBefore_pa_IN() {
     var fmt = new ilib.DateFmt({locale: "pa-IN", length: "full"});
@@ -1343,7 +1342,7 @@ function testDateFmtFormatRelativeWithinQuarterBefore_pa_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("9 सप्ताह पहले", fmt.formatRelative(reference, date));
+    assertEquals("9 ਵੀਕਸ ਅਗੋ", fmt.formatRelative(reference, date));
 }
 
 function testDateFmtFormatRelativeWithinTwoYearsAfter_pa_IN() {
@@ -1368,7 +1367,7 @@ function testDateFmtFormatRelativeWithinTwoYearsAfter_pa_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("16 महीने में", fmt.formatRelative(reference, date));
+    assertEquals("16 ਮੋੰਥ੍ਸ ਇਨ", fmt.formatRelative(reference, date));
 }
 function testDateFmtFormatRelativeWithinTwoYearsBefore_pa_IN() {
     var fmt = new ilib.DateFmt({locale: "pa-IN", length: "full"});
@@ -1392,7 +1391,7 @@ function testDateFmtFormatRelativeWithinTwoYearsBefore_pa_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("14 महीने पहले", fmt.formatRelative(reference, date));
+    assertEquals("14 ਮੋੰਥ੍ਸ ਅਗੋ", fmt.formatRelative(reference, date));
 }
 
 function testDateFmtFormatRelativeYearsAfter_pa_IN() {
@@ -1417,7 +1416,7 @@ function testDateFmtFormatRelativeYearsAfter_pa_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("14 साल में", fmt.formatRelative(reference, date));
+    assertEquals("14 ਏਆਰ੍ਸ ਇਨ", fmt.formatRelative(reference, date));
 }
 function testDateFmtFormatRelativeYearsBefore_pa_IN() {
     var fmt = new ilib.DateFmt({locale: "pa-IN", length: "full"});
@@ -1441,7 +1440,7 @@ function testDateFmtFormatRelativeYearsBefore_pa_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("21 साल पहले", fmt.formatRelative(reference, date));
-}*/
+    assertEquals("21 ਏਆਰ੍ਸ ਅਗੋ", fmt.formatRelative(reference, date));
+}
 
 

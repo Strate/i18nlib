@@ -100,7 +100,7 @@ function testDateFmtINSimpleFull_ta_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न", fmt.format(date));
+    assertEquals("1:45 p.m.", fmt.format(date));
 }
 
 
@@ -117,7 +117,7 @@ function testDateFmtINSimpleTimeShort_ta_IN1() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न", fmt.format(date));
+    assertEquals("1:45 p.m.", fmt.format(date));
 }
 
 function testDateFmtINSimpleTimeMedium_ta_IN() {
@@ -133,7 +133,7 @@ function testDateFmtINSimpleTimeMedium_ta_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न", fmt.format(date));
+    assertEquals("1:45 p.m.", fmt.format(date));
 }
 
 function testDateFmtINSimpleTimeLong_ta_IN() {
@@ -149,7 +149,7 @@ function testDateFmtINSimpleTimeLong_ta_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न", fmt.format(date));
+    assertEquals("1:45 p.m.", fmt.format(date));
 }
 
 function testDateFmtINSimpleTimeFull_ta_IN() {
@@ -165,7 +165,7 @@ function testDateFmtINSimpleTimeFull_ta_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न", fmt.format(date));
+    assertEquals("1:45 p.m.", fmt.format(date));
 }
 
 function testDateFmtINDateTimeSimpleShort_ta_IN() {
@@ -181,7 +181,7 @@ function testDateFmtINDateTimeSimpleShort_ta_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न 29/9/11", fmt.format(date));
+    assertEquals("1:45 p.m. 29/9/11", fmt.format(date));
 }
 
 function testDateFmtINDateTimeSimpleMedium_ta_IN() {
@@ -197,7 +197,7 @@ function testDateFmtINDateTimeSimpleMedium_ta_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न 29 செப்., 11", fmt.format(date));
+    assertEquals("1:45 p.m. 29 செப்., 11", fmt.format(date));
 }
 
 function testDateFmtINDateTimeSimpleLong_ta_IN() {
@@ -213,7 +213,7 @@ function testDateFmtINDateTimeSimpleLong_ta_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न 29 செப்., 2011", fmt.format(date));
+    assertEquals("1:45 p.m. 29 செப்., 2011", fmt.format(date));
 }
 
 function testDateFmtINDateTimeSimpleFull_ta_IN() {
@@ -229,7 +229,7 @@ function testDateFmtINDateTimeSimpleFull_ta_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न 29 செப்டம்பர் 2011", fmt.format(date));
+    assertEquals("1:45 p.m. 29 செப்டம்பர் 2011", fmt.format(date));
 }*/
 
 
@@ -408,7 +408,7 @@ function testDateFmtINTypeDate_ta_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न", fmt.format(date));
+    assertEquals("1:45 p.m.", fmt.format(date));
 }
 
 function testDateFmtINTypeDateTime_ta_IN() {
@@ -424,7 +424,7 @@ function testDateFmtINTypeDateTime_ta_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न 29/9/11", fmt.format(date));
+    assertEquals("1:45 p.m. 29/9/11", fmt.format(date));
 }
 */
 
@@ -764,7 +764,7 @@ function testDateFmtINShortTimeComponentsH_ta_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न", fmt.format(date));
+    assertEquals("1:45 p.m.", fmt.format(date));
 }
 
 function testDateFmtINShortTimeComponentsHMS_ta_IN() {
@@ -780,7 +780,7 @@ function testDateFmtINShortTimeComponentsHMS_ta_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45:37 अपराह्न", fmt.format(date));
+    assertEquals("1:45:37 p.m.", fmt.format(date));
 }
 
 function testDateFmtINShortTimeComponentsHMA_ta_IN() {
@@ -796,7 +796,7 @@ function testDateFmtINShortTimeComponentsHMA_ta_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न", fmt.format(date));
+    assertEquals("1:45 p.m.", fmt.format(date));
 }
 
 function testDateFmtINShortTimeComponentsHMZ_ta_IN() {
@@ -816,7 +816,7 @@ function testDateFmtINShortTimeComponentsHMZ_ta_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45:37 अपराह्न IST", fmt.format(date));
+    assertEquals("1:45:37 p.m. IST", fmt.format(date));
 }
 
 function testDateFmtINShortTimeComponentsHMAZ_ta_IN() {
@@ -837,7 +837,7 @@ function testDateFmtINShortTimeComponentsHMAZ_ta_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45:37 अपराह्न IST", fmt.format(date));
+    assertEquals("1:45:37 p.m. IST", fmt.format(date));
 }
 
 function testDateFmtINShortTimeComponentsHMSA_ta_IN() {
@@ -853,7 +853,7 @@ function testDateFmtINShortTimeComponentsHMSA_ta_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45:37 अपराह्न", fmt.format(date));
+    assertEquals("1:45:37 p.m.", fmt.format(date));
 }
 
 function testDateFmtINShortTimeComponentsHMSZ_ta_IN() {
@@ -874,7 +874,7 @@ function testDateFmtINShortTimeComponentsHMSZ_ta_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45:37 अपराह्न IST", fmt.format(date));
+    assertEquals("1:45:37 p.m. IST", fmt.format(date));
 }
 
 function testDateFmtINShortTimeComponentsHMSAZ_ta_IN() {
@@ -895,7 +895,7 @@ function testDateFmtINShortTimeComponentsHMSAZ_ta_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45:37 अपराह्न IST", fmt.format(date));
+    assertEquals("1:45:37 p.m. IST", fmt.format(date));
 }
 */
 
@@ -947,7 +947,6 @@ function testDateFmtINFullTimeComponentsH_ta_IN() {
     assertEquals("1", fmt.format(date));
 }
 
-//needs to have translations for ago and after
 
 /*function testDateFmtINFullTimeComponentsHM_ta_IN() {
     var fmt = new ilib.DateFmt({locale: "ta-IN", type: "time", length: "full", time: "hma"});
@@ -962,7 +961,7 @@ function testDateFmtINFullTimeComponentsH_ta_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न", fmt.format(date));
+    assertEquals("1:45 p.m.", fmt.format(date));
 }
 
 function testDateFmtINFullTimeComponentsHMS_ta_IN() {
@@ -978,7 +977,7 @@ function testDateFmtINFullTimeComponentsHMS_ta_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45:37 अपराह्न", fmt.format(date));
+    assertEquals("1:45:37 p.m.", fmt.format(date));
 }
 
 function testDateFmtINFullTimeComponentsHMA_ta_IN() {
@@ -994,7 +993,7 @@ function testDateFmtINFullTimeComponentsHMA_ta_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45 अपराह्न", fmt.format(date));
+    assertEquals("1:45 p.m.", fmt.format(date));
 }
 
 
@@ -1018,7 +1017,7 @@ function testDateFmtINFullTimeComponentsHMAZ_ta_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45:37 अपराह्न IST", fmt.format(date));
+    assertEquals("1:45:37 p.m. IST", fmt.format(date));
 }
 
 function testDateFmtINFullTimeComponentsHMSA_ta_IN() {
@@ -1034,7 +1033,7 @@ function testDateFmtINFullTimeComponentsHMSA_ta_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45:37 अपराह्न", fmt.format(date));
+    assertEquals("1:45:37 p.m.", fmt.format(date));
 }
 
 function testDateFmtINFullTimeComponentsHMSZ_ta_IN() {
@@ -1056,7 +1055,7 @@ function testDateFmtINFullTimeComponentsHMSZ_ta_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45:37 अपराह्न IST", fmt.format(date));
+    assertEquals("1:45:37 p.m. IST", fmt.format(date));
 }
 
 function testDateFmtINFullTimeComponentsHMSAZ_ta_IN() {
@@ -1078,7 +1077,7 @@ function testDateFmtINFullTimeComponentsHMSAZ_ta_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45:37 अपराह्न IST", fmt.format(date));
+    assertEquals("1:45:37 p.m. IST", fmt.format(date));
 }
 
 function testDateFmtINWithTimeZoneAndNoDST_ta_IN() {
@@ -1100,10 +1099,10 @@ function testDateFmtINWithTimeZoneAndNoDST_ta_IN() {
 		second: 37,
 		millisecond: 0
 	});
-    assertEquals("1:45:37 अपराह्न IST", fmt.format(date));
+    assertEquals("1:45:37 p.m. IST", fmt.format(date));
 }*/
 
-/*function testDateFmtFormatRelativeWittanMinuteAfter_ta_IN() {
+function testDateFmtFormatRelativeWittanMinuteAfter_ta_IN() {
     var fmt = new ilib.DateFmt({locale: "ta-IN", length: "full"});
     assertNotNull(fmt);
     
@@ -1125,7 +1124,7 @@ function testDateFmtINWithTimeZoneAndNoDST_ta_IN() {
 		second: 30,
 		millisecond: 0
 	});
-    assertEquals("30 வினாடிகள் में", fmt.formatRelative(reference, date));
+    assertEquals("30 வினாடிகள் இல்", fmt.formatRelative(reference, date));
 }
 function testDateFmtFormatRelativeWittanMinuteBefore_ta_IN() {
     var fmt = new ilib.DateFmt({locale: "ta-IN", length: "full"});
@@ -1149,7 +1148,7 @@ function testDateFmtFormatRelativeWittanMinuteBefore_ta_IN() {
 		second: 30,
 		millisecond: 0
 	});
-    assertEquals("30 வினாடிகள் पहले", fmt.formatRelative(reference, date));
+    assertEquals("30 வினாடிகள் முன்", fmt.formatRelative(reference, date));
 }
 function testDateFmtFormatRelativeWittanHourAfter_ta_IN() {
     var fmt = new ilib.DateFmt({locale: "ta-IN", length: "full"});
@@ -1173,7 +1172,7 @@ function testDateFmtFormatRelativeWittanHourAfter_ta_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("10 நிமிடங்கள் में", fmt.formatRelative(reference, date));
+    assertEquals("10 நிமிடங்கள் இல்", fmt.formatRelative(reference, date));
 }
 function testDateFmtFormatRelativeWittanHourBefore_ta_IN() {
     var fmt = new ilib.DateFmt({locale: "ta-IN", length: "full"});
@@ -1197,7 +1196,7 @@ function testDateFmtFormatRelativeWittanHourBefore_ta_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("10 நிமிடங்கள் पहले", fmt.formatRelative(reference, date));
+    assertEquals("10 நிமிடங்கள் முன்", fmt.formatRelative(reference, date));
 }
 function testDateFmtFormatRelativeWittanDayAfter_ta_IN() {
     var fmt = new ilib.DateFmt({locale: "ta-IN", length: "full"});
@@ -1221,7 +1220,7 @@ function testDateFmtFormatRelativeWittanDayAfter_ta_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("4 மணிநேரம் में", fmt.formatRelative(reference, date));
+    assertEquals("4 மணிநேரம் இல்", fmt.formatRelative(reference, date));
 }
 function testDateFmtFormatRelativeWittanDayBefore_ta_IN() {
     var fmt = new ilib.DateFmt({locale: "ta-IN", length: "full"});
@@ -1245,7 +1244,7 @@ function testDateFmtFormatRelativeWittanDayBefore_ta_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("4 மணிநேரம் पहले", fmt.formatRelative(reference, date));
+    assertEquals("4 மணிநேரம் முன்", fmt.formatRelative(reference, date));
 }
 
 function testDateFmtFormatRelativeWittanFortnightAfter_ta_IN() {
@@ -1270,7 +1269,7 @@ function testDateFmtFormatRelativeWittanFortnightAfter_ta_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("4 நாட்கள் में", fmt.formatRelative(reference, date));
+    assertEquals("4 நாட்கள் இல்", fmt.formatRelative(reference, date));
 }
 function testDateFmtFormatRelativeWittanFortnightBefore_ta_IN() {
     var fmt = new ilib.DateFmt({locale: "ta-IN", length: "full"});
@@ -1294,7 +1293,7 @@ function testDateFmtFormatRelativeWittanFortnightBefore_ta_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("4 நாட்கள் पहले", fmt.formatRelative(reference, date));
+    assertEquals("4 நாட்கள் முன்", fmt.formatRelative(reference, date));
 }
 
 function testDateFmtFormatRelativeWittanQuarterAfter_ta_IN() {
@@ -1319,7 +1318,7 @@ function testDateFmtFormatRelativeWittanQuarterAfter_ta_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("9 வாரங்கள் में", fmt.formatRelative(reference, date));
+    assertEquals("9 வாரங்கள் இல்", fmt.formatRelative(reference, date));
 }
 function testDateFmtFormatRelativeWittanQuarterBefore_ta_IN() {
     var fmt = new ilib.DateFmt({locale: "ta-IN", length: "full"});
@@ -1343,7 +1342,7 @@ function testDateFmtFormatRelativeWittanQuarterBefore_ta_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("9 வாரங்கள் पहले", fmt.formatRelative(reference, date));
+    assertEquals("9 வாரங்கள் முன்", fmt.formatRelative(reference, date));
 }
 
 function testDateFmtFormatRelativeWittanTwoYearsAfter_ta_IN() {
@@ -1368,7 +1367,7 @@ function testDateFmtFormatRelativeWittanTwoYearsAfter_ta_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("16 மாதங்கள் में", fmt.formatRelative(reference, date));
+    assertEquals("16 மாதங்கள் இல்", fmt.formatRelative(reference, date));
 }
 function testDateFmtFormatRelativeWittanTwoYearsBefore_ta_IN() {
     var fmt = new ilib.DateFmt({locale: "ta-IN", length: "full"});
@@ -1392,7 +1391,7 @@ function testDateFmtFormatRelativeWittanTwoYearsBefore_ta_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("14 மாதங்கள் पहले", fmt.formatRelative(reference, date));
+    assertEquals("14 மாதங்கள் முன்", fmt.formatRelative(reference, date));
 }
 
 function testDateFmtFormatRelativeYearsAfter_ta_IN() {
@@ -1417,7 +1416,7 @@ function testDateFmtFormatRelativeYearsAfter_ta_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("14 வருடங்கள் में", fmt.formatRelative(reference, date));
+    assertEquals("14 வருடங்கள் இல்", fmt.formatRelative(reference, date));
 }
 function testDateFmtFormatRelativeYearsBefore_ta_IN() {
     var fmt = new ilib.DateFmt({locale: "ta-IN", length: "full"});
@@ -1441,7 +1440,7 @@ function testDateFmtFormatRelativeYearsBefore_ta_IN() {
 		second: 0,
 		millisecond: 0
 	});
-    assertEquals("21 வருடங்கள் पहले", fmt.formatRelative(reference, date));
+    assertEquals("21 வருடங்கள் முன்", fmt.formatRelative(reference, date));
 }
-*/
+
 
