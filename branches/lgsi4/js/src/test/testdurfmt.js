@@ -247,7 +247,7 @@ function testDurFmtFormatFullSingle() {
     	second: 1,
     	millisecond: 1
     });
-    assertEquals("1 year, 1 month, 1 week, 1 day, 1 hour, 1 minute, 1 second, and 1 millisecond", duration.toString());
+    assertEquals("1 year, 1 month, 1 week, 1 day, 1 hour, 1 minute, 1 second and 1 millisecond", duration.toString());
 };
 
 function testDurFmtFormatFullSingleNotAllFields() {
@@ -262,27 +262,10 @@ function testDurFmtFormatFullSingleNotAllFields() {
     	day: 1,
     	minute: 1
     });
-    assertEquals("1 year, 1 week, 1 day, and 1 minute", duration.toString());
+    assertEquals("1 year, 1 week, 1 day and 1 minute", duration.toString());
 };
 
-function testDurFmtFormatFullSingle() {
-    var fmt = new ilib.DurFmt({
-    	length: "full"
-    });
-    assertNotNull(fmt);
-    
-    var duration = fmt.format({
-    	year: 1,
-    	month: 1,
-    	week: 1,
-    	day: 1,
-    	hour: 1,
-    	minute: 1,
-    	second: 1,
-    	millisecond: 1
-    });
-    assertEquals("1 year, 1 month, 1 week, 1 day, 1 hour, 1 minute, 1 second, and 1 millisecond", duration.toString());
-};
+
 
 function testDurFmtFormatLongPlural() {
     var fmt = new ilib.DurFmt({
@@ -319,7 +302,7 @@ function testDurFmtFormatFullPlural() {
     	second: 2,
     	millisecond: 2
     });
-    assertEquals("2 years, 2 months, 2 weeks, 2 days, 2 hours, 2 minutes, 2 seconds, and 2 milliseconds", duration.toString());
+    assertEquals("2 years, 2 months, 2 weeks, 2 days, 2 hours, 2 minutes, 2 seconds and 2 milliseconds", duration.toString());
 };
 
 function testDurFmtFormatShortDEDefaultStyle() {
@@ -747,7 +730,7 @@ function testDurFmtAsync() {
     	    	second: 2,
     	    	millisecond: 2
     	    });
-    	    assertEquals("2 years, 2 months, 2 weeks, 2 days, 2 hours, 2 minutes, 2 seconds, and 2 milliseconds", duration.toString());
+    	    assertEquals("2 years, 2 months, 2 weeks, 2 days, 2 hours, 2 minutes, 2 seconds and 2 milliseconds", duration.toString());
     	    callbackCalled = true;
     	}
     });
@@ -3474,7 +3457,7 @@ function testDurFmtKNFormatShortText() {
     	minute: 1,
     	second: 1
     });
-    assertEquals("1ವ 1ತ 1ವ 1ದ 1:01:01 पूर्वाह्न", duration.toString());
+    assertEquals("1ವ 1ತ 1ವ 1ದ 1:01:01 a.m", duration.toString());
 };*/
 
 function testDurFmtKNFormatMedium() {
@@ -3582,7 +3565,7 @@ function testDurFmtKNFormatShortClockAsync() {
     	    	minute: 1,
     	    	second: 1
     	    });
-    	    assertEquals("1ವ 1ತ 1ವ 1ದ 1:01:01 पूर्वाह्न", duration.toString());
+    	    assertEquals("1ವ 1ತ 1ವ 1ದ 1:01:01 a.m", duration.toString());
     	    callbackCalled = true;
     	}
     });
@@ -3649,7 +3632,7 @@ function testDurFmtTAFormatShortText() {
     	minute: 1,
     	second: 1
     });
-    assertEquals("1வ 1ம 1வ 1ந 1:01:01 पूर्वाह्न", duration.toString());
+    assertEquals("1வ 1ம 1வ 1ந 1:01:01 a.m", duration.toString());
 };
 */
 function testDurFmtTAFormatMedium() {
@@ -3756,7 +3739,7 @@ function testDurFmtTAAsyncWithLocale() {
     	    	minute: 1,
     	    	second: 1
     	    });
-    	    assertEquals("1வ 1ம 1வ 1ந 1:01:01 पूर्वाह्न", duration.toString());
+    	    assertEquals("1வ 1ம 1வ 1ந 1:01:01 a.m", duration.toString());
     	    callbackCalled = true;
     	}
     });
@@ -3823,7 +3806,7 @@ function testDurFmtMLFormatShortText() {
     	minute: 1,
     	second: 1
     });
-    assertEquals("1ദ 1മ 1മ 1സ 1:01:01 पूर्वाह्न", duration.toString());
+    assertEquals("1ദ 1മ 1മ 1സ 1:01:01 a.m", duration.toString());
 };
 */
 function testDurFmtMLFormatMedium() {
@@ -3930,7 +3913,7 @@ function testDurFmtMLAsyncWithLocale() {
     	    	minute: 1,
     	    	second: 1
     	    });
-    	    assertEquals("1வ 1ம 1வ 1ந 1:01:01 पूर्वाह्न", duration.toString());
+    	    assertEquals("1வ 1ம 1வ 1ந 1:01:01 a.m", duration.toString());
     	    callbackCalled = true;
     	}
     });
@@ -3998,7 +3981,7 @@ function testDurFmtGUFormatShortText() {
     	minute: 1,
     	second: 1
     });
-    assertEquals("1வ 1ம 1வ 1ந 1:01:01 पूर्वाह्न", duration.toString());
+    assertEquals("1வ 1ம 1வ 1ந 1:01:01 a.m", duration.toString());
 };
 */
 function testDurFmtGUFormatMedium() {
@@ -4105,7 +4088,7 @@ function testDurFmtGUAsyncWithLocale() {
     	    	minute: 1,
     	    	second: 1
     	    });
-    	    assertEquals("1வ 1ம 1வ 1ந 1:01:01 पूर्वाह्न", duration.toString());
+    	    assertEquals("1வ 1ம 1வ 1ந 1:01:01 a.m", duration.toString());
     	    callbackCalled = true;
     	}
     });
@@ -4173,7 +4156,7 @@ function testDurFmtBNFormatShortText() {
     	minute: 1,
     	second: 1
     });
-    assertEquals("1வ 1ம 1வ 1ந 1:01:01 पूर्वाह्न", duration.toString());
+    assertEquals("1வ 1ம 1வ 1ந 1:01:01 a.m", duration.toString());
 };
 */
 function testDurFmtBNFormatMedium() {
@@ -4280,7 +4263,7 @@ function testDurFmtBNAsyncWithLocale() {
     	    	minute: 1,
     	    	second: 1
     	    });
-    	    assertEquals("1வ 1ம 1வ 1ந 1:01:01 पूर्वाह्न", duration.toString());
+    	    assertEquals("1வ 1ம 1வ 1ந 1:01:01 a.m", duration.toString());
     	    callbackCalled = true;
     	}
     });
@@ -4465,7 +4448,7 @@ function testDurFmtASAsyncWithLocale() {
 
 //test cases for Punjabi(pa-IN)
 
-/*function testDurFmtPAFormatShortDefaultStyle() {
+function testDurFmtPAFormatShortDefaultStyle() {
     var fmt = new ilib.DurFmt({
     	locale: "pa-IN",
     	length: "short"
@@ -4481,7 +4464,7 @@ function testDurFmtASAsyncWithLocale() {
     	minute: 1,
     	second: 1
     });
-    assertEquals("y", duration.toString());
+    assertEquals("1ਏ 1ਮੋੰਥ 1ਵੀ 1ਦੇ 1ਹੋ 1ਮਿਨੁਤੇ 1ਸੇ", duration.toString());
 };
 
 function testDurFmtPAFormatShortText() {
@@ -4501,9 +4484,9 @@ function testDurFmtPAFormatShortText() {
     	minute: 1,
     	second: 1
     });
-    assertEquals("y", duration.toString());
+    assertEquals("1ਏ 1ਮੋੰਥ 1ਵੀ 1ਦੇ 1ਹੋ 1ਮਿਨੁਤੇ 1ਸੇ", duration.toString());
 };
-*/
+
 //Need translation for a.m & p.m
 /*function testDurFmtPAFormatShortClock() {
     var fmt = new ilib.DurFmt({
@@ -4527,7 +4510,7 @@ function testDurFmtPAFormatShortText() {
 
 
 
-/*function testDurFmtPAFormatMedium() {
+function testDurFmtPAFormatMedium() {
     var fmt = new ilib.DurFmt({
     	locale: "pa-IN",
     	length: "medium"
@@ -4543,7 +4526,7 @@ function testDurFmtPAFormatShortText() {
     	minute: 1,
     	second: 1
     });
-    assertEquals("y", duration.toString());
+    assertEquals("1 ਏਸਰ 1 ਮੋੰਥ 1 ਵੀ 1 ਦੇ 1 घं. 1 ਮਿ 1 ਸੇ", duration.toString());
 };
 
 function testDurFmtPAFormatLong() {
@@ -4562,7 +4545,7 @@ function testDurFmtPAFormatLong() {
     	minute: 1,
     	second: 1
     });
-    assertEquals("y", duration.toString());
+    assertEquals("1 ਏਸਰ 1 ਮੋੰਥ 1 ਵੀਕ 1 ਦੇ 1 ਹੋਉਰ 1 ਮਿਨੁਤੇ 1 ਸੇ", duration.toString());
 };
 
 function testDurFmtPAFormatFull() {
@@ -4581,9 +4564,8 @@ function testDurFmtPAFormatFull() {
     	minute: 1,
     	second: 1
     });
-    assertEquals("y", duration.toString());
+    assertEquals("1 ਏਆਰ੍ਸ, 1 ਮੋੰਥ੍ਸ, 1 ਵੀਕਸ, 1 ਦੇਸ, 1 ਹੋਉਰ੍ਸ, 1 ਮਿਨੁਤੇਸ, 1 ਸੇਕੋੰਡ", duration.toString());
 };
-
 
 function testDurFmtPAAsyncWithLocale() {
 	var callbackCalled = false;
@@ -4603,7 +4585,7 @@ function testDurFmtPAAsyncWithLocale() {
     	    	minute: 2,
     	    	second: 2
     	    });
-    	    assertEquals("y", duration.toString());
+    	    assertEquals("2 ਏਆਰ੍ਸ, 2 ਮੋੰਥ੍ਸ, 2 ਵੀਕਸ, 2 ਦੇਸ, 2 ਹੋਉਰ੍ਸ, 2 ਮਿਨੁਤੇਸ, 2 ਸੇਕੋੰਡ", duration.toString());
     	    callbackCalled = true;
     	}
     });
