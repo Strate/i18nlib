@@ -95,7 +95,7 @@
     "durationMediumYears": "#{num} વર",
     "1#1 yr|#{num} yrs": "#{num} વર્ષ",
     "1#1 year|#{num} years": "#{num} વર્ષ",
-    "{duration} ago": "{duration} પહેલા",
+    "{duration} ago": "{duration} અગાઉ",
     "in {duration}": "{duration} માં",
     "finalSeparatorFull": " અને ",
     "separatorLong": " "
