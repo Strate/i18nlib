@@ -1,0 +1,22 @@
+{
+    "native_numfmt": {
+        "script": "Deva",
+        "decimalChar": ".",
+        "groupChar": ",",
+        "secgroupSize": 2,
+        "currencyFormats": {
+            "common": "{s} {n}",
+            "commonNegative": "-{s} {n}"
+        },
+        "digits": "०१२३४५६७८९"
+    },
+    "numfmt": {
+        "decimalChar": ".",
+        "groupChar": ",",
+	 "secgroupSize": 2,
+        "currencyFormats": {
+            "common": "{s} {n}",
+            "commonNegative": "-{s} {n})"
+        }
+    }
+}
