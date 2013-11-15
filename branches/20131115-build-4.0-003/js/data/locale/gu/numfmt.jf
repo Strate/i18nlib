@@ -1,0 +1,23 @@
+{
+   
+    "native_numfmt": {
+        "script": "Gujr",
+        "decimalChar": ".",
+        "groupChar": ",",
+        "secgroupSize": 2,
+        "currencyFormats": {
+            "common": "{s} {n}",
+            "commonNegative": "-{s} {n}"
+        },
+        "digits": "૦૧૨૩૪૫૬૭૮૯"
+    },
+    "numfmt": {
+        "decimalChar": ".",
+        "groupChar": ",",
+	"secgroupSize": 2,
+        "currencyFormats": {
+	    "common": "{s} {n}",
+            "commonNegative": "-{s} {n}"
+        }
+    }
+}
