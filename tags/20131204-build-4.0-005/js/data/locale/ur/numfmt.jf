@@ -1,0 +1,18 @@
+{
+    "native_numfmt": {
+        "script": "arabext",
+        "decimalChar": "٫",
+        "groupChar": "٬",
+        "pctChar": "٪",
+        "exponential": "×۱۰^",
+        "currencyFormats": {
+            "common": "{s}{n}"
+        },
+        "pctFmt": "{n}٪",
+        "digits": "۰۱۲۳۴۵۶۷۸۹"
+    },
+    "numfmt": {
+        "decimalChar": ".",
+        "groupChar": ","
+    }
+}

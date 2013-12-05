@@ -1,0 +1,23 @@
+{
+  
+    "native_numfmt": {
+        "script": "Telu",
+        "decimalChar": ".",
+        "groupChar": ",",
+        "secgroupSize": 2,
+        "currencyFormats": {
+            "common": "{s} {n}",
+            "commonNegative": "-{s} {n}"
+        },
+        "digits": "౦౧౨౩౪౫౬౭౮౯"
+    },
+    "numfmt": {
+        "decimalChar": ".",
+        "groupChar": ",",
+        "secgroupSize": 2,
+        "currencyFormats": {
+           "common": "{s} {n}",
+            "commonNegative": "-{s} {n}"
+        }
+    }
+}
