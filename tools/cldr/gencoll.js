@@ -33,7 +33,7 @@ var common = require('./common.js');
 // It was hard to replicate the functionality of the unicode normalization
 // without this. Make sure that the top level dir of this project is built
 // before trying to run this tool.
-// var ilib = require('../../js/src');
+var ilib = require('../../js/src').ilib;
 
 var UnicodeData = uniData.UnicodeData;
 var CharacterInfo = uniData.CharacterInfo;
@@ -227,6 +227,10 @@ WeightVector.prototype = {
 		this.weights[position] = amount;
 	},
 	
+	get: function(position) {
+		return this.weights[position];
+	},
+	
 	add: function(position, amount) {
 		this.weights[position] += amount;
 		for (var i = position + 1; i < 4; i++) {
@@ -292,17 +296,69 @@ util.print("Reading DUCET code points and weights\n");
 
 var ducet = {};
 
-var ch;
+var ch;if (name && name.length > 0) {
 var ducetFile = new UnicodeFile({path: ducetFileName});
 len = ducetFile.length();
-
+var later = {};
 for (var i = 0; i < len; i++ ) {
 	row = ducetFile.get(i);
 	ch = hexStringUTF16String(row[0]);
-
 	ducet[ch] = {
+		original: ch,
 		weights: parseWeightLine(row[1])
 	};
+}
+
+/*
+util.print("Checking if " + ch + " is normalized... ");
+var n = new ilib.NormString(ch);
+var normalized = n.normalize("nfc");
+var norm = normalized.toString();
+
+if (ch !== norm) {
+	util.print("Normalized " + common.toHexString(normalized.toString()) + " original " + common.toHexString(ch.toString()) + " base " + common.toHexString(ch[0]) + "\n");
+	// base may not be there yet, so add the variant later
+	later[norm] = {
+		original: ch, 
+		weights: parseWeightLine(row[1])
+	};
+} else {
+	util.print("It is.\n");
+}
+
+// now process the normalized strings and add variants to their bases
+for (var name in later) {
+	if (name && name.length > 0) {
+		if (!ducet[name]) {
+			ducet[name] = {
+				weights: later[name].weights
+			};
+		}
+		var varWeight = ducet[name].weights.clone();
+		varWeight.addSecondary(1);
+		ducet[later[name].original] = {
+			weights: varWeight
+		};
+	}
+}
+*/
+
+var sortKeyIndex = new Array(65536);
+
+for (var name in ducet) {
+	if (name && name.length > 0 && ducet[name]) {
+		var primary = ducet[name].weights.get(1);
+		if (sortKeyIndex[primary]) {
+			if (sortKeyIndex[primary].secondaries) {
+				
+			} else {
+				sortKeyIndex[primary].secondaries = new ilib.List();
+				sortKeyIndex[primary].secondaries.addFirst();
+			}
+		} else {
+			sortKeyIndex[primary] = ducet[name];	
+		}
+	}
 }
 
 util.print("Attaching script codes to DUCET code points\n");
@@ -335,6 +391,7 @@ for (var name in ducet) {
 util.print("Ducet table for Latin is: " + JSON.stringify(elementsByScript["Latn"]) + "\n");
 
 util.print("Ducet table is: \n");
+process.exit(0);
 
 var i = 0;
 for (ch in ducet) {
@@ -345,7 +402,6 @@ for (ch in ducet) {
 	}
 }
 
-process.exit(0);
 
 function compareWeightArray(left, right) {
 	var i = 0; 
