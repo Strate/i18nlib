@@ -22,7 +22,7 @@
 // !data charset
 
 /**
- * Create a new chararcter set info instance. Charset instances give information about
+ * Create a new character set info instance. Charset instances give information about
  * a particular character set, such as whether or not it is single byte or multibyte,
  * and which languages commonly use that charset.<p>
  * 
@@ -68,7 +68,7 @@
  * @see {ilib.setLoaderCallback} for information about registering a loader callback instance
  * @param {Object=} options options which govern the construction of this instance
  */
-ilib.Charset = function(locale, options) {
+ilib.Charset = function(options) {
 	var sync = true,
 	    loadParams = undefined,
 	    name = "unicode";
