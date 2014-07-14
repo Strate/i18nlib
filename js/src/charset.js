@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-// !depends ilibglobal.js locale.js
+// !depends ilibglobal.js
 
 // !data charset
 
@@ -110,10 +110,13 @@ ilib.Charset = function(options) {
 };
 
 /**
- * Return the standard name of the given charset.
+ * Return the standard name of the given charset. The list of standard names comes
+ * from the IANA registry of character set names at
+ * <a href="http://www.iana.org/assignments/character-sets/character-sets.xhtml">http://www.iana.org/assignments/character-sets/character-sets.xhtml</a>.
+ * 
  * 
  * @static
- * @param {string} name one of any number of variations that this charset could have
+ * @param {string} name one of any number of variations or aliases that this charset could have
  * @return {string} the standard name
  */
 ilib.Charset.getStandardName = function(name) {

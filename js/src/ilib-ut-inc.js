@@ -75,4 +75,5 @@ localematch.js
 normstring.js
 mapper.js
 maps/casemapper.js
+charset.js
 */
