@@ -34,10 +34,10 @@
  * 
  * <ul>
  * <li><i>charset</i> - the name of the native charset to map to or from. This can be 
- * given as any  * commonly used name for the character set, which is mapped to a 
- * standard name by the static method {@link ilib.Charset.getStandardName}. 
+ * given as an ilib.Charset instance or as a string that contains any commonly used name 
+ * for the character set, which is normalized to a standard IANA name. 
  * If a name is not given, this class will return information about the base character 
- * set of Javascript, which is currently unicode.
+ * set of Javascript, which is currently Unicode encoded as UTF-16.
  * 
  * <li><i>missing</i> - specify what to do if a mapping is missing for a particular
  * character. For example, if you are mapping Unicode characters to a particular native
