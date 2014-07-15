@@ -19,7 +19,7 @@
 
 // !depends ilibglobal.js
 
-// !data charset
+// !data charsetaliases charset
 
 /**
  * Create a new character set info instance. Charset instances give information about
@@ -70,12 +70,12 @@
  */
 ilib.Charset = function(options) {
 	var sync = true,
-	    loadParams = undefined,
-	    name = "unicode";
+	    loadParams = undefined;
+	this.originalName = "UTF-8";
 	
 	if (options) {
 		if (typeof(options.name) !== 'undefined') {
-			name = options.name;
+			this.originalName = options.name;
 		}
 		
 		if (typeof(options.sync) !== 'undefined') {
@@ -94,42 +94,59 @@ ilib.Charset = function(options) {
 	ilib.loadData({
 		object: ilib.Charset, 
 		locale: "-", 
-		name: name + ".json", 
-		sync: sync, 
+		name: "charsetaliases.json", 
+		sync: sync,
 		loadParams: loadParams, 
 		callback: ilib.bind(this, function (info) {
-			if (!info) {
-				// throw exception?
+			// first map the given original name to one of the standardized IANA names
+			if (info) {
+				// recognize better by getting rid of extraneous crap and upper-casing
+				// it so that the match is case-insensitive
+				var n = this.originalName.replace(/[-_\.]/g, '').toUpperCase();
+				this.name = info[n];
 			}
-			this.info = info;
-			if (options && typeof(options.onLoad) === 'function') {
-				options.onLoad(this);
+			if (!this.name) {
+				this.name = this.originalName;
 			}
+			ilib.loadData({
+				object: ilib.Charset, 
+				locale: "-", 
+				name: "charsets/" + this.name + ".json", 
+				sync: sync, 
+				loadParams: loadParams, 
+				callback: ilib.bind(this, function (info) {
+					if (!info) {
+						// throw exception?
+					}
+					this.info = info;
+					if (options && typeof(options.onLoad) === 'function') {
+						options.onLoad(this);
+					}
+				})
+			});
 		})
 	});
 };
 
-/**
- * Return the standard name of the given charset. The list of standard names comes
- * from the IANA registry of character set names at
- * <a href="http://www.iana.org/assignments/character-sets/character-sets.xhtml">http://www.iana.org/assignments/character-sets/character-sets.xhtml</a>.
- * 
- * 
- * @static
- * @param {string} name one of any number of variations or aliases that this charset could have
- * @return {string} the standard name
- */
-ilib.Charset.getStandardName = function(name) {
-	return "";
-};
-
 ilib.Charset.prototype = {
     /**
-     * Return the standard name of this charset.
-     * @returns {string} the name of the locale's language in English
+     * Return the standard normalized name of this charset.  The list of standard names 
+     * comes from the IANA registry of character set names at 
+     * <a href="http://www.iana.org/assignments/character-sets/character-sets.xhtml">http://www.iana.org/assignments/character-sets/character-sets.xhtml</a>.
+     * 
+     * @returns {string} the name of the charset
      */
     getName: function () {
     	return this.name;	
+    },
+    
+    /**
+     * Return the original name that this instance was constructed with.
+     * 
+     * @returns {String} the original name that this instance was constructed with
+     */
+    getOriginalName: function() {
+    	return this.originalName;
     },
     
     /**
