@@ -31,10 +31,10 @@
  * 
  * <ul>
  * <li><i>name</i> - the name of the charset. This can be given as any commonly
- * used name for the character set, which is mapped to a standard name by the
- * static method {@link ilib.Charset.getStandardName}. If a name is not given,
+ * used name for the character set, which is normalized to a standard IANA name 
+ * before its info is loaded. If a name is not given,
  * this class will return information about the base character set of Javascript,
- * which is currently unicode.
+ * which is currently Unicode as encoded in UTF-16.
  * 
  * <li><i>onLoad</i> - a callback function to call when this object is fully 
  * loaded. When the onLoad option is given, this class will attempt to
@@ -150,6 +150,17 @@ ilib.Charset.prototype = {
     },
     
     /**
+     * Return the smallest number of bytes that a single character in this charset
+     * could use. For most charsets, this is 1, but for some charsets such as Unicode
+     * encoded in UTF-16, this may be 2 or more.
+     * @returns {number} the smallest number of bytes that a single character in
+     * this charset uses
+     */
+    getMinCharWidth: function () {
+    	return 1;
+    },
+    
+    /**
      * Return the largest number of bytes that a single character in this charset
      * could use.
      * @returns {number} the largest number of bytes that a single character in
@@ -162,9 +173,20 @@ ilib.Charset.prototype = {
     /**
      * Return true if this is a multibyte character set, or false for a fixed
      * width character set.
+     * 
      * @returns {boolean} true if this is a multibyte charset, or false otherwise
      */
     isMultiByte: function() {
-    	return false;
+    	return this.getMaxCharWidth() > this.getMinCharWidth();
+    },
+    
+    /**
+     * Return an array of ISO script codes whose characters can be encoded with this 
+     * character set.
+     * 
+     * @returns {Array.<string>} an array of ISO script codes supported by this charset
+     */
+    getScripts: function() {
+    	return ["Latin"];
     }
 };
