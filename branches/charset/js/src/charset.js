@@ -90,6 +90,14 @@ ilib.Charset = function(options) {
 	if (!ilib.Charset.cache) {
 		ilib.Charset.cache = {};
 	}
+	
+	// default data. A majority of charsets use this info
+	this.info = {
+		min: 1,
+		max: 1,
+		bigendian: true,
+		scripts: ["Latn"]
+	};
 
 	ilib.loadData({
 		object: ilib.Charset, 
@@ -111,14 +119,13 @@ ilib.Charset = function(options) {
 			ilib.loadData({
 				object: ilib.Charset, 
 				locale: "-", 
-				name: "charsets/" + this.name + ".json", 
+				name: "charset/" + this.name + ".json", 
 				sync: sync, 
 				loadParams: loadParams, 
 				callback: ilib.bind(this, function (info) {
-					if (!info) {
-						// throw exception?
+					if (info) {
+						this.info = ilib.merge(this.info, info);	
 					}
-					this.info = info;
 					if (options && typeof(options.onLoad) === 'function') {
 						options.onLoad(this);
 					}
@@ -141,12 +148,22 @@ ilib.Charset.prototype = {
     },
     
     /**
-     * Return the original name that this instance was constructed with.
+     * Return the original name that this instance was constructed with before it was
+     * normalized to the standard name returned by {@link #getName}.
      * 
      * @returns {String} the original name that this instance was constructed with
      */
     getOriginalName: function() {
     	return this.originalName;
+    },
+    
+    /**
+     * Return a short description of the character set.
+     * 
+     * @returns {string} a description of the character set
+     */
+    getDescription: function() {
+    	return this.info.description || this.getName();
     },
     
     /**
@@ -157,7 +174,7 @@ ilib.Charset.prototype = {
      * this charset uses
      */
     getMinCharWidth: function () {
-    	return 1;
+    	return this.info.min;
     },
     
     /**
@@ -167,17 +184,30 @@ ilib.Charset.prototype = {
      * this charset uses
      */
     getMaxCharWidth: function () {
-    	return 1;
+    	return this.info.max;
     },
     
     /**
      * Return true if this is a multibyte character set, or false for a fixed
-     * width character set.
+     * width character set. A multibyte character set is one in which the characters
+     * have a variable width. That is, one character may use 1 byte and a different
+     * character might use 2 or 3 bytes.
      * 
      * @returns {boolean} true if this is a multibyte charset, or false otherwise
      */
-    isMultiByte: function() {
+    isMultibyte: function() {
     	return this.getMaxCharWidth() > this.getMinCharWidth();
+    },
+    
+    /**
+     * Return whether or not characters larger than 1 byte use the big endian order
+     * or little endian.
+     * 
+     * @returns {boolean} true if this character set uses big endian order, or false
+     * otherwise
+     */
+    isBigEndian: function() {
+    	return this.info.bigendian;
     },
     
     /**
@@ -187,6 +217,6 @@ ilib.Charset.prototype = {
      * @returns {Array.<string>} an array of ISO script codes supported by this charset
      */
     getScripts: function() {
-    	return ["Latin"];
+    	return this.info.scripts;
     }
 };

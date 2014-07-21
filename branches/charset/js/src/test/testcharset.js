@@ -105,3 +105,92 @@ function testCharsetGetStandardNameEUCKR() {
 	assertEquals("EUC-KR", new ilib.Charset({name: "cseuckr"}).getName());
 	assertEquals("EUC-KR", new ilib.Charset({name: "euckr"}).getName());
 }
+
+function testCharsetGetOriginalName() {
+	assertEquals("cseuckr", new ilib.Charset({name: "cseuckr"}).getOriginalName());
+}
+
+function testCharsetGetOriginalNameUnknown() {
+	assertEquals("foobarfoo", new ilib.Charset({name: "foobarfoo"}).getOriginalName());
+}
+
+function testCharsetMinCharWidth1() {
+	var cs = new ilib.Charset({name: "Latin1"});
+	assertEquals(1, cs.getMinCharWidth());
+}
+
+function testCharsetMinCharWidth2() {
+	var cs = new ilib.Charset({name: "UCS-2"});
+	assertEquals(2, cs.getMinCharWidth());
+}
+
+function testCharsetMinCharWidthUTF16() {
+	var cs = new ilib.Charset({name: "UTF-16"});
+	assertEquals(2, cs.getMinCharWidth());
+}
+
+function testCharsetMinCharWidthMultibyte() {
+	var cs = new ilib.Charset({name: "EUC-JP"});
+	assertEquals(1, cs.getMinCharWidth());
+}
+
+function testCharsetMaxCharWidth1() {
+	var cs = new ilib.Charset({name: "Latin1"});
+	assertEquals(1, cs.getMaxCharWidth());
+}
+
+function testCharsetMaxCharWidth2() {
+	var cs = new ilib.Charset({name: "UCS-2"});
+	assertEquals(2, cs.getMaxCharWidth());
+}
+
+function testCharsetMaxCharWidthUTF16() {
+	var cs = new ilib.Charset({name: "UTF-16"});
+	assertEquals(2, cs.getMaxCharWidth());
+}
+
+function testCharsetMaxCharWidthMultibyte() {
+	var cs = new ilib.Charset({name: "EUC-JP"});
+	assertEquals(2, cs.getMaxCharWidth());
+}
+
+function testCharsetIsMultibyteTrue() {
+	var cs = new ilib.Charset({name: "Shift_JIS"});
+	assertTrue(cs.isMultibyte());
+}
+
+function testCharsetIsMultibyteFalse() {
+	var cs = new ilib.Charset({name: "Latin1"});
+	assertFalse(cs.isMultibyte());
+}
+
+function testCharsetGetScriptsJP() {
+	var cs = new ilib.Charset({name: "Shift_JIS"});
+	var expected = [
+	    "Latn",
+	    "Hrkt",
+        "Hira",
+        "Kana",
+        "Jpan",
+        "Hani"
+	];
+	assertArrayEqualsIgnoringOrder(expected, cs.getScripts());
+}
+
+function testCharsetGetScriptsEN() {
+	var cs = new ilib.Charset({name: "ISO-Latin-15"});
+	var expected = [
+	    "Latn"
+	];
+	assertArrayEqualsIgnoringOrder(expected, cs.getScripts());
+}
+
+function testCharsetIsBigEndianUTF16() {
+	var cs = new ilib.Charset({name: "UTF-16"});
+	assertTrue(cs.isBigEndian());
+}
+
+function testCharsetIsBigEndianUTF16LE() {
+	var cs = new ilib.Charset({name: "UTF-16LE"});
+	assertFalse(cs.isBigEndian());
+}

@@ -1,0 +1,6 @@
+{
+	"description": "Hong Kong Traditional Chinese",
+	"min": 1,
+	"max": 2,
+	"scripts": ["Latn", "Grek", "Cyrl", "Bopo", "Hrkt", "Hira", "Kana", "Jpan", "Hani"]
+}
