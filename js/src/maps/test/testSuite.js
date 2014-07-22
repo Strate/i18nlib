@@ -28,7 +28,10 @@ function suite() {
     
     var suites = [
 	    "testtoupper.js",
-	    "testtolower.js"
+	    "testtolower.js",
+	    "testcharmap.js",
+	    "testcm_ISO-8859-1.js",
+	    "testcm_UTF-8.js"
 	];
 
     suites.forEach(function (path) {
