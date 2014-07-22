@@ -1,1 +1,4 @@
-{}
+{
+	"max": 2,
+	"scripts": ["Hrkt", "Hira", "Kana", "Jpan", "Hani"]
+}
