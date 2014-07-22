@@ -35,7 +35,8 @@ function newSandbox() {
 		require : require,
 		global: global,
 		process: process,
-		Uint8Array: Uint8Array
+		Uint8Array: Uint8Array,
+		Buffer: Buffer
 	};
 };
 
@@ -158,7 +159,8 @@ TestSuite.prototype = {
 				util: util,
 				global: global,
 				path: this.path,
-				Uint8Array: Uint8Array
+				Uint8Array: Uint8Array,
+				Buffer: Buffer
 			});
 			if (this.setupCode) {
 				// allow arbitrary set up before the includes and running the tests
