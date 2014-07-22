@@ -1,1 +1,5 @@
-{}
+{
+	"min": 1,
+	"max": 1,
+	"scripts": ["Latn","Grek","Cyrl","Hebr","Arab","Hira","Kana"]
+}
