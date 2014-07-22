@@ -76,4 +76,6 @@ normstring.js
 mapper.js
 maps/casemapper.js
 charset.js
+maps/charmap.js
+maps/utf.js
 */

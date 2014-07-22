@@ -26,28 +26,30 @@
  * other character sets. The charsets can be of any type, single-byte, multi-byte,
  * shifting, etc. <p>
  * 
- * All mappings are done to or from Unicode in the UTF-16 encoding. In order to convert 
+ * All mappings are done to or from Unicode in the UTF-16 encoding, which is the base
+ * character set and encoding used by Javascript itself. In order to convert 
  * between two non-Unicode character sets, you must chain two charmap instances together 
  * to first map to Unicode and then back to the second charset. <p>
  * 
- * The options object holds parameters. The current list of supported options are:
+ * The options object contols which mapping is constructed and its behaviours. The 
+ * current list of supported options are:
  * 
  * <ul>
  * <li><i>charset</i> - the name of the native charset to map to or from. This can be 
- * given as an ilib.Charset instance or as a string that contains any commonly used name 
+ * given as an {@link ilib.Charset} instance or as a string that contains any commonly used name 
  * for the character set, which is normalized to a standard IANA name. 
- * If a name is not given, this class will return information about the base character 
- * set of Javascript, which is currently Unicode encoded as UTF-16.
+ * If a name is not given, this class will default to the Western European character 
+ * set called ISO-8859-15.
  * 
  * <li><i>missing</i> - specify what to do if a mapping is missing for a particular
  * character. For example, if you are mapping Unicode characters to a particular native
- * character set that does not support those Unicode characters, the mapper will
+ * character set that does not support particular Unicode characters, the mapper will
  * follow the behaviour specified in this property. Valid values are:
  * <ul>
- * <li><i>skip</i> - skip any unknown characters
+ * <li><i>skip</i> - skip any characters that do not exist in the target charset
  * <li><i>placeholder</i> - put a static placeholder character in the output string 
  * wherever there is an unknown character in the input string. Use the <i>placeholder</i> 
- * parameter to specify which character.
+ * parameter to specify which character to use in this case
  * <li><i>escape</i> - use an escape sequence to represent the unknown character 
  * </ul>
  * The default value for the missing property if not otherwise specified is "escape"
@@ -71,15 +73,16 @@
  * accent would be "\u00E9". This can also be specified as "c#" as
  * it uses a similar escape syntax.
  * <li><i>c</i> - Use the C/C++ escape style, which is similar to the the
- * Javascript style. Eg. an "e" with an acute accent would be "\x00E9"
+ * Javascript style, but uses an "x" in place of the "u". Eg. an "e" with an 
+ * acute accent would be "\x00E9"
  * <li><i>java</i> - Use the Java escape style. This is very similar to the
  * the Javascript style, but the backslash has to be escaped twice. Eg. an
  * "e" with an acute accent would be "\\u00E9". This can also be specified
- * as "ruby", as Ruby uses a similar escape syntax.
- * <li><i>perl</i> - USe the Perl escape style. Eg. an "e" with an acute
+ * as "ruby", as Ruby uses a similar escape syntax with double backslashes.
+ * <li><i>perl</i> - Use the Perl escape style. Eg. an "e" with an acute
  * accent would be "\N{U+00E9}"
  * </ul>
- * The default if this style is not specified is "js" or Javascript.
+ * The default if this style is not specified is "js" for Javascript.
  * 
  * <li><i>onLoad</i> - a callback function to call when this object is fully 
  * loaded. When the onLoad option is given, this class will attempt to
@@ -115,12 +118,13 @@
  */
 ilib.Charmap = function(options) {
 	var sync = true,
-	    loadParams = undefined,
-	    name = "unicode";
+	    loadParams = undefined;
+	
+	this.name = "ISO-8859-15";
 	
 	if (options) {
 		if (typeof(options.name) !== 'undefined') {
-			name = options.name;
+			this.name = options.name;
 		}
 		
 		if (typeof(options.sync) !== 'undefined') {
@@ -136,23 +140,40 @@ ilib.Charmap = function(options) {
 		ilib.Charmap.cache = {};
 	}
 
-	ilib.loadData({
-		object: ilib.Charmap, 
-		locale: "-", 
-		name: name + ".json", 
-		sync: sync, 
-		loadParams: loadParams, 
-		callback: ilib.bind(this, function (info) {
-			if (!info) {
-				// throw exception?
-			}
-			this.info = info;
-			if (options && typeof(options.onLoad) === 'function') {
-				options.onLoad(this);
-			}
-		})
-	});
+	if (typeof(ilib.Charmap._algorithms[this.name]) !== 'undefined') {
+		// this type of conversion is done algorithmically instead of via a mapping table
+		this.algorithm = ilib.Charmap._algorithms[this.name];
+		if (options && typeof(options.onLoad) === 'function') {
+			options.onLoad(this);
+		}
+	} else {
+		ilib.loadData({
+			object: ilib.Charmap, 
+			locale: "-", 
+			name: this.name + ".json", 
+			sync: sync, 
+			loadParams: loadParams, 
+			callback: ilib.bind(this, function (mapping) {
+				//if (!mapping) {
+					// throw exception?
+				//}
+				this.mapping = mapping;
+				if (options && typeof(options.onLoad) === 'function') {
+					options.onLoad(this);
+				}
+			})
+		});
+	}
 };
+
+/**
+ * A place for the algorithmic conversions to register themselves as 
+ * they are defined.
+ * 
+ * @static
+ * @private
+ */
+ilib.Charmap._algorithms = {};
 
 ilib.Charmap.prototype = {
     /**
@@ -165,29 +186,35 @@ ilib.Charmap.prototype = {
 
     /**
      * Map a string to the native character set. This string may be 
-     * given as a Javascript string object, an ilib.String object, an array of numbers 
-     * where each number represents a code point in the "from" charset, or as a UIntArray8 
-     * array of bytes representing the bytes of the string in order.
+     * given as an intrinsic Javascript string object or an ilib.String 
+     * object.
      * 
-     * @param {string|ilib.String} string string to map to 
-     * a different character set. 
-     * @return {UIntArray8} A string in the standard Javascript charset UTF-16
+     * @param {string|ilib.String} string string to map to a different 
+     * character set. 
+     * @return {Uint8Array} An array of bytes representing the string 
+     * in the native character set
      */
     mapToNative: function(string) {
-    	
+    	if (this.algorithm) {
+    		return this.algorithm.mapToNative(string);
+    	}
+    	return new Uint8Array(1);
     },
     
     /**
-     * Map a string to the standard Javascript charset of UTF-16. This string may be 
-     * given as a Javascript string object, an ilib.String object, an array of numbers 
-     * where each number represents a code point in the "from" charset, or as a UIntArray8 
+     * Map a native string to the standard Javascript charset of UTF-16. 
+     * This string may be given as an array of numbers where each number 
+     * represents a code point in the "from" charset, or as a Uint8Array 
      * array of bytes representing the bytes of the string in order.
      * 
-     * @param {string|ilib.String|Array.<string>|UIntArray8} string string to map to 
-     * a different character set. 
+     * @param {Array.<number>|Uint8Array} bytes bytes to map to 
+     * a Unicode string
      * @return {string} A string in the standard Javascript charset UTF-16
      */
-    mapToUnicode: function(string) {
+    mapToUnicode: function(bytes) {
+    	if (this.algorithm) {
+    		return this.algorithm.mapToUnicode(bytes);
+    	}
     	return "";
     }
 };
