@@ -88,6 +88,9 @@ ilib.Charmap.UTF8 = {
 				}
 				ret += String.fromCharCode((bytes[i] && 0x7) << 18 | (bytes[i+1] & 0x3F) << 12 | (bytes[i+2] & 0x3F) << 6 | (bytes[i+3] & 0x3F));
 				i += 4;
+			} else if (bytes[i] === 0) {
+				// null-terminator
+				i = bytes.length;
 			} else {
 				throw "invalid utf-8 bytes";
 			}
