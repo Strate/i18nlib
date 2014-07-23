@@ -39,7 +39,7 @@ function testCharmapUTF8MapToUnicodeUint8Array() {
     assertEquals("This is a test", cm.mapToUnicode(input));
 }
 
-function testCharmapUTF8MapToUnicodeUint8ArrayExtended() {
+function testCharmapUTF8MapToUnicodeUint8ArrayExtended2() {
 	var cm = new ilib.Charmap({
 		name: "UTF-8"
 	});
@@ -48,11 +48,42 @@ function testCharmapUTF8MapToUnicodeUint8ArrayExtended() {
         0xC3, 0x80,
         0xC3, 0x81,
         0xC3, 0xA2,
-        0xC3, 0xA3,
-        0x00
+        0xC3, 0xA3
 	]);
     
     assertEquals("ÀÁâã", cm.mapToUnicode(input));
+}
+
+function testCharmapUTF8MapToUnicodeUint8ArrayExtended3() {
+	var cm = new ilib.Charmap({
+		name: "UTF-8"
+	});
+    assertNotUndefined(cm);
+    var input = new Uint8Array([
+        0xe4, 0xb8,	0x80,
+		0xe4, 0xb8, 0x81,
+		0xe4, 0xb8, 0x82,
+		0xe5, 0x9c, 0x81,
+		0xe5, 0x9c, 0x82,
+		0xe5, 0x9c, 0x83
+	]);
+    
+    assertEquals("一丁丂圁圂圃", cm.mapToUnicode(input));
+}
+
+function testCharmapUTF8MapToUnicodeUint8ArrayExtended4() {
+	var cm = new ilib.Charmap({
+		name: "UTF-8"
+	});
+    assertNotUndefined(cm);
+    var input = new Uint8Array([
+        0xf0, 0xa0, 0x94, 0x89,
+		0xf0, 0xa0, 0x98, 0xa8,
+		0xf0, 0xa0, 0x9d, 0x8f,
+		0xf0, 0xa0, 0xa0, 0xba
+	]);
+    
+    assertEquals("𠔉𠘨𠝏𠠺", cm.mapToUnicode(input));
 }
 
 function testCharmapUTF8MapToUnicodeNumberArray() {
@@ -69,7 +100,7 @@ function testCharmapUTF8MapToUnicodeNumberArray() {
     assertEquals("This is a test", cm.mapToUnicode(input));
 }
 
-function testCharmapUTF8MapToUnicodeNumberArrayExtended() {
+function testCharmapUTF8MapToUnicodeNumberArrayExtended2() {
 	var cm = new ilib.Charmap({
 		name: "UTF-8"
 	});
@@ -78,10 +109,40 @@ function testCharmapUTF8MapToUnicodeNumberArrayExtended() {
         0xC3, 0x80,
         0xC3, 0x81,
         0xC3, 0xA2,
-        0xC3, 0xA3,
-        0x00
+        0xC3, 0xA3
 	];
     
     assertEquals("ÀÁâã", cm.mapToUnicode(input));
 }
 
+function testCharmapUTF8MapToUnicodeNumberArrayExtended3() {
+	var cm = new ilib.Charmap({
+		name: "UTF-8"
+	});
+    assertNotUndefined(cm);
+    var input = [
+        0xe4, 0xb8,	0x80,
+		0xe4, 0xb8, 0x81,
+		0xe4, 0xb8, 0x82,
+		0xe5, 0x9c, 0x81,
+		0xe5, 0x9c, 0x82,
+		0xe5, 0x9c, 0x83
+	];
+    
+    assertEquals("一丁丂圁圂圃", cm.mapToUnicode(input));
+}
+
+function testCharmapUTF8MapToUnicodeNumberArrayExtended4() {
+	var cm = new ilib.Charmap({
+		name: "UTF-8"
+	});
+    assertNotUndefined(cm);
+    var input = [
+        0xf0, 0xa0, 0x94, 0x89,
+		0xf0, 0xa0, 0x98, 0xa8,
+		0xf0, 0xa0, 0x9d, 0x8f,
+		0xf0, 0xa0, 0xa0, 0xba
+	];
+    
+    assertEquals("𠔉𠘨𠝏𠠺", cm.mapToUnicode(input));
+}

@@ -23,15 +23,15 @@ ilib.Charmap.UTF8 = {
 	validate: function(bytes) {
 		var i = 0;
 		while (i < bytes.length) {
-			if (bytes[i] & 0x80 === 0) {
+			if ((bytes[i] & 0x80) === 0) {
 				i++;
 			} else {
 				var len;
-				if (bytes[i] & 0xC0 === 0xC0) {
+				if ((bytes[i] & 0xC0) === 0xC0) {
 					len = 2;
-				} else if (bytes[i] & 0xE0 === 0xE0) {
+				} else if ((bytes[i] & 0xE0) === 0xE0) {
 					len = 3;
-				} else if (bytes[i] & 0xF0 === 0xF0) {
+				} else if ((bytes[i] & 0xF0) === 0xF0) {
 					len = 4;
 				} else {
 					// invalid lead byte
@@ -43,7 +43,7 @@ ilib.Charmap.UTF8 = {
 				}
 				for (var j = 1; j < len; j++) {
 					// check each trailing byte to see if it has the correct form
-					if (bytes[i+j] & 0x80 !== 0x80) {
+					if ((bytes[i+j] & 0x80) !== 0x80) {
 						return false;
 					}
 				}
@@ -64,33 +64,36 @@ ilib.Charmap.UTF8 = {
 		var ret = "";
 		var i = 0;
 		while (i < bytes.length) {
-			if (bytes[i] & 0x80 === 0) {
-				// 1 byte char
-				ret += String.fromCharCode(bytes[i++]);
-			} if (bytes[i] & 0xC0 === 0xC0) {
-				// 2 byte char
-				if (i + 1 >= bytes.length || bytes[i+1] & 0x80 !== 0x80) {
-					throw "invalid utf-8 bytes";
-				}
-				ret += String.fromCharCode((bytes[i] && 0x1F) << 11 | (bytes[i+1] & 0x3F));
-				i += 2;
-			} else if (bytes[i] & 0xE0 === 0xE0) {
-				// 3 byte char
-				if (i + 2 >= bytes.length || bytes[i+1] & 0x80 !== 0x80 || bytes[i+2] & 0x80 !== 0x80) {
-					throw "invalid utf-8 bytes";
-				}
-				ret += String.fromCharCode((bytes[i] && 0xF) << 12 | (bytes[i+1] & 0x3F) << 6 | (bytes[i+2] & 0x3F));
-				i += 3;
-			} else if (bytes[i] & 0xF0 === 0xF0) {
-				// 4 byte char
-				if (i + 3 >= bytes.length || bytes[i+1] & 0x80 !== 0x80 || bytes[i+2] & 0x80 !== 0x80 || bytes[i+3] & 0x80 !== 0x80) {
-					throw "invalid utf-8 bytes";
-				}
-				ret += String.fromCharCode((bytes[i] && 0x7) << 18 | (bytes[i+1] & 0x3F) << 12 | (bytes[i+2] & 0x3F) << 6 | (bytes[i+3] & 0x3F));
-				i += 4;
-			} else if (bytes[i] === 0) {
+			if (bytes[i] === 0) {
 				// null-terminator
 				i = bytes.length;
+			} else if ((bytes[i] & 0x80) === 0) {
+				// 1 byte char
+				ret += String.fromCharCode(bytes[i++]);
+			} else if ((bytes[i] & 0xE0) === 0xC0) {
+				// 2 byte char
+				if (i + 1 >= bytes.length || (bytes[i+1] & 0x80) !== 0x80) {
+					throw "invalid utf-8 bytes";
+				}
+				// xxx xxyyyyyy
+				ret += String.fromCharCode((bytes[i] & 0x1F) << 6 | (bytes[i+1] & 0x3F));
+				i += 2;
+			} else if ((bytes[i] & 0xF0) === 0xE0) {
+				// 3 byte char
+				if (i + 2 >= bytes.length || (bytes[i+1] & 0x80) !== 0x80 || (bytes[i+2] & 0x80) !== 0x80) {
+					throw "invalid utf-8 bytes";
+				}
+				// xxxxyyyy yyzzzzzz
+				ret += String.fromCharCode((bytes[i] & 0xF) << 12 | (bytes[i+1] & 0x3F) << 6 | (bytes[i+2] & 0x3F));
+				i += 3;
+			} else if ((bytes[i] & 0xF8) === 0xF0) {
+				// 4 byte char
+				if (i + 3 >= bytes.length || (bytes[i+1] & 0x80) !== 0x80 || (bytes[i+2] & 0x80) !== 0x80 || (bytes[i+3] & 0x80) !== 0x80) {
+					throw "invalid utf-8 bytes";
+				}
+				// wwwxx xxxxyyyy yyzzzzzz
+				ret += ilib.String.fromCodePoint((bytes[i] & 0x7) << 18 | (bytes[i+1] & 0x3F) << 12 | (bytes[i+2] & 0x3F) << 6 | (bytes[i+3] & 0x3F));
+				i += 4;
 			} else {
 				throw "invalid utf-8 bytes";
 			}
@@ -144,7 +147,7 @@ ilib.Charmap.UTF8 = {
 					i += 2;
 				}
 			} else {
-				ret[i++] = (c && 0x7F);
+				ret[i++] = (c & 0x7F);
 			}
 		}
 		ret[i] = 0; // null-terminate it
