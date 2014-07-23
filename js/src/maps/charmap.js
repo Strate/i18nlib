@@ -120,11 +120,11 @@ ilib.Charmap = function(options) {
 	var sync = true,
 	    loadParams = undefined;
 	
-	this.name = "ISO-8859-15";
+	this.charset = new ilib.Charset({name: "ISO-8859-15"});
 	
 	if (options) {
 		if (typeof(options.name) !== 'undefined') {
-			this.name = options.name;
+			this.charset = new ilib.Charset({name: options.name});
 		}
 		
 		if (typeof(options.sync) !== 'undefined') {
@@ -140,9 +140,9 @@ ilib.Charmap = function(options) {
 		ilib.Charmap.cache = {};
 	}
 
-	if (typeof(ilib.Charmap._algorithms[this.name]) !== 'undefined') {
+	if (typeof(ilib.Charmap._algorithms[this.charset.getName()]) !== 'undefined') {
 		// this type of conversion is done algorithmically instead of via a mapping table
-		this.algorithm = ilib.Charmap._algorithms[this.name];
+		this.algorithm = ilib.Charmap._algorithms[this.charset.getName()];
 		if (options && typeof(options.onLoad) === 'function') {
 			options.onLoad(this);
 		}
@@ -150,7 +150,7 @@ ilib.Charmap = function(options) {
 		ilib.loadData({
 			object: ilib.Charmap, 
 			locale: "-", 
-			name: this.name + ".json", 
+			name: this.charset.getName() + ".json", 
 			sync: sync, 
 			loadParams: loadParams, 
 			callback: ilib.bind(this, function (mapping) {
@@ -181,7 +181,7 @@ ilib.Charmap.prototype = {
      * @returns {string} the name of the locale's language in English
      */
     getName: function () {
-    	return this.name;	
+    	return this.charset.getName();	
     },
 
     /**
