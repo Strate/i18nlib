@@ -36,11 +36,7 @@
  */
 ilib.String = function (string) {
 	if (typeof(string) === 'object') {
-		if (string instanceof ilib.String) {
-			this.str = string.str;	
-		} else {
-			this.str = string.toString();
-		}
+		this.str = string.str;
 	} else if (typeof(string) === 'string') {
 		this.str = new String(string);
 	} else {

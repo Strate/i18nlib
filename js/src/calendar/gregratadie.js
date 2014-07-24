@@ -76,7 +76,6 @@ julianday.js
  */
 ilib.Date.GregRataDie = function(params) {
 	this.cal = params && params.cal || new ilib.Cal.Gregorian();
-	/** @type {number|undefined} */
 	this.rd = undefined;
 	ilib.Date.RataDie.call(this, params);
 };
@@ -166,7 +165,7 @@ ilib.Date.GregRataDie.prototype._setDateComponents = function(date) {
 	*/
 	
 	/**
-	 * @type {number|undefined} the RD number of this Gregorian date
+	 * @type {number} the RD number of this Gregorian date
 	 */
 	this.rd = years + dayInYear + rdtime;
 };

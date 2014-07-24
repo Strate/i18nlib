@@ -1196,167 +1196,12 @@ function testDateFmtFullTimeComponentsHMSAZ_zh_Hant_HK() {
     assertEquals("下午01:45:37HKST", fmt.format(date));
 }
 
-function testDateFmtTimeFrameDefaultWeeHours_zh_Hant_HK() {
+function testDateFmtTimeFrameWeeHours_zh_Hant_HK() {
     var fmt = new ilib.DateFmt({
         locale: "zh-Hant-HK", 
         type: "time", 
         length: "full", 
         time: "hma"
-    });
-    assertNotNull(fmt);
-    
-    var date = new ilib.Date.GregDate({
-		locale: "zh-Hant-HK",
-		year: 2011,
-		month: 9,
-		day: 29,
-		hour: 1,
-		minute: 45,
-		second: 37,
-		millisecond: 0
-	});
-    assertEquals("上午01:45", fmt.format(date));
-}
-
-function testDateFmtTimeFrameDefaultEarlyMorning_zh_Hant_HK() {
-    var fmt = new ilib.DateFmt({
-        locale: "zh-Hant-HK", 
-        type: "time", 
-        length: "full", 
-        time: "hma"
-    });
-    assertNotNull(fmt);
-    
-    var date = new ilib.Date.GregDate({
-		locale: "zh-Hant-HK",
-		year: 2011,
-		month: 9,
-		day: 29,
-		hour: 8,
-		minute: 30,
-		second: 37,
-		millisecond: 0
-	});
-    assertEquals("上午08:30", fmt.format(date));
-}
-
-function testDateFmtTimeFrameDefaultLateMorning_zh_Hant_HK() {
-    var fmt = new ilib.DateFmt({
-        locale: "zh-Hant-HK", 
-        type: "time", 
-        length: "full", 
-        time: "hma"
-    });
-    assertNotNull(fmt);
-    
-    var date = new ilib.Date.GregDate({
-		locale: "zh-Hant-HK",
-		year: 2011,
-		month: 9,
-		day: 29,
-		hour: 11,
-		minute: 30,
-		second: 37,
-		millisecond: 0
-	});
-    assertEquals("上午11:30", fmt.format(date));
-}
-
-function testDateFmtTimeFrameDefaultNoonHour_zh_Hant_HK() {
-    var fmt = new ilib.DateFmt({
-        locale: "zh-Hant-HK", 
-        type: "time", 
-        length: "full", 
-        time: "hma"
-    });
-    assertNotNull(fmt);
-    
-    var date = new ilib.Date.GregDate({
-		locale: "zh-Hant-HK",
-		year: 2011,
-		month: 9,
-		day: 29,
-		hour: 12,
-		minute: 37,
-		second: 37,
-		millisecond: 0
-	});
-    assertEquals("下午12:37", fmt.format(date));
-}
-
-function testDateFmtTimeFrameDefaultAfterNoon_zh_Hant_HK() {
-    var fmt = new ilib.DateFmt({
-        locale: "zh-Hant-HK", 
-        type: "time", 
-        length: "full", 
-        time: "hma"
-    });
-    assertNotNull(fmt);
-    
-    var date = new ilib.Date.GregDate({
-		locale: "zh-Hant-HK",
-		year: 2011,
-		month: 9,
-		day: 29,
-		hour: 15,
-		minute: 37,
-		second: 37,
-		millisecond: 0
-	});
-    assertEquals("下午03:37", fmt.format(date));
-}
-
-function testDateFmtTimeFrameDefaultEvening_zh_Hant_HK() {
-    var fmt = new ilib.DateFmt({
-        locale: "zh-Hant-HK", 
-        type: "time", 
-        length: "full", 
-        time: "hma"
-    });
-    assertNotNull(fmt);
-    
-    var date = new ilib.Date.GregDate({
-		locale: "zh-Hant-HK",
-		year: 2011,
-		month: 9,
-		day: 29,
-		hour: 19,
-		minute: 47,
-		second: 37,
-		millisecond: 0
-	});
-    assertEquals("下午07:47", fmt.format(date));
-}
-
-function testDateFmtTimeFrameDefaultNight_zh_Hant_HK() {
-    var fmt = new ilib.DateFmt({
-        locale: "zh-Hant-HK", 
-        type: "time", 
-        length: "full", 
-        time: "hma"
-    });
-    assertNotNull(fmt);
-    
-    var date = new ilib.Date.GregDate({
-		locale: "zh-Hant-HK",
-		year: 2011,
-		month: 9,
-		day: 29,
-		hour: 22,
-		minute: 53,
-		second: 37,
-		millisecond: 0
-	});
-    assertEquals("下午10:53", fmt.format(date));
-}
-
-function testDateFmtTimeFrameChineseWeeHours_zh_Hant_HK() {
-    var fmt = new ilib.DateFmt({
-        locale: "zh-Hant-HK", 
-        type: "time", 
-        length: "full", 
-        time: "hma",
-        meridiems: "chinese"
     });
     assertNotNull(fmt);
     
@@ -1373,13 +1218,12 @@ function testDateFmtTimeFrameChineseWeeHours_zh_Hant_HK() {
     assertEquals("凌晨01:45", fmt.format(date));
 }
 
-function testDateFmtTimeFrameChineseEarlyMorning_zh_Hant_HK() {
+function testDateFmtTimeFrameEarlyMorning_zh_Hant_HK() {
     var fmt = new ilib.DateFmt({
         locale: "zh-Hant-HK", 
         type: "time", 
         length: "full", 
-        time: "hma",
-        meridiems: "chinese"
+        time: "hma"
     });
     assertNotNull(fmt);
     
@@ -1396,13 +1240,12 @@ function testDateFmtTimeFrameChineseEarlyMorning_zh_Hant_HK() {
     assertEquals("早上08:30", fmt.format(date));
 }
 
-function testDateFmtTimeFrameChineseLateMorning_zh_Hant_HK() {
+function testDateFmtTimeFrameLateMorning_zh_Hant_HK() {
     var fmt = new ilib.DateFmt({
         locale: "zh-Hant-HK", 
         type: "time", 
         length: "full", 
-        time: "hma",
-        meridiems: "chinese"
+        time: "hma"
     });
     assertNotNull(fmt);
     
@@ -1419,13 +1262,12 @@ function testDateFmtTimeFrameChineseLateMorning_zh_Hant_HK() {
     assertEquals("上午11:30", fmt.format(date));
 }
 
-function testDateFmtTimeFrameChineseNoonHour_zh_Hant_HK() {
+function testDateFmtTimeFrameNoonHour_zh_Hant_HK() {
     var fmt = new ilib.DateFmt({
         locale: "zh-Hant-HK", 
         type: "time", 
         length: "full", 
-        time: "hma",
-        meridiems: "chinese"
+        time: "hma"
     });
     assertNotNull(fmt);
     
@@ -1442,13 +1284,12 @@ function testDateFmtTimeFrameChineseNoonHour_zh_Hant_HK() {
     assertEquals("正午12:37", fmt.format(date));
 }
 
-function testDateFmtTimeFrameChineseAfterNoon_zh_Hant_HK() {
+function testDateFmtTimeFrameAfterNoon_zh_Hant_HK() {
     var fmt = new ilib.DateFmt({
         locale: "zh-Hant-HK", 
         type: "time", 
         length: "full", 
-        time: "hma",
-        meridiems: "chinese"
+        time: "hma"
     });
     assertNotNull(fmt);
     
@@ -1465,13 +1306,12 @@ function testDateFmtTimeFrameChineseAfterNoon_zh_Hant_HK() {
     assertEquals("下午03:37", fmt.format(date));
 }
 
-function testDateFmtTimeFrameChineseEvening_zh_Hant_HK() {
+function testDateFmtTimeFrameEvening_zh_Hant_HK() {
     var fmt = new ilib.DateFmt({
         locale: "zh-Hant-HK", 
         type: "time", 
         length: "full", 
-        time: "hma",
-        meridiems: "chinese"
+        time: "hma"
     });
     assertNotNull(fmt);
     
@@ -1488,13 +1328,12 @@ function testDateFmtTimeFrameChineseEvening_zh_Hant_HK() {
     assertEquals("傍晚07:47", fmt.format(date));
 }
 
-function testDateFmtTimeFrameChineseNight_zh_Hant_HK() {
+function testDateFmtTimeFrameNight_zh_Hant_HK() {
     var fmt = new ilib.DateFmt({
         locale: "zh-Hant-HK", 
         type: "time", 
         length: "full", 
-        time: "hma",
-        meridiems: "chinese"
+        time: "hma"
     });
     assertNotNull(fmt);
     
