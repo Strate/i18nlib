@@ -2,5 +2,6 @@
 	"min": 2,
 	"max": 2,
 	"bigendian": false,
-	"scripts": ["*"]
+	"scripts": ["*"],
+	"locales": ["*"]
 }

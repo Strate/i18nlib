@@ -1,5 +1,6 @@
 {
 	"min": 2,
 	"max": 2,
-	"scripts": ["*"]
+	"scripts": ["*"],
+	"locales": ["*"]
 }

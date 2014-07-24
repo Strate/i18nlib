@@ -2,5 +2,6 @@
 	"description": "EBCDIC-IT + euro character",
 	"min": 1,
 	"max": 1,
-	"scripts": ["Latn"]
+	"scripts": ["Latn"],
+	"locales": ["IT"]
 }
