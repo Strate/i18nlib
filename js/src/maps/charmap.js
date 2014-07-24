@@ -19,7 +19,7 @@
 
 // !depends ilibglobal.js charset.js
 
-// !data charmap
+// !data charmaps/ISO-8859-1
 
 /**
  * Create a new character set mapping instance. Charmap instances map strings to 
@@ -74,7 +74,7 @@
  * it uses a similar escape syntax.
  * <li><i>c</i> - Use the C/C++ escape style, which is similar to the the
  * Javascript style, but uses an "x" in place of the "u". Eg. an "e" with an 
- * acute accent would be "\x00E9"
+ * acute accent would be "\x00E9". This can also be specified as "c++".
  * <li><i>java</i> - Use the Java escape style. This is very similar to the
  * the Javascript style, but the backslash has to be escaped twice. Eg. an
  * "e" with an acute accent would be "\\u00E9". This can also be specified
@@ -121,16 +121,52 @@ ilib.Charmap = function(options) {
 	    loadParams = undefined;
 	
 	this.charset = new ilib.Charset({name: "ISO-8859-15"});
+	this.missing = "placeholder";
+	this.placeholder = "?";
+	this.escapeStyle = "js";
+	this.expansionFactor = 1;
 	
 	if (options) {
 		if (typeof(options.name) !== 'undefined') {
 			this.charset = new ilib.Charset({name: options.name});
+			this.expansionFactor = this.charset.getMaxCharWidth();
 		}
 		
 		if (typeof(options.sync) !== 'undefined') {
 			sync = (options.sync == true);
 		}
 		
+		if (typeof(options.missing) !== 'undefined') {
+			if (options.missing === "skip" || options.missing === "placeholder" || options.missing === "escape") {
+				this.missing = options.missing;
+			}
+		}
+		
+		if (typeof(options.placeholder) !== 'undefined') {
+			this.placeholder = options.placeholder;
+		}
+
+		var escapes = {
+			"html": "html",
+			"js": "js",
+			"c#": "js",
+			"c": "c",
+			"c++": "c",
+			"java": "java",
+			"ruby": "java",
+			"perl": "perl"
+		};
+		
+		if (typeof(options.escapeStyle) !== 'undefined') {
+			if (typeof(escapes[options.escapeStyle]) !== 'undefined') {
+				this.escapeStyle = escapes[options.escapeStyle];
+				// Convervative estimate of the expansion factor. There are 6 overhead
+				// characters in the perl escape encoding, plus 2 * the max number of 
+				// bytes worth of hex digits.
+				this.expansionFactor = this.charset.getMaxCharWidth() * 2 + 6;
+			}
+		}
+
 		if (typeof(options.loadParams) !== 'undefined') {
 			loadParams = options.loadParams;
 		}
@@ -149,15 +185,18 @@ ilib.Charmap = function(options) {
 	} else {
 		ilib.loadData({
 			object: ilib.Charmap, 
-			locale: "-", 
-			name: this.charset.getName() + ".json", 
+			locale: "-",
+			nonlocale: true,
+			name: "charmaps/" + this.charset.getName() + ".json", 
 			sync: sync, 
 			loadParams: loadParams, 
 			callback: ilib.bind(this, function (mapping) {
 				//if (!mapping) {
 					// throw exception?
 				//}
-				this.mapping = mapping;
+				
+				/** @type {{from:Object,to:Object}} */
+				this.map = mapping;
 				if (options && typeof(options.onLoad) === 'function') {
 					options.onLoad(this);
 				}
@@ -184,6 +223,61 @@ ilib.Charmap.prototype = {
     	return this.charset.getName();	
     },
 
+    writeNative: function (array, start, value) {
+		var bytes = Math.floor(Math.floor(Math.log(value) / Math.log(2) + 0.5) / 8 + 0.5);
+		for (var i = 0, j = bytes-1; j >= 0; j--, i++) {
+			array[start+i] = (value >> (j*8)) & 0xFF;
+		}
+		return bytes;
+    },
+    
+    writeNativeString: function (array, start, string) {
+    	for (var i = 0; i < string.length; i++) {
+    		array[start+i] = string.charCodeAt(i);
+    	}
+    	return string.length;
+    },
+    
+    dealWithMissingChar: function(c) {
+    	var seq = "";
+    	
+		switch (this.missing) {
+			case "skip":
+				// do nothing
+				break;
+				
+			case "escape":
+				var bigc = c.toString(16).toUpperCase();
+				switch (this.escapeStyle) {
+					case "html":
+						seq = "&#" + bigc + ";";
+						break;
+					case "c":
+						seq = "\\x" + bigc;
+						break;
+					case "java":
+						seq = "\\\\u" + bigc;
+						break;
+					case "perl":
+						seq = "\\N{U+" + bigc + "}";
+						break;
+						
+					default:
+					case "js":
+						seq = "\\u" + c.toString(16);
+						break;
+				}
+				break;
+				
+			default:
+			case "placeholder":
+				seq = this.placeholder;
+				break;
+		}
+		
+		return seq;
+    },
+    
     /**
      * Map a string to the native character set. This string may be 
      * given as an intrinsic Javascript string object or an ilib.String 
@@ -195,10 +289,38 @@ ilib.Charmap.prototype = {
      * in the native character set
      */
     mapToNative: function(string) {
+    	if (!string) {
+    		return new Uint8Array(0);
+    	}
+    	
     	if (this.algorithm) {
     		return this.algorithm.mapToNative(string);
     	}
-    	return new Uint8Array(1);
+    	
+    	var str = (string instanceof ilib.String) ? string : new ilib.String(string);
+    	
+    	// use ilib.String's iterator so that we take care of walking through
+    	// the code points correctly, including the surrogate pairs
+    	var c, i = 0, it = str.iterator();
+    	var ret = new Uint8Array(str.length() * this.expansionFactor);
+    	while (it.hasNext()) {
+    		c = it.next();
+			var n = this.map.from[c];
+			if (typeof(n) !== 'undefined') {
+    			i += this.writeNative(ret, i, n);
+			} else {
+				i += this.writeNativeString(ret, i, this.dealWithMissingChar(c));
+    		}
+    	}
+    	return ret;
+    },
+    
+    makeChar: function(array, start, length) {
+    	var n = 0;
+    	for (var i = 0; i < length; i++) {
+    		n |= array[start+i] << (length - i);
+    	}
+    	return n;
     },
     
     /**
@@ -215,6 +337,32 @@ ilib.Charmap.prototype = {
     	if (this.algorithm) {
     		return this.algorithm.mapToUnicode(bytes);
     	}
-    	return "";
+    	var ret = "";
+    	var i = 0;
+    	var trienode = this.map.to;
+    	var start = 0;
+    	
+    	while (i < bytes.length) {
+    		if (bytes[i] === 0) {
+    			// null-terminator, so end the mapping.
+    			i = bytes.length;
+    		} else if (typeof(trienode[bytes[i]]) !== 'undefined') {
+	    		if (typeof(trienode[bytes[i]]) === 'string') {
+	    			ret += trienode[bytes[i++]];
+	    			trienode = this.map.to;
+	    			start = i;
+	    		} else {
+	    			trienode = trienode[bytes[i++]];
+	    		}
+    		} else {
+    			ret += this.dealWithMissingChar(bytes[start]);
+    			// 'start' wasn't a lead byte, so start again at the 
+    			// next byte instead. This may synchronize the rest 
+    			// of the string.
+    			start++;
+    			i = start;
+    		}
+    	}
+    	return ret;
     }
 };
