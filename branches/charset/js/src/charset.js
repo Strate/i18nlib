@@ -19,7 +19,7 @@
 
 // !depends ilibglobal.js
 
-// !data charsetaliases charset
+// !data charsetaliases charset/ISO-8859-1 charset/ISO-8859-15
 
 /**
  * Create a new character set info instance. Charset instances give information about
@@ -93,15 +93,18 @@ ilib.Charset = function(options) {
 	
 	// default data. A majority of charsets use this info
 	this.info = {
+		description: "default",
 		min: 1,
 		max: 1,
 		bigendian: true,
-		scripts: ["Latn"]
+		scripts: ["Latn"],
+		locales: ["*"]
 	};
 
 	ilib.loadData({
 		object: ilib.Charset, 
-		locale: "-", 
+		locale: "-",
+		nonlocale: true,
 		name: "charsetaliases.json", 
 		sync: sync,
 		loadParams: loadParams, 
@@ -110,7 +113,7 @@ ilib.Charset = function(options) {
 			if (info) {
 				// recognize better by getting rid of extraneous crap and upper-casing
 				// it so that the match is case-insensitive
-				var n = this.originalName.replace(/[-_\.]/g, '').toUpperCase();
+				var n = this.originalName.replace(/[-_:\+\.\(\)]/g, '').toUpperCase();
 				this.name = info[n];
 			}
 			if (!this.name) {
@@ -118,7 +121,8 @@ ilib.Charset = function(options) {
 			}
 			ilib.loadData({
 				object: ilib.Charset, 
-				locale: "-", 
+				locale: "-",
+				nonlocale: true,
 				name: "charset/" + this.name + ".json", 
 				sync: sync, 
 				loadParams: loadParams, 

@@ -151,7 +151,7 @@ function testCharsetMaxCharWidthUTF16() {
 
 function testCharsetMaxCharWidthMultibyte() {
 	var cs = new ilib.Charset({name: "EUC-JP"});
-	assertEquals(2, cs.getMaxCharWidth());
+	assertEquals(3, cs.getMaxCharWidth());
 }
 
 function testCharsetIsMultibyteTrue() {
