@@ -1,5 +1,5 @@
 {
 	"min": 1,
 	"max": 2,
-	"scripts": ["Hans","Latn"]
+	"scripts": ["Hans","Hani","Latn"]
 }

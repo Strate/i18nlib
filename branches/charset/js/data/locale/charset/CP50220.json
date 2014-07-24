@@ -1,5 +1,6 @@
 {
 	"min": 1,
 	"max": 2,
-	"scripts": ["Latn","Jpan","Kana","Hira"]
+	"scripts": ["Jpan","Kana","Hira","Latn"],
+	"locales": ["ja"]
 }
