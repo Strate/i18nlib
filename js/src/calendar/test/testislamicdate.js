@@ -90,7 +90,7 @@ var testDates = [
 ];
 
 function testIslamicDateConvert() {
-    var id;
+    var gd;
     
     for (var i = 0; i < testDates.length; i++) {
         id = new ilib.Date.IslamicDate({julianday: testDates[i][0], timezone: "Etc/UTC"});
@@ -1111,94 +1111,94 @@ function testIslamicDateGetEraBAHYear0() {
 }
 
 function testIslamicDateSetTimeZone() {
-    var id = new ilib.Date.IslamicDate({
+    var gd = new ilib.Date.IslamicDate({
     	year: 1433, 
     	month: 3, 
     	day: 8,
     	timezone: "America/Los_Angeles"
     });
-    assertNotNull(id);
+    assertNotNull(gd);
     
-    assertEquals("America/Los_Angeles", id.getTimeZone());
+    assertEquals("America/Los_Angeles", gd.getTimeZone());
     
-    id.setTimeZone("Asia/Tokyo");
+    gd.setTimeZone("Asia/Tokyo");
     
-    assertEquals("Asia/Tokyo", id.getTimeZone());
+    assertEquals("Asia/Tokyo", gd.getTimeZone());
 }
 
 function testIslamicDateSetTimeZoneNotString() {
-    var id = new ilib.Date.IslamicDate({
+    var gd = new ilib.Date.IslamicDate({
     	year: 1433, 
     	month: 3, 
     	day: 8,
     	timezone: "America/Los_Angeles"
     });
-    assertNotNull(id);
+    assertNotNull(gd);
     
-    assertEquals("America/Los_Angeles", id.getTimeZone());
+    assertEquals("America/Los_Angeles", gd.getTimeZone());
     
-    id.setTimeZone(345);
+    gd.setTimeZone(345);
     
-    assertEquals("America/Los_Angeles", id.getTimeZone());
+    assertEquals("America/Los_Angeles", gd.getTimeZone());
 }
 
 function testIslamicDateSetTimeZoneUndefined() {
-    var id = new ilib.Date.IslamicDate({
+    var gd = new ilib.Date.IslamicDate({
     	year: 1433, 
     	month: 3, 
     	day: 8,
     	timezone: "America/Los_Angeles"
     });
-    assertNotNull(id);
+    assertNotNull(gd);
     
-    assertEquals("America/Los_Angeles", id.getTimeZone());
+    assertEquals("America/Los_Angeles", gd.getTimeZone());
 
     // clears it out
-    id.setTimeZone(undefined);
+    gd.setTimeZone(undefined);
     
-    assertEquals("local", id.getTimeZone());
+    assertEquals("local", gd.getTimeZone());
 }
 
 function testIslamicDateSetTimeZoneEmpty() {
-    var id = new ilib.Date.IslamicDate({
+    var gd = new ilib.Date.IslamicDate({
     	year: 1433, 
     	month: 3, 
     	day: 8,
     	timezone: "America/Los_Angeles"
     });
-    assertNotNull(id);
+    assertNotNull(gd);
     
-    assertEquals("America/Los_Angeles", id.getTimeZone());
+    assertEquals("America/Los_Angeles", gd.getTimeZone());
     
     // clears it out
-    id.setTimeZone("");
+    gd.setTimeZone("");
     
-    assertEquals("local", id.getTimeZone());
+    assertEquals("local", gd.getTimeZone());
 }
 
 function testIslamicDateInitWithUnixTimeRightTimeZone() {
-    var id = new ilib.Date.IslamicDate({
+    var gd = new ilib.Date.IslamicDate({
     	unixtime: 0
     });
-    assertNotNull(id);
+    assertNotNull(gd);
     
-    assertEquals("local", id.getTimeZone());
+    assertEquals("local", gd.getTimeZone());
 }
 
 function testIslamicDateInitWithJDRightTimeZone() {
-    var id = new ilib.Date.IslamicDate({
+    var gd = new ilib.Date.IslamicDate({
     	julianday: 0
     });
-    assertNotNull(id);
+    assertNotNull(gd);
     
-    assertEquals("local", id.getTimeZone());
+    assertEquals("local", gd.getTimeZone());
 }
 
 function testIslamicDateInitWithRDRightTimeZone() {
-    var id = new ilib.Date.IslamicDate({
+    var gd = new ilib.Date.IslamicDate({
     	rd: 0
     });
-    assertNotNull(id);
+    assertNotNull(gd);
     
-    assertEquals("local", id.getTimeZone());
+    assertEquals("local", gd.getTimeZone());
 }

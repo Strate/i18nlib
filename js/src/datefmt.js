@@ -399,7 +399,6 @@ ilib.DateFmt = function(options) {
 
 	new ilib.LocaleInfo(this.locale, {
 		sync: sync,
-		loadParams: loadParams, 
 		onLoad: ilib.bind(this, function (li) {
 			this.locinfo = li;
 			
@@ -428,7 +427,6 @@ ilib.DateFmt = function(options) {
 				locale: this.locale,
 				name: "sysres",
 				sync: sync,
-				loadParams: loadParams, 
 				onLoad: ilib.bind(this, function (rb) {
 					this.sysres = rb;
 					
@@ -513,9 +511,7 @@ ilib.DateFmt.defaultFmt = ilib.data.dateformats || {
 	"islamic": "gregorian",
 	"hebrew": "gregorian",
 	"julian": "gregorian",
-	"buddhist": "gregorian",
-	"persian": "gregorian",
-	"persian-algo": "gregorian"
+	"buddhist": "gregorian"
 };
 
 /**

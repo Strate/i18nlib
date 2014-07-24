@@ -785,7 +785,7 @@ ilib.TimeZone.prototype.inDaylightTime = function (date, wallTime) {
 	}
 	
 	// this should be a Gregorian RD number now, in UTC
-	rd = date.rd.getRataDie();
+	rd = date.getRataDie();
 	
 	// these calculate the start/end in local wall time
 	var startrule = this._getDSTStartRule(date.year);

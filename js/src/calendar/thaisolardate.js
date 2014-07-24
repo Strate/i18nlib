@@ -100,15 +100,11 @@ ilib.Date.ThaiSolarDate = function(params) {
 			p.rd -= 198327;
 		}
 	}
-	this.rd = undefined; // clear these out so that the GregDate constructor can set it
-	this.offset = undefined;
-	//console.log("ThaiSolarDate.constructor: date is " + JSON.stringify(this) + " parent is " + JSON.stringify(this.parent) + " and parent.parent is " + JSON.stringify(this.parent.parent));
+	this.rd = undefined; // clear this out so that the GregDate constructor can set it
 	ilib.Date.GregDate.call(this, p);
 	this.cal = new ilib.Cal.ThaiSolar();
 	// make sure the year is set correctly
-	if (params && typeof(params.year) !== 'undefined') {
-		this.year = parseInt(params.year, 10);
-	}
+	this._calcDateComponents();
 };
 
 ilib.Date.ThaiSolarDate.prototype = new ilib.Date.GregDate();
@@ -131,7 +127,6 @@ ilib.Date.ThaiSolarDate.epoch = 1523097.5;
 ilib.Date.ThaiSolarDate.prototype._calcDateComponents = function () {
 	// there is 198327 days difference between the Thai solar and 
 	// Gregorian epochs which is equivalent to 543 years
-	// console.log("ThaiSolarDate._calcDateComponents: date is " + JSON.stringify(this) + " parent is " + JSON.stringify(this.parent) + " and parent.parent is " + JSON.stringify(this.parent.parent));
 	this.parent._calcDateComponents.call(this);
 	this.year += 543;
 };

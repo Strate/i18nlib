@@ -35,9 +35,7 @@
  * @param {Object=} options The date components to initialize this date with
  */
 ilib.Date = function(options) {
-	if (!options || typeof(options.noinstance) === 'undefined') {
-		return ilib.Date.newInstance(options);
-	}
+	return ilib.Date.newInstance(options);
 };
 
 /**
@@ -55,7 +53,6 @@ ilib.Date = function(options) {
  * and "julian" calendars are all included by default, as they are the
  * standard calendars for much of the world. If not specified, the type
  * of the date returned is the one that is appropriate for the locale.
- * This property may also be given as "calendar" instead of "type".
  * </ul>
  * 
  * The options object is also passed down to the date constructor, and 
@@ -93,7 +90,7 @@ ilib.Date = function(options) {
  */
 ilib.Date.newInstance = function(options) {
 	var locale = options && options.locale,
-		type = options && (options.type || options.calendar),
+		type = options && options.type,
 		cons;
 
 	if (!locale) {
