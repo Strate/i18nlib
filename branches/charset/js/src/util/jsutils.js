@@ -94,10 +94,36 @@ ilib.indexOf = function(array, obj) {
 };
 
 /**
+ * Pad the str with zeros to the given length of digits.
+ * 
  * @static
+ * @param {string|number} str the string or number to pad
+ * @param {number} length the desired total length of the output string, padded
+ * @param {boolean=} right if true, pad on the right side of the number rather than the left.
+ * Default is false.
+ */
+ilib.pad = function (str, length, right) {
+	if (typeof(str) !== 'string') {
+		str = "" + str;
+	}
+	var start = 0;
+	// take care of negative numbers
+	if (str.charAt(0) === '-') {
+		start++;
+	}
+	return (str.length >= length+start) ? str : 
+		(right ? str + ilib.pad.zeros.substring(0,length-str.length+start) : 
+			str.substring(0, start) + ilib.pad.zeros.substring(0,length-str.length+start) + str.substring(start));
+};
+
+/** @private */
+ilib.pad.zeros = "00000000000000000000000000000000";
+
+/**
  * Convert a string into the hexadecimal representation
  * of the Unicode characters in that string.
  * 
+ * @static
  * @param {string} string The string to convert
  * @param {number=} limit the number of digits to use to represent the character (1 to 8)
  * @return {string} a hexadecimal representation of the
@@ -113,7 +139,7 @@ ilib.toHexString = function(string, limit) {
 	}
 	for (i = 0; i < string.length; i++) {
 		var ch = string.charCodeAt(i).toString(16);
-		result += "00000000".substring(0, lim-ch.length) + ch;
+		result += ilib.pad(ch, lim);
 	}
 	return result.toUpperCase();
 };

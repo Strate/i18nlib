@@ -462,8 +462,6 @@ ilib.DateFmt.lenmap = {
 	"f": "full"
 };
 
-ilib.DateFmt.zeros = "0000";
-
 ilib.DateFmt.defaultFmt = ilib.data.dateformats || {
 	"gregorian": {
 		"order": "{date} {time}",
@@ -901,23 +899,6 @@ ilib.DateFmt.prototype = {
 	
 	/*
 	 * @private
-	 * Left pad the str to the given length of digits with zeros
-	 * @param {string} str the string to pad
-	 * @param {number} length the desired total length of the output string, padded 
-	 */
-	_pad: function (str, length) {
-		if (typeof(str) !== 'string') {
-			str = "" + str;
-		}
-		var start = 0;
-		if (str.charAt(0) === '-') {
-			start++;
-		}
-		return (str.length >= length+start) ? str : str.substring(0, start) + ilib.DateFmt.zeros.substring(0,length-str.length+start) + str.substring(start);
-	},
-	
-	/*
-	 * @private
 	 * Format a date according to a sequence of components. 
 	 * @param {ilib.Date} date a date/time object to format
 	 * @param {Array.<string>} templateArr an array of components to format
@@ -931,20 +912,20 @@ ilib.DateFmt.prototype = {
 					str += (date.day || 1);
 					break;
 				case 'dd':
-					str += this._pad(date.day || "1", 2);
+					str += ilib.pad(date.day || "1", 2);
 					break;
 				case 'yy':
 					temp = "" + ((date.year || 0) % 100);
-					str += this._pad(temp, 2);
+					str += ilib.pad(temp, 2);
 					break;
 				case 'yyyy':
-					str += this._pad(date.year || "0", 4);
+					str += ilib.pad(date.year || "0", 4);
 					break;
 				case 'M':
 					str += (date.month || 1);
 					break;
 				case 'MM':
-					str += this._pad(date.month || "1", 2);
+					str += ilib.pad(date.month || "1", 2);
 					break;
 
 				case 'h':
@@ -959,7 +940,7 @@ ilib.DateFmt.prototype = {
 					if (temp == 0) {
 						temp = "12";
 					}
-					str += this._pad(temp, 2);
+					str += ilib.pad(temp, 2);
 					break;
 				case 'K':
 					temp = (date.hour || 0) % 12;
@@ -967,40 +948,40 @@ ilib.DateFmt.prototype = {
 					break;
 				case 'KK':
 					temp = (date.hour || 0) % 12;
-					str += this._pad(temp, 2);
+					str += ilib.pad(temp, 2);
 					break;
 
 				case 'H':
 					str += (date.hour || "0");
 					break;
 				case 'HH':
-					str += this._pad(date.hour || "0", 2);
+					str += ilib.pad(date.hour || "0", 2);
 					break;
 				case 'k':
 					str += (date.hour == 0 ? "24" : date.hour);
 					break;
 				case 'kk':
 					temp = (date.hour == 0 ? "24" : date.hour);
-					str += this._pad(temp, 2);
+					str += ilib.pad(temp, 2);
 					break;
 
 				case 'm':
 					str += (date.minute || "0");
 					break;
 				case 'mm':
-					str += this._pad(date.minute || "0", 2);
+					str += ilib.pad(date.minute || "0", 2);
 					break;
 				case 's':
 					str += (date.minute || "0");
 					break;
 				case 'ss':
-					str += this._pad(date.second || "0", 2);
+					str += ilib.pad(date.second || "0", 2);
 					break;
 				case 'S':
 					str += (date.millisecond || "0");
 					break;
 				case 'SSS':
-					str += this._pad(date.millisecond || "0", 3);
+					str += ilib.pad(date.millisecond || "0", 3);
 					break;
 
 				case 'N':
@@ -1048,17 +1029,17 @@ ilib.DateFmt.prototype = {
 					str += date.getWeekOfYear();
 					break;
 				case 'ww':
-					str += this._pad(date.getWeekOfYear(), 2);
+					str += ilib.pad(date.getWeekOfYear(), 2);
 					break;
 
 				case 'D':
 					str += date.getDayOfYear();
 					break;
 				case 'DD':
-					str += this._pad(date.getDayOfYear(), 2);
+					str += ilib.pad(date.getDayOfYear(), 2);
 					break;
 				case 'DDD':
-					str += this._pad(date.getDayOfYear(), 3);
+					str += ilib.pad(date.getDayOfYear(), 3);
 					break;
 				case 'W':
 					str += date.getWeekOfMonth(this.locale);
