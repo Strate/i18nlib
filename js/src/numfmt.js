@@ -305,17 +305,6 @@ ilib.NumFmt.prototype = {
 		this.exponentSymbol = this.localeInfo.getExponential() || "e";
 	},
 
-	/*
-	 * @private
-	 */
-	_pad: function (str, length, left) {
-		return (str.length >= length) ?
-			str :
-			(left ?
-			ilib.NumFmt.zeros.substring(0, length - str.length) + str :
-			str + ilib.NumFmt.zeros.substring(0, length - str.length));
-	},
-
 	/**
 	 * @private
 	 * @param {Number|ilib.Number|string|number} num object, string, or number to convert to a primitive number
@@ -400,7 +389,7 @@ ilib.NumFmt.prototype = {
 		integral = integral.toString();
 
 		if (this.minFractionDigits > 0) {
-			fraction = this._pad(fraction || "", this.minFractionDigits, false);
+			fraction = ilib.pad(fraction || "", this.minFractionDigits, true);
 		}
 
 		if (this.secgroupSize > 0) {

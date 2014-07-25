@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-// !depends locale.js ilibglobal.js numprs.js ctype.ispunct.js normstring.js
+// !depends locale.js ilibglobal.js numprs.js ctype.ispunct.js normstring.js util/jsutils.js
 
 // !data collation
 
@@ -738,14 +738,10 @@ ilib.Collator.prototype = {
 			return str;
 		}
 		
-		function pad(str, limit) {
-			return "0000000000000000".substring(0, limit - str.length) + str;
-		}
-		
 		if (this.numeric) {
 			var v = new ilib.Number(str, {locale: this.locale});
 			var s = isNaN(v.valueOf()) ? "" : v.valueOf().toString(16);
-			return pad(s, 16);	
+			return ilib.pad(s, 16);	
 		} else {
 			var n = (typeof(str) === "string") ? new ilib.NormString(str) : str,
 				ret = "",
@@ -757,7 +753,7 @@ ilib.Collator.prototype = {
 				if (this.reverse) {
 					element = (1 << this.keysize) - element;
 				}
-				ret += pad(element.toString(16), this.keysize/4);	
+				ret += ilib.pad(element.toString(16), this.keysize/4);	
 			}
 		}
 		return ret;
