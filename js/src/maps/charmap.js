@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-// !depends ilibglobal.js charset.js
+// !depends ilibglobal.js charset.js util/jsutils.js
 
 // !data charmaps/ISO-8859-1
 
@@ -136,14 +136,9 @@ ilib.Charmap = function(options) {
 			sync = (options.sync == true);
 		}
 		
-		if (typeof(options.missing) !== 'undefined') {
-			if (options.missing === "skip" || options.missing === "placeholder" || options.missing === "escape") {
-				this.missing = options.missing;
-			}
-		}
-		
 		if (typeof(options.placeholder) !== 'undefined') {
 			this.placeholder = options.placeholder;
+			this.expansionFactor = this.expansionFactor < this.placeholder.length ? this.placeholder.length : this.expansionFactor;  
 		}
 
 		var escapes = {
@@ -160,13 +155,22 @@ ilib.Charmap = function(options) {
 		if (typeof(options.escapeStyle) !== 'undefined') {
 			if (typeof(escapes[options.escapeStyle]) !== 'undefined') {
 				this.escapeStyle = escapes[options.escapeStyle];
+			}
+		}
+
+		if (typeof(options.missing) !== 'undefined') {
+			if (options.missing === "skip" || options.missing === "placeholder" || options.missing === "escape") {
+				this.missing = options.missing;
+			}
+			
+			if (options.missing === "escape") {
 				// Convervative estimate of the expansion factor. There are 6 overhead
 				// characters in the perl escape encoding, plus 2 * the max number of 
 				// bytes worth of hex digits.
 				this.expansionFactor = this.charset.getMaxCharWidth() * 2 + 6;
 			}
 		}
-
+		
 		if (typeof(options.loadParams) !== 'undefined') {
 			loadParams = options.loadParams;
 		}
@@ -224,11 +228,10 @@ ilib.Charmap.prototype = {
     },
 
     writeNative: function (array, start, value) {
-		var bytes = Math.floor(Math.floor(Math.log(value) / Math.log(2) + 0.5) / 8 + 0.5);
-		for (var i = 0, j = bytes-1; j >= 0; j--, i++) {
-			array[start+i] = (value >> (j*8)) & 0xFF;
-		}
-		return bytes;
+    	for (var i = 0; i < value.length; i++) {
+    		array[start+i] = value[i];
+    	}
+		return value.length;
     },
     
     writeNativeString: function (array, start, string) {
@@ -247,7 +250,7 @@ ilib.Charmap.prototype = {
 				break;
 				
 			case "escape":
-				var bigc = c.toString(16).toUpperCase();
+				var bigc = ilib.pad(c.toString(16), 4).toUpperCase();
 				switch (this.escapeStyle) {
 					case "html":
 						seq = "&#" + bigc + ";";
@@ -264,7 +267,7 @@ ilib.Charmap.prototype = {
 						
 					default:
 					case "js":
-						seq = "\\u" + c.toString(16);
+						seq = "\\u" + bigc;
 						break;
 				}
 				break;
@@ -301,15 +304,20 @@ ilib.Charmap.prototype = {
     	
     	// use ilib.String's iterator so that we take care of walking through
     	// the code points correctly, including the surrogate pairs
-    	var c, i = 0, it = str.iterator();
-    	var ret = new Uint8Array(str.length() * this.expansionFactor);
+    	var c, i = 0, it = str.charIterator();
+    	var ret = new Uint8Array(str.length * this.expansionFactor);
     	while (it.hasNext()) {
     		c = it.next();
 			var n = this.map.from[c];
 			if (typeof(n) !== 'undefined') {
     			i += this.writeNative(ret, i, n);
 			} else {
-				i += this.writeNativeString(ret, i, this.dealWithMissingChar(c));
+				// if there is more than one UTF-16 char, write each separately. We 
+				// can't escape a fully composed astral plane char, so we have to 
+				// write it as two UTF-16 surrogate chars instead.
+				for (var j = 0; j < c.length; j++) {
+					i += this.writeNativeString(ret, i, this.dealWithMissingChar(c.charCodeAt(j)));
+				}
     		}
     	}
     	return ret;
