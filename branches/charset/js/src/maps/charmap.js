@@ -68,7 +68,7 @@
  * <li><i>html</i> - Escape the characters as HTML entities. This would use
  * the standard HTML 5.0 (or later) entity names where possible, and numeric
  * entities in all other cases. Eg. an "e" with an acute accent would be 
- * "&eacute;"
+ * "&#x00E9;"
  * <li><i>js</i> - Use the Javascript escape style. Eg. an "e" with an acute
  * accent would be "\u00E9". This can also be specified as "c#" as
  * it uses a similar escape syntax.
@@ -253,7 +253,7 @@ ilib.Charmap.prototype = {
 				var bigc = ilib.pad(c.toString(16), 4).toUpperCase();
 				switch (this.escapeStyle) {
 					case "html":
-						seq = "&#" + bigc + ";";
+						seq = "&#x" + bigc + ";";
 						break;
 					case "c":
 						seq = "\\x" + bigc;

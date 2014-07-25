@@ -118,7 +118,7 @@ ilib.Charmap.UTF8 = {
 		// multiply by 4 because the max size of a UTF-8 char is 4 bytes, so
 		// this will at least get us enough room to encode everything. Add 1
 		// for the null terminator
-		var ret = new Uint8Array(istr.length() * 4 + 1);
+		var ret = new Uint8Array(istr.length * 4 + 1);
 		var i = 0;
 		
 		while (it.hasNext()) {
@@ -141,7 +141,7 @@ ilib.Charmap.UTF8 = {
 						i += 3;
 					}
 				} else {
-					ret[i]   = 0xC0 | ((c >> 11) & 0x1F);
+					ret[i]   = 0xC0 | ((c >> 6) & 0x1F);
 					ret[i+1] = 0x80 | (c & 0x3F);
 					
 					i += 2;
