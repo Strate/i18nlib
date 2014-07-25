@@ -192,6 +192,7 @@ ilib.Address = function (freeformAddress, options) {
 					ilib.loadData({
 						name: "nativecountries.json", // countries in their own language 
 						locale: "-", // only need to load the root file 
+						nonlocale: true,
 						sync: this.sync, 
 						loadParams: this.loadParams, 
 						callback: /** @type function(Object=):undefined */ ilib.bind(this, /** @type function() */ function(nativecountries) {
@@ -217,6 +218,7 @@ ilib.Address.prototype = {
 			ilib.loadData({
 				name: "countries.json", // countries in English
 				locale: "-", // only need to load the root file
+				nonelocale: true,
 				sync: this.sync, 
 				loadParams: this.loadParams, 
 				callback: /** @type function(Object=):undefined */ ilib.bind(this, /** @type function() */ function(countries) {

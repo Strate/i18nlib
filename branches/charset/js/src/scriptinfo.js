@@ -78,6 +78,7 @@ ilib.ScriptInfo = function(script, options) {
 		ilib.loadData({
 			object: ilib.ScriptInfo, 
 			locale: "-", 
+			nonlocale: true,
 			name: "scripts.json", 
 			sync: sync, 
 			loadParams: loadParams, 

@@ -93,10 +93,10 @@ ilib.NormString.init = function(options) {
 	}
 	
 	ilib._callLoadData(files, sync, loadParams, function(arr) {
-		ilib.data.norm.ccc = arr[0];
+		ilib.data.norm_ccc = arr[0];
 		for (var i = 1; i < arr.length; i++) {
 			if (typeof(arr[i]) !== 'undefined') {
-				ilib.data.norm[forms[i-1]] = arr[i];
+				ilib.data["norm_" + forms[i-1]] = arr[i];
 			}
 		}
 		
@@ -267,7 +267,7 @@ ilib.NormString._compose = function (lead, trail) {
 	}
 
 	var c = lead + trail;
-	return (ilib.data.norm.nfc && ilib.data.norm.nfc[c]);
+	return (ilib.data.norm_nfc && ilib.data.norm_nfc[c]);
 };
 
 
@@ -448,24 +448,24 @@ ilib.NormString.prototype.normalize = function (form) {
 		var ch, it = this.parent.charIterator.call(this);
 		while (it.hasNext()) {
 			ch = it.next();
-			decomp += ilib.NormString._expand(ch, ilib.data.norm.nfd, ilib.data.norm.nfkd);
+			decomp += ilib.NormString._expand(ch, ilib.data.norm_nfd, ilib.data.norm_nfkd);
 		}
 	} else {
 		var ch, it = this.parent.charIterator.call(this);
 		while (it.hasNext()) {
 			ch = it.next();
-			decomp += ilib.NormString._expand(ch, ilib.data.norm.nfd);
+			decomp += ilib.NormString._expand(ch, ilib.data.norm_nfd);
 		}
 	}
 
 	// now put the combining marks in a fixed order by 
 	// sorting on the combining class
 	function compareByCCC(left, right) {
-		return ilib.data.norm.ccc[left] - ilib.data.norm.ccc[right]; 
+		return ilib.data.norm_ccc[left] - ilib.data.norm_ccc[right]; 
 	}
 	
 	function ccc(c) {
-		return ilib.data.norm.ccc[c] || 0;
+		return ilib.data.norm_ccc[c] || 0;
 	}
 		
 	var dstr = new ilib.String(decomp);
@@ -479,11 +479,11 @@ ilib.NormString.prototype.normalize = function (form) {
 	
 	i = 0;
 	while (i < cpArray.length) {
-		if (typeof(ilib.data.norm.ccc[cpArray[i]]) !== 'undefined' && ccc(cpArray[i]) !== 0) {
+		if (typeof(ilib.data.norm_ccc[cpArray[i]]) !== 'undefined' && ccc(cpArray[i]) !== 0) {
 			// found a non-starter... rearrange all the non-starters until the next starter
 			var end = i+1;
 			while (end < cpArray.length &&
-					typeof(ilib.data.norm.ccc[cpArray[end]]) !== 'undefined' && 
+					typeof(ilib.data.norm_ccc[cpArray[end]]) !== 'undefined' && 
 					ccc(cpArray[end]) !== 0) {
 				end++;
 			}
@@ -499,15 +499,15 @@ ilib.NormString.prototype.normalize = function (form) {
 	if (nfc) {
 		i = 0;
 		while (i < cpArray.length) {
-			if (typeof(ilib.data.norm.ccc[cpArray[i]]) === 'undefined' || ilib.data.norm.ccc[cpArray[i]] === 0) {
+			if (typeof(ilib.data.norm_ccc[cpArray[i]]) === 'undefined' || ilib.data.norm_ccc[cpArray[i]] === 0) {
 				// found a starter... find all the non-starters until the next starter. Must include
 				// the next starter because under some odd circumstances, two starters sometimes recompose 
 				// together to form another character
 				var end = i+1;
 				var notdone = true;
 				while (end < cpArray.length && notdone) {
-					if (typeof(ilib.data.norm.ccc[cpArray[end]]) !== 'undefined' && 
-						ilib.data.norm.ccc[cpArray[end]] !== 0) {
+					if (typeof(ilib.data.norm_ccc[cpArray[end]]) !== 'undefined' && 
+						ilib.data.norm_ccc[cpArray[end]] !== 0) {
 						if (ccc(cpArray[end-1]) < ccc(cpArray[end])) { 
 							// not blocked 
 							var testChar = ilib.NormString._compose(cpArray[i], cpArray[end]);
@@ -587,7 +587,7 @@ ilib.NormString.prototype.charIterator = function() {
 		 * @private
 		 */
 		var ccc = function(c) {
-			return ilib.data.norm.ccc[c] || 0;
+			return ilib.data.norm_ccc[c] || 0;
 		};
 
 		this.index = 0;
@@ -602,8 +602,8 @@ ilib.NormString.prototype.charIterator = function() {
 			
 			this.nextChar = undefined;
 			
-			if (ilib.data.norm.ccc && 
-					(typeof(ilib.data.norm.ccc[ch]) === 'undefined' || ccc(ch) === 0)) {
+			if (ilib.data.norm_ccc && 
+					(typeof(ilib.data.norm_ccc[ch]) === 'undefined' || ccc(ch) === 0)) {
 				// found a starter... find all the non-starters until the next starter. Must include
 				// the next starter because under some odd circumstances, two starters sometimes recompose 
 				// together to form another character
@@ -611,7 +611,7 @@ ilib.NormString.prototype.charIterator = function() {
 				while (it.hasNext() && notdone) {
 					this.nextChar = it.next();
 					nextCcc = ccc(this.nextChar);
-					if (typeof(ilib.data.norm.ccc[this.nextChar]) !== 'undefined' && nextCcc !== 0) {
+					if (typeof(ilib.data.norm_ccc[this.nextChar]) !== 'undefined' && nextCcc !== 0) {
 						ch += this.nextChar;
 						this.nextChar = undefined;
 					} else {

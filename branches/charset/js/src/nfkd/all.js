@@ -20,5 +20,5 @@
 // !depends util/utils.js 
 // !depends nfd/all.js
 // !data norm.ccc nfkd/all
-ilib.data.norm.nfkd = ilib.merge(ilib.data.norm.nfkd || {}, ilib.data.nfkd_all);
+ilib.data.norm_nfkd = ilib.merge(ilib.data.norm_nfkd || {}, ilib.data.nfkd_all);
 ilib.data.nfkd_all = undefined;
