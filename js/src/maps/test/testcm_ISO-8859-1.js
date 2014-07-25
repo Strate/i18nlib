@@ -25,6 +25,22 @@ function testCharmap88591LoadMap() {
     assertEquals("ISO-8859-1", cm.getName());
 }
 
+function testCharmap88591UseAliases1() {
+	var cm = new ilib.Charmap({
+		name: "8859-1"
+	});
+    assertNotUndefined(cm);
+    assertEquals("ISO-8859-1", cm.getName());
+}
+
+function testCharmap88591UseAliases2() {
+	var cm = new ilib.Charmap({
+		name: "iso_8859_1"
+	});
+    assertNotUndefined(cm);
+    assertEquals("ISO-8859-1", cm.getName());
+}
+
 function testCharmap88591MapToUnicodeUint8Array() {
 	var cm = new ilib.Charmap({
 		name: "ISO-8859-1"
@@ -211,6 +227,150 @@ function testCharmap88591MapToNativeMissingEscapeJS() {
                     0x5C, 0x75, 0x44, 0x43, 0x33, 0x41,
                     0xE2,
                     0x5C, 0x75, 0x30, 0x31, 0x30, 0x32,
+                    0xE3];
+   
+    for (var i = 0; i < expected.length; i++) {
+    	assertEquals("testing index " + i, expected[i], array[i]);
+    }
+}
+
+function testCharmap88591MapToNativeMissingEscapeC() {
+	var cm = new ilib.Charmap({
+		name: "ISO-8859-1",
+		missing: "escape",
+		escapeStyle: "c"
+	});
+    assertNotUndefined(cm);
+    
+    var array = cm.mapToNative("ÀČÁ𠠺âĂã");
+    // maps to \xXXXX where the X's are hex digits for the Unicode char
+    var expected = [0xC0,
+                    0x5C, 0x78, 0x30, 0x31, 0x30, 0x43,
+                    0xC1,
+                    0x5C, 0x78, 0x44, 0x38, 0x34, 0x32,
+                    0x5C, 0x78, 0x44, 0x43, 0x33, 0x41,
+                    0xE2,
+                    0x5C, 0x78, 0x30, 0x31, 0x30, 0x32,
+                    0xE3];
+   
+    for (var i = 0; i < expected.length; i++) {
+    	assertEquals("testing index " + i, expected[i], array[i]);
+    }
+}
+
+function testCharmap88591MapToNativeMissingEscapeCPP() {
+	var cm = new ilib.Charmap({
+		name: "ISO-8859-1",
+		missing: "escape",
+		escapeStyle: "c++"
+	});
+    assertNotUndefined(cm);
+    
+    var array = cm.mapToNative("ÀČÁ𠠺âĂã");
+    // maps to \xXXXX where the X's are hex digits for the Unicode char
+    var expected = [0xC0,
+                    0x5C, 0x78, 0x30, 0x31, 0x30, 0x43,
+                    0xC1,
+                    0x5C, 0x78, 0x44, 0x38, 0x34, 0x32,
+                    0x5C, 0x78, 0x44, 0x43, 0x33, 0x41,
+                    0xE2,
+                    0x5C, 0x78, 0x30, 0x31, 0x30, 0x32,
+                    0xE3];
+   
+    for (var i = 0; i < expected.length; i++) {
+    	assertEquals("testing index " + i, expected[i], array[i]);
+    }
+}
+
+function testCharmap88591MapToNativeMissingEscapeJava() {
+	var cm = new ilib.Charmap({
+		name: "ISO-8859-1",
+		missing: "escape",
+		escapeStyle: "java"
+	});
+    assertNotUndefined(cm);
+    
+    var array = cm.mapToNative("ÀČÁ𠠺âĂã");
+    // maps to \\uXXXX where the X's are hex digits for the Unicode char
+    var expected = [0xC0,
+                    0x5C, 0x5C, 0x75, 0x30, 0x31, 0x30, 0x43,
+                    0xC1,
+                    0x5C, 0x5C, 0x75, 0x44, 0x38, 0x34, 0x32,
+                    0x5C, 0x5C, 0x75, 0x44, 0x43, 0x33, 0x41,
+                    0xE2,
+                    0x5C, 0x5C, 0x75, 0x30, 0x31, 0x30, 0x32,
+                    0xE3];
+   
+    for (var i = 0; i < expected.length; i++) {
+    	assertEquals("testing index " + i, expected[i], array[i]);
+    }
+}
+
+function testCharmap88591MapToNativeMissingEscapeRuby() {
+	var cm = new ilib.Charmap({
+		name: "ISO-8859-1",
+		missing: "escape",
+		escapeStyle: "ruby"
+	});
+    assertNotUndefined(cm);
+    
+    var array = cm.mapToNative("ÀČÁ𠠺âĂã");
+    // maps to \\uXXXX where the X's are hex digits for the Unicode char
+    var expected = [0xC0,
+                    0x5C, 0x5C, 0x75, 0x30, 0x31, 0x30, 0x43,
+                    0xC1,
+                    0x5C, 0x5C, 0x75, 0x44, 0x38, 0x34, 0x32,
+                    0x5C, 0x5C, 0x75, 0x44, 0x43, 0x33, 0x41,
+                    0xE2,
+                    0x5C, 0x5C, 0x75, 0x30, 0x31, 0x30, 0x32,
+                    0xE3];
+   
+    for (var i = 0; i < expected.length; i++) {
+    	assertEquals("testing index " + i, expected[i], array[i]);
+    }
+}
+
+function testCharmap88591MapToNativeMissingEscapeHtml() {
+	var cm = new ilib.Charmap({
+		name: "ISO-8859-1",
+		missing: "escape",
+		escapeStyle: "html"
+	});
+    assertNotUndefined(cm);
+    
+    var array = cm.mapToNative("ÀČÁ𠠺âĂã");
+    // maps to &#xXXXX; where the X's are hex digits for the Unicode char
+    var expected = [0xC0,
+                    0x26, 0x23, 0x78, 0x30, 0x31, 0x30, 0x43, 0x3B,
+                    0xC1,
+                    0x26, 0x23, 0x78, 0x44, 0x38, 0x34, 0x32, 0x3B,
+                    0x26, 0x23, 0x78, 0x44, 0x43, 0x33, 0x41, 0x3B,
+                    0xE2,
+                    0x26, 0x23, 0x78, 0x30, 0x31, 0x30, 0x32, 0x3B,
+                    0xE3];
+   
+    for (var i = 0; i < expected.length; i++) {
+    	assertEquals("testing index " + i, expected[i], array[i]);
+    }
+}
+
+function testCharmap88591MapToNativeMissingEscapePerl() {
+	var cm = new ilib.Charmap({
+		name: "ISO-8859-1",
+		missing: "escape",
+		escapeStyle: "perl"
+	});
+    assertNotUndefined(cm);
+    
+    var array = cm.mapToNative("ÀČÁ𠠺âĂã");
+    // maps to \xXXXX where the X's are hex digits for the Unicode char
+    var expected = [0xC0,
+                    0x5C, 0x4E, 0x7B, 0x55, 0x2B, 0x30, 0x31, 0x30, 0x43, 0x7D,
+                    0xC1,
+                    0x5C, 0x4E, 0x7B, 0x55, 0x2B, 0x44, 0x38, 0x34, 0x32, 0x7D,
+                    0x5C, 0x4E, 0x7B, 0x55, 0x2B, 0x44, 0x43, 0x33, 0x41, 0x7D,
+                    0xE2,
+                    0x5C, 0x4E, 0x7B, 0x55, 0x2B, 0x30, 0x31, 0x30, 0x32, 0x7D,
                     0xE3];
    
     for (var i = 0; i < expected.length; i++) {
