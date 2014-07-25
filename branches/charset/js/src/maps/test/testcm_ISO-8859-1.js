@@ -81,3 +81,139 @@ function testCharmap88591MapToUnicodeNumberArrayExtended() {
     assertEquals("ÀÁâã", cm.mapToUnicode(input));
 }
 
+function testCharmap88591MapToNative() {
+	var cm = new ilib.Charmap({
+		name: "ISO-8859-1"
+	});
+    assertNotUndefined(cm);
+    
+    var array = cm.mapToNative("This is a test");
+    var expected = [0x54, 0x68, 0x69, 0x73, 0x20, 
+                    0x69, 0x73, 0x20, 0x61, 0x20, 
+                    0x74, 0x65, 0x73, 0x74];
+   
+    for (var i = 0; i < expected.length; i++) {
+    	assertEquals("testing index " + i, expected[i], array[i]);
+    }
+}
+
+function testCharmap88591MapToNativeExtended() {
+	var cm = new ilib.Charmap({
+		name: "ISO-8859-1"
+	});
+    assertNotUndefined(cm);
+    
+    var array = cm.mapToNative("ÀÁâã");
+    var expected = [0xC0, 0xC1, 0xE2, 0xE3];
+    
+    for (var i = 0; i < expected.length; i++) {
+    	assertEquals("testing index " + i, expected[i], array[i]);
+    }
+}
+
+function testCharmap88591MapToNativeMissingSkip() {
+	var cm = new ilib.Charmap({
+		name: "ISO-8859-1",
+		missing: "skip"
+	});
+    assertNotUndefined(cm);
+    
+    var array = cm.mapToNative("ÀČÁ𠠺âĂã");
+    var expected = [0xC0, 0xC1, 0xE2, 0xE3];
+   
+    for (var i = 0; i < expected.length; i++) {
+    	assertEquals("testing index " + i, expected[i], array[i]);
+    }
+}
+
+function testCharmap88591MapToNativeMissingPlaceholderDefault() {
+	var cm = new ilib.Charmap({
+		name: "ISO-8859-1",
+		missing: "placeholder"
+	});
+    assertNotUndefined(cm);
+    
+    var array = cm.mapToNative("ÀČÁ𠠺âĂã");
+    var expected = [0xC0,
+                    0x3F,
+                    0xC1,
+                    0x3F,
+                    0x3F,
+                    0xE2,
+                    0x3F,
+                    0xE3];
+   
+    for (var i = 0; i < expected.length; i++) {
+    	assertEquals("testing index " + i, expected[i], array[i]);
+    }
+}
+
+function testCharmap88591MapToNativeMissingPlaceholderWithChars() {
+	var cm = new ilib.Charmap({
+		name: "ISO-8859-1",
+		missing: "placeholder",
+		placeholder: "XXX"
+	});
+    assertNotUndefined(cm);
+    
+    var array = cm.mapToNative("ÀČÁ𠠺âĂã");
+    var expected = [0xC0,
+                    0x58, 0x58, 0x58,
+                    0xC1,
+                    0x58, 0x58, 0x58,
+                    0x58, 0x58, 0x58,
+                    0xE2,
+                    0x58, 0x58, 0x58,
+                    0xE3];
+   
+    for (var i = 0; i < expected.length; i++) {
+    	assertEquals("testing index " + i, expected[i], array[i]);
+    }
+}
+
+function testCharmap88591MapToNativeMissingEscapeDefault() {
+	var cm = new ilib.Charmap({
+		name: "ISO-8859-1",
+		missing: "escape"
+	});
+    assertNotUndefined(cm);
+    
+    var array = cm.mapToNative("ÀČÁ𠠺âĂã");
+    // maps to \uXXXX where the X's are hex digits for the Unicode char
+    var expected = [0xC0,
+                    0x5C, 0x75, 0x30, 0x31, 0x30, 0x43,
+                    0xC1,
+                    0x5C, 0x75, 0x44, 0x38, 0x34, 0x32,
+                    0x5C, 0x75, 0x44, 0x43, 0x33, 0x41,
+                    0xE2,
+                    0x5C, 0x75, 0x30, 0x31, 0x30, 0x32,
+                    0xE3];
+   
+    for (var i = 0; i < expected.length; i++) {
+    	assertEquals("testing index " + i, expected[i], array[i]);
+    }
+}
+
+function testCharmap88591MapToNativeMissingEscapeJS() {
+	var cm = new ilib.Charmap({
+		name: "ISO-8859-1",
+		missing: "escape",
+		escapeStyle: "js"
+	});
+    assertNotUndefined(cm);
+    
+    var array = cm.mapToNative("ÀČÁ𠠺âĂã");
+    // maps to \uXXXX where the X's are hex digits for the Unicode char
+    var expected = [0xC0,
+                    0x5C, 0x75, 0x30, 0x31, 0x30, 0x43,
+                    0xC1,
+                    0x5C, 0x75, 0x44, 0x38, 0x34, 0x32,
+                    0x5C, 0x75, 0x44, 0x43, 0x33, 0x41,
+                    0xE2,
+                    0x5C, 0x75, 0x30, 0x31, 0x30, 0x32,
+                    0xE3];
+   
+    for (var i = 0; i < expected.length; i++) {
+    	assertEquals("testing index " + i, expected[i], array[i]);
+    }
+}
