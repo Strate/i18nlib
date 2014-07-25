@@ -39,12 +39,6 @@ ilib.getVersion = function () {
  * @dict
  */
 ilib.data = {
-    norm: {
-        nfc: {},
-        nfd: {},
-        nfkd: {},
-        ccc: {}
-    },
     zoneinfo: {
         "Etc/UTC":{"o":"0:0","f":"UTC"},
         "local":{"f":"local"}

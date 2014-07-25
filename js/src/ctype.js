@@ -283,6 +283,7 @@ ilib.CType = {
 			ilib.loadData({
 				name: loadName,
 				locale: "-",
+				nonlocale: true,
 				sync: sync,
 				loadParams: loadParams, 
 				callback: /** @type function(Object=):undefined */ ilib.bind(this, /** @type function() */ function(ct) {

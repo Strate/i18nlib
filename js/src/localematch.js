@@ -82,7 +82,8 @@ ilib.LocaleMatcher = function(options) {
 	if (!ilib.data.likelylocales) {
 		ilib.loadData({
 			object: ilib.LocaleMatcher, 
-			locale: "-", 
+			locale: "-",
+			nonlocale: true,
 			name: "likelylocales.json", 
 			sync: sync, 
 			loadParams: loadParams, 

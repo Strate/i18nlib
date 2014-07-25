@@ -237,7 +237,7 @@ function genCode(script, form) {
 		"/*\n" +
 		" * " + script + ".js - include file for normalization data for a particular script\n" +
 		" * \n" +
-		" * Copyright © 2013, JEDLSoft\n" +
+		" * Copyright © 2013-2014, JEDLSoft\n" +
 		" *\n" +
 		" * Licensed under the Apache License, Version 2.0 (the \"License\");\n" +
 		" * you may not use this file except in compliance with the License.\n" +
@@ -262,19 +262,19 @@ function genCode(script, form) {
 	switch (form) {
 		case 'nfd':
 			str += "// !data norm.ccc nfd/" + script + "\n" +
-				"ilib.data.norm.nfd = ilib.merge(ilib.data.norm.nfd || {}, ilib.data.nfd_" + script + ");\n" +
+				"ilib.data.norm_nfd = ilib.merge(ilib.data.norm_nfd || {}, ilib.data.nfd_" + script + ");\n" +
 				"ilib.data.nfd_" + script + " = undefined;";
 			break;
 		case 'nfc':
 			str += "// !depends nfd/" + script + ".js\n" +
 				"// !data norm.ccc nfc/" + script + "\n" +
-				"ilib.data.norm.nfc = ilib.merge(ilib.data.norm.nfc || {}, ilib.data.nfc_" + script + ");\n" +
+				"ilib.data.norm_nfc = ilib.merge(ilib.data.norm_nfc || {}, ilib.data.nfc_" + script + ");\n" +
 				"ilib.data.nfc_" + script + " = undefined;";
 			break;
 		case 'nfkd':
 			str += "// !depends nfd/" + script + ".js\n" +
 				"// !data norm.ccc nfkd/" + script + "\n" +
-				"ilib.data.norm.nfkd = ilib.merge(ilib.data.norm.nfkd || {}, ilib.data.nfkd_" + script + ");\n" +
+				"ilib.data.norm_nfkd = ilib.merge(ilib.data.norm_nfkd || {}, ilib.data.nfkd_" + script + ");\n" +
 				"ilib.data.nfkd_" + script + " = undefined;";
 			break;
 		case 'nfkc':

@@ -115,6 +115,7 @@ ilib.Currency = function (options) {
 			name: "currency.json",
 			object: ilib.Currency, 
 			locale: "-",
+			nonlocale: true,
 			sync: this.sync, 
 			loadParams: this.loadParams, 
 			callback: /** @type function(Object=):undefined */ ilib.bind(this, /** @type function() */ function(currency) {

@@ -20,5 +20,5 @@
 // !depends util/utils.js 
 // !depends nfd/all.js
 // !data norm.ccc nfc/all
-ilib.data.norm.nfc = ilib.merge(ilib.data.norm.nfc || {}, ilib.data.nfc_all);
+ilib.data.norm_nfc = ilib.merge(ilib.data.norm_nfc || {}, ilib.data.nfc_all);
 ilib.data.nfc_all = undefined;
