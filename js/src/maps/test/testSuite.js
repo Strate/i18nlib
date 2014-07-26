@@ -33,7 +33,7 @@ function suite() {
 	    "testcm_ISO-8859-1.js",
 	    "testcm_UTF-8.js",
 	    "testcm_UTF-16.js",
-	    "testcm_Shift_JIS.js"
+	    "testcm_JP.js"
 	];
 
     suites.forEach(function (path) {
