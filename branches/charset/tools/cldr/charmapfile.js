@@ -47,7 +47,7 @@ exports.CharmapFile = function (options) {
 	var data = undefined;
 	
 	this.rows = [];
-	this.splitChar = /\s+/g;
+	this.splitChar = /[\s,]+/g;
 	
 	if (options) {
 		if (options.path) {
@@ -66,7 +66,7 @@ exports.CharmapFile = function (options) {
 		return undefined;
 	}
 	
-	util.print("read data\n");
+	// util.print("read data\n");
 	
 	var string = new String(data, "utf-8");
 	string = (string.charAt(string.length-1) === '\n') ? string.substring(0, string.length-1): string; 

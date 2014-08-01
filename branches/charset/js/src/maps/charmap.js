@@ -182,7 +182,7 @@ ilib.Charmap = function(options) {
 
 	if (typeof(ilib.Charmap._algorithms[this.charset.getName()]) !== 'undefined') {
 		// this type of conversion is done algorithmically instead of via a mapping table
-		this.algorithm = ilib.Charmap._algorithms[this.charset.getName()];
+		this.algorithm = new ilib.Charmap._algorithms[this.charset.getName()](this.charset);
 		if (options && typeof(options.onLoad) === 'function') {
 			options.onLoad(this);
 		}
@@ -228,10 +228,16 @@ ilib.Charmap.prototype = {
     },
 
     writeNative: function (array, start, value) {
-    	for (var i = 0; i < value.length; i++) {
-    		array[start+i] = value[i];
+    	if (typeof(value) === 'object' && value instanceof Array) { 
+	    	for (var i = 0; i < value.length; i++) {
+	    		array[start+i] = value[i];
+	    	}
+	    	
+	    	return value.length;
+    	} else {
+    		array[start] = value;
+    		return 1;
     	}
-		return value.length;
     },
     
     writeNativeString: function (array, start, string) {
@@ -250,7 +256,8 @@ ilib.Charmap.prototype = {
 				break;
 				
 			case "escape":
-				var bigc = ilib.pad(c.toString(16), 4).toUpperCase();
+				var num = (typeof(c) === 'string') ? c.charCodeAt(0) : c;
+				var bigc = ilib.pad(num.toString(16), 4).toUpperCase();
 				switch (this.escapeStyle) {
 					case "html":
 						seq = "&#x" + bigc + ";";
@@ -282,6 +289,55 @@ ilib.Charmap.prototype = {
     },
     
     /**
+     * Walk a trie to find the value for the current position in the given array.
+     * @private
+     */
+    _trieWalk: function(trie, array, start) {
+    	function isValue(node) {
+    		return (typeof(node) === 'string' || typeof(node) === 'number' ||
+    			(typeof(node) === 'object' && node instanceof Array));
+    	}
+    	
+    	var lastLeaf = undefined,
+    		i = start,
+    		trienode = trie;
+    	
+    	while (i < array.length) {
+    		if (typeof(trienode.__leaf) !== 'undefined') {
+    			lastLeaf = {
+    				consumed: i - start + 1,
+    				value: trienode.__leaf
+    			};
+    		}
+    		if (array[i] === 0) {
+    			// null-terminator, so end the mapping.
+    			return {
+    				consumed: 1,
+    				value: 0
+    			};
+    		} else if (typeof(trienode[array[i]]) !== 'undefined') {
+    			// we have a mapping
+    			if (isValue(trienode[array[i]])) {
+    				// it is a leaf node
+    				return {
+    					consumed: i - start + 1,
+    					value: trienode[array[i]]
+    				};
+    			} else {
+    				// it is an intermediate node
+	    			trienode = trienode[array[i++]];
+	    		}
+    		} else {
+    			// no mapping for this array element, so return the last known
+    			// leaf. If none, this will return undefined.
+    			return lastLeaf;
+    		}
+    	}
+
+    	return undefined;
+    },
+    
+    /**
      * Map a string to the native character set. This string may be 
      * given as an intrinsic Javascript string object or an ilib.String 
      * object.
@@ -304,8 +360,10 @@ ilib.Charmap.prototype = {
     	
     	// use ilib.String's iterator so that we take care of walking through
     	// the code points correctly, including the surrogate pairs
-    	var c, i = 0, it = str.charIterator();
+    	// var c, i = 0, it = str.charIterator();
     	var ret = new Uint8Array(str.length * this.expansionFactor);
+    	
+    	/*
     	while (it.hasNext()) {
     		c = it.next();
 			var n = this.map.from[c];
@@ -320,6 +378,28 @@ ilib.Charmap.prototype = {
 				}
     		}
     	}
+    	*/
+    	
+    	var i = 0, j = 0;
+    	
+    	while (i < string.length) {
+    		var result = this._trieWalk(this.map.from, string, i);
+    		if (result) {
+    			if (result.value) {
+	    			i += result.consumed;
+	    			j += this.writeNative(ret, j, result.value);
+    			} else {
+    				// null-termination
+    				i = string.length;
+    				this.writeNative(ret, j, [result.value]);
+    			}
+    		} else {
+    			// The unicode char at "i" didn't have any mapping, so
+    			// deal with the missing char
+				j += this.writeNativeString(ret, j, this.dealWithMissingChar(string[i++]));
+    		}
+    	}
+
     	return ret;
     },
     
@@ -347,30 +427,89 @@ ilib.Charmap.prototype = {
     	}
     	var ret = "";
     	var i = 0;
-    	var trienode = this.map.to;
-    	var start = 0;
+    	// var trienode = this.map.to;
+    	// var start = 0;
+
+    	/*
+    	function nodeValue(node) {
+    		if (typeof(node) === 'string') {
+    			return node;
+    		} else if (node instanceof Array) {
+    			var ret = "", arr = node;
+    			for (var j = 0; j < arr.length; j++) {
+    				ret += arr[j];
+    			}
+    			return ret;
+    		}
+    		return undefined;
+    	}
+    	*/
     	
     	while (i < bytes.length) {
+    		var result = this._trieWalk(this.map.to, bytes, i);
+    		if (result) {
+    			if (result.value) {
+	    			i += result.consumed;
+	    			if (typeof(result.value) === 'string') {
+	        			ret += result.value;
+	        		} else if (result.value instanceof Array) {
+	        			for (var j = 0; j < result.value.length; j++) {
+	        				ret += result.value[j];
+	        			}
+	        		} // else error in charmap file??
+    			} else {
+    				// null-termination
+    				i = bytes.length;
+	    			// ret += '\u0000';
+    			}
+    		} else {
+    			// The byte at "i" wasn't a lead byte, so start again at the 
+    			// next byte instead. This may synchronize the rest 
+    			// of the string.
+				ret += this.dealWithMissingChar(bytes[i++]);
+    		}
+    	}
+
+/*    		
     		if (bytes[i] === 0) {
     			// null-terminator, so end the mapping.
     			i = bytes.length;
     		} else if (typeof(trienode[bytes[i]]) !== 'undefined') {
-	    		if (typeof(trienode[bytes[i]]) === 'string') {
-	    			ret += trienode[bytes[i++]];
+    			// we have a mapping
+    			var s = nodeValue(trienode[bytes[i]]);
+    			if (s) {
+    				// it is a leaf node
+    				ret += s;
 	    			trienode = this.map.to;
-	    			start = i;
-	    		} else {
+	    			start = ++i;
+    			} else {
+    				// it is an intermediate node
 	    			trienode = trienode[bytes[i++]];
 	    		}
     		} else {
-    			ret += this.dealWithMissingChar(bytes[start]);
-    			// 'start' wasn't a lead byte, so start again at the 
-    			// next byte instead. This may synchronize the rest 
-    			// of the string.
-    			start++;
-    			i = start;
+    			// no mapping for this byte, so check if any of the previous
+    			// mappings have a leaf node. If there are no leafs, go all
+    			// the way back to the start and deal with it as an unknown char.
+    			for (var j = i; j > start; j--) {
+    				if (typeof(trienode[bytes[j]].__leaf) !== 'undefined') {
+    					ret += nodeValue(trienode[bytes[j]].__leaf);
+		    			trienode = this.map.to;
+		    			start = j;
+		    			i = j;
+	    				break;
+    				}
+    			}
+    			if (j <= start) {
+    				ret += this.dealWithMissingChar(bytes[start]);
+	    			// 'start' wasn't a lead byte, so start again at the 
+	    			// next byte instead. This may synchronize the rest 
+	    			// of the string.
+	    			i = ++start;
+    			}
     		}
     	}
+*/
+    	
     	return ret;
     }
 };
