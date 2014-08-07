@@ -332,7 +332,8 @@ function testCharmapJPMapToUnicode() {
 	    assertNotUndefined(cm);
 	    var data = testData[charset];
 	    for (var element in data) {
-	    	assertEquals("testing " + charset + " element " + element + "\n", element, cm.mapToUnicode(data[element]));
+	    	// console.log("testing " + charset + " element " + element);
+		    assertEquals("testing " + charset + " element " + element + "\n", element, cm.mapToUnicode(data[element]));
 	    }
 	}
 }
@@ -349,7 +350,8 @@ function testCharmapJPMapToNative() {
 	    	// console.log("cm.mapToNative returned " + JSON.stringify(cm.mapToUnicode(array)));
 		    
 	        for (var i = 0; i < data[element].length; i++) {
-	        	assertEquals("testing " + charset + " element " + element + " array index " + i + "\n", data[element][i], array[i]);
+	        	// console.log("testing " + charset + " element " + element + " array index " + i);
+			    assertEquals("testing " + charset + " element " + element + " array index " + i + "\n", data[element][i], array[i]);
 	        }
 	    }
 	}
