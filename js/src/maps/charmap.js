@@ -19,7 +19,7 @@
 
 // !depends ilibglobal.js charset.js util/jsutils.js
 
-// !data charmaps/ISO-8859-1
+// !data charmaps/ISO-8859-1 charset/ISO-8859-1 charmaps/US-ASCII charset/US-ASCII
 
 /**
  * Create a new character set mapping instance. Charmap instances map strings to 

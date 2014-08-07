@@ -78,5 +78,5 @@ maps/casemapper.js
 charset.js
 maps/charmap.js
 maps/utf.js
-maps/iso2022.js
+maps/charmaps-Jpan.js
 */
