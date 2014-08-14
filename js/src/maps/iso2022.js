@@ -46,3 +46,4 @@ ilib.Charmap._algorithms["ISO-2022-JP-3"] = ilib.Charmap.ISO2022;
 ilib.Charmap._algorithms["ISO-2022-JP-2004"] = ilib.Charmap.ISO2022;
 ilib.Charmap._algorithms["ISO-2022-CN"] = ilib.Charmap.ISO2022;
 ilib.Charmap._algorithms["ISO-2022-CN-EXT"] = ilib.Charmap.ISO2022;
+ilib.Charmap._algorithms["ISO-2022-KR"] = ilib.Charmap.ISO2022;

@@ -25,7 +25,7 @@ var aliases = {
     	"SHIFT_JIS",
     	"SJIS"
 	],
-	"Shift_JIS_X_0213": [
+	"Shift_JIS_X0213": [
         "Shift_JISX0213",
         "Shift-JIS-X-0213",
         "SJISX0213"
@@ -35,7 +35,7 @@ var aliases = {
 		"EUC_JP",
 		"Extended_Unix_Code_JP"
     ],
-    "EUC-JIS_X_0213": [
+    "EUC-JIS_X0213": [
         "Extended_Unix_Code_JIS_X_0213",
         "EUC_JISX0213"
     ]
@@ -121,7 +121,7 @@ var testData = {
 			0xa4, 0xb9  // す
 	    ]
 	},
-	"EUC-JISX0213": {
+	"EUC-JIS_X0213": {
 	    "This is a test": [
    			0x54, // T
    		    0x68, // h
@@ -255,7 +255,7 @@ var testData = {
 			0x82, 0xB7  // す
 		]
 	},
-	"Shift_JIS_X_0213": {
+	"Shift_JIS_X0213": {
 	    "This is a test": [
 			0x54, // T
 			0x68, // h
