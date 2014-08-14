@@ -48,6 +48,8 @@ exports.CharmapFile = function (options) {
 	
 	this.rows = [];
 	this.splitChar = /[\s,]+/g;
+	this.startEnd = true;
+	this.commentChar = '%';
 	
 	if (options) {
 		if (options.path) {
@@ -58,6 +60,13 @@ exports.CharmapFile = function (options) {
 		}
 		if (options.splitChar) {
 			this.splitChar = new RegExp(options.splitChar);
+		}
+		if (typeof(options.startEnd) === 'boolean') {
+			// look for CHARMAP ... END CHARMAP
+			this.startEnd = options.startEnd;
+		}
+		if (options.commentChar) {
+			this.commentChar = options.commentChar;
 		}
 	}
 	
@@ -73,7 +82,6 @@ exports.CharmapFile = function (options) {
 	var rows = string.split('\n');
 	var row;
 	var i;
-	var commentChar = '%';
 	
 	/*
 	var commentRE = /^<comment_char> (.)/;
@@ -87,21 +95,25 @@ exports.CharmapFile = function (options) {
 	}
 	*/
 	
-	for (i = 0; i < rows.length; i++) {
-		if (rows[i].trim().charAt(0) !== commentChar) {
-			if (rows[i].trim() === "CHARMAP") {
-				i++;
-				break;
+	i = 0;
+	if (this.startEnd) {
+		while (i < rows.length) {
+			if (rows[i].trim().charAt(0) !== this.commentChar) {
+				if (rows[i].trim() === "CHARMAP") {
+					i++;
+					break;
+				}
 			}
+			i++;
 		}
 	}
 
 	while (i < rows.length) {
-		if (rows[i].trim() === "END CHARMAP") {
+		if (this.startEnd && rows[i].trim() === "END CHARMAP") {
 			// done
 			break;
 		}
-		var commentStart = rows[i].indexOf(commentChar);
+		var commentStart = rows[i].indexOf(this.commentChar);
 		row = (commentStart === -1) ? rows[i] : rows[i].substring(0, commentStart);
 		row = row.trim();
 		if (row.length > 0) {
