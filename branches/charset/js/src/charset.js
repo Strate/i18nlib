@@ -113,7 +113,7 @@ ilib.Charset = function(options) {
 			if (info) {
 				// recognize better by getting rid of extraneous crap and upper-casing
 				// it so that the match is case-insensitive
-				var n = this.originalName.replace(/[-_:\+\.\(\)]/g, '').toUpperCase();
+				var n = this.originalName.replace(/[-_,:\+\.\(\)]/g, '').toUpperCase();
 				this.name = info[n];
 			}
 			if (!this.name) {
