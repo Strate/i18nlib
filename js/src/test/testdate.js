@@ -141,15 +141,6 @@ function testDateFactoryNonGregorian() {
     assertEquals("hebrew", date.getCalendar());
 };
 
-function testDateFactoryNonGregorianWithCalendar() {
-    var date = ilib.Date.newInstance({
-    	calendar: "hebrew"
-    });
-    
-    assertNotNull(date);
-    assertEquals("hebrew", date.getCalendar());
-};
-
 function testDateFactoryBogus() {
     var date = ilib.Date.newInstance({
     	type: "asdf"

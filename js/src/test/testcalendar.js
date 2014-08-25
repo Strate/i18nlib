@@ -69,7 +69,6 @@ function testGetCalendars() {
         "islamic",
         "hebrew",
         "thaisolar",
-        "persian-algo",
         "persian"
     ];
     

@@ -146,10 +146,9 @@ ilib.TimeZone = function(options) {
 				// take the negative to get the correct offset
 				this.offsetJan1 = -jan1.getTimezoneOffset();
 				this.offsetJun1 = -jun1.getTimezoneOffset();
-				// the offset of the standard time for the time zone is always the one that is closest 
-				// to negative infinity of the two, no matter whether you are in the northern or southern 
-				// hemisphere, east or west
-				this.offset = Math.min(this.offsetJan1, this.offsetJun1);
+				// the offset of the standard time for the time zone is always the one that is largest of 
+				// the two, no matter whether you are in the northern or southern hemisphere
+				this.offset = Math.max(this.offsetJan1, this.offsetJun1);
 			}
 			this.id = id;
 		} else if (options.offset) {
@@ -763,9 +762,9 @@ ilib.TimeZone.prototype.inDaylightTime = function (date, wallTime) {
 		}
 		
 		var d = new Date(date ? date.getTime() + offset: undefined);
-		// the DST offset is always the one that is closest to positive infinity, no matter 
-		// if you are in the northern or southern hemisphere, east or west
-		var dst = Math.max(this.offsetJan1, this.offsetJun1);
+		// the DST offset is always the one that is closest to negative infinity, no matter 
+		// if you are in the northern or southern hemisphere
+		var dst = Math.min(this.offsetJan1, this.offsetJun1);
 		return (-d.getTimezoneOffset() === dst);
 	}
 	
@@ -786,7 +785,7 @@ ilib.TimeZone.prototype.inDaylightTime = function (date, wallTime) {
 	}
 	
 	// this should be a Gregorian RD number now, in UTC
-	rd = date.rd.getRataDie();
+	rd = date.getRataDie();
 	
 	// these calculate the start/end in local wall time
 	var startrule = this._getDSTStartRule(date.year);

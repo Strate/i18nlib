@@ -41,33 +41,6 @@ function testStringConstructorFull() {
     assertEquals("test test test", str.toString());
 }
 
-function testStringConstructorWithStringObj() {
-    var str = new ilib.String(new String("test test test"));
-    
-    assertNotNull(str);
-
-    assertEquals(14, str.length);
-    assertEquals("test test test", str.toString());
-}
-
-function testStringConstructorWithIlibStringObj() {
-    var str = new ilib.String(new ilib.String("test test test"));
-    
-    assertNotNull(str);
-
-    assertEquals(14, str.length);
-    assertEquals("test test test", str.toString());
-}
-
-function testStringConstructorWithIlibNormStringObj() {
-    var str = new ilib.String(new ilib.NormString("test test test"));
-    
-    assertNotNull(str);
-
-    assertEquals(14, str.length);
-    assertEquals("test test test", str.toString());
-}
-
 function testStringFormatNoArgs() {
     var str = new ilib.String("Format this string.");
     
@@ -689,37 +662,6 @@ function testIteratorEmpty() {
     assertEquals(-1, it.next());
 }
 
-function testForEachCodePointSimple() {
-    var str = new ilib.String("abcd");
-
-    var expected = [0x0061, 0x0062, 0x0063, 0x0064];
-    var i = 0;
-    
-    str.forEachCodePoint(function(ch) {
-    	assertEquals(expected[i++], ch);
-    });
-}
-
-function testForEachCodePointComplex() {
-    var str = new ilib.String("a\uD800\uDF02b\uD800\uDC00");
-
-    var expected = [0x0061, 0x10302, 0x0062, 0x10000];
-    var i = 0;
-    
-    str.forEachCodePoint(function(ch) {
-    	assertEquals(expected[i++], ch);
-    });
-}
-
-function testForEachCodePointEmpty() {
-    var str = new ilib.String("");
-
-    str.forEachCodePoint(function(ch) {
-    	// should never call this callback
-    	fail();
-    });
-}
-
 function testCharIteratorSimple() {
     var str = new ilib.String("abcd");
 
@@ -758,37 +700,6 @@ function testCharIteratorEmpty() {
     var it = str.charIterator();
     assertFalse(it.hasNext());
     assertEquals(undefined, it.next());
-}
-
-function testForEachSimple() {
-    var str = new ilib.String("abcd");
-
-    var expected = ["a", "b", "c", "d"];
-    var i = 0;
-    
-    str.forEach(function(ch) {
-    	assertEquals(expected[i++], ch);
-    });
-}
-
-function testForEachComplex() {
-    var str = new ilib.String("a\uD800\uDF02b\uD800\uDC00");
-
-    var expected = ["a", "\uD800\uDF02", "b", "\uD800\uDC00"];
-    var i = 0;
-    
-    str.forEach(function(ch) {
-    	assertEquals(expected[i++], ch);
-    });
-}
-
-function testForEachEmpty() {
-    var str = new ilib.String("");
-
-    str.forEach(function(ch) {
-    	// should never call this callback
-    	fail();
-    });
 }
 
 function testCodePointLengthUCS2() {

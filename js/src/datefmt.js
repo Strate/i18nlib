@@ -399,7 +399,6 @@ ilib.DateFmt = function(options) {
 
 	new ilib.LocaleInfo(this.locale, {
 		sync: sync,
-		loadParams: loadParams, 
 		onLoad: ilib.bind(this, function (li) {
 			this.locinfo = li;
 			
@@ -428,7 +427,6 @@ ilib.DateFmt = function(options) {
 				locale: this.locale,
 				name: "sysres",
 				sync: sync,
-				loadParams: loadParams, 
 				onLoad: ilib.bind(this, function (rb) {
 					this.sysres = rb;
 					
@@ -513,9 +511,7 @@ ilib.DateFmt.defaultFmt = ilib.data.dateformats || {
 	"islamic": "gregorian",
 	"hebrew": "gregorian",
 	"julian": "gregorian",
-	"buddhist": "gregorian",
-	"persian": "gregorian",
-	"persian-algo": "gregorian"
+	"buddhist": "gregorian"
 };
 
 /**
@@ -892,7 +888,7 @@ ilib.DateFmt.prototype = {
 	 * </ul>
 	 * @param  {Object=} options an object-literal that contains one key 
 	 *                   "length" with the standard length strings
-	 * @return {Array} an array of all of the names of the days of the week
+	 * @return {Array} an array of all of the months of the year for the current calendar
 	 */
 	getDaysOfWeek: function(options) {
 		var length = (options && options.length) || this.getLength(),

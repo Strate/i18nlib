@@ -135,8 +135,7 @@ ilib.Date.RataDie.prototype = {
 	 */
 	_setJulianDay: function (date) {
 		var jd = (typeof(date) === 'number') ? new ilib.JulianDay(date) : date;
-		// round to the nearest millisecond
-		this.rd = ilib._roundFnc.halfup((jd.getDate() - this.epoch) * 86400000) / 86400000;
+		this.rd = ilib._roundFnc.halfup((jd.getDate() - this.epoch) * 100000000) / 100000000;
 	},
 
 	/**

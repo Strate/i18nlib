@@ -36,8 +36,6 @@ calendar/thaisolar.js
 calendar/thaisolardate.js
 calendar/persian.js
 calendar/persiandate.js
-calendar/persianastro.js
-calendar/persianastrodate.js
 numprs.js
 numfmt.js
 julianday.js
@@ -77,5 +75,4 @@ localematch.js
 normstring.js
 mapper.js
 maps/casemapper.js
-glyphstring.js
 */

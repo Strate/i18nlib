@@ -816,16 +816,6 @@ function testDateFmtGetMonthsOfYear2() {
     assertArrayEquals([undefined, "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], arrMonths);
 }
 
-function testDateFmtGetMonthsOfYearThai() {
-	// uses ThaiSolar calendar
-    var fmt = new ilib.DateFmt({locale: "th-TH"});
-    assertNotNull(fmt);
-    
-    var arrMonths = fmt.getMonthsOfYear({length: "long"});
-    
-    assertArrayEquals([undefined, "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."], arrMonths);
-}
-
 function testDateFmtGetMonthsOfYearLeapYear() {
 	var d = ilib.Date.newInstance({type: "hebrew", locale: "en-US", year: 5774, month: 1, day: 1});
     var fmt = new ilib.DateFmt({date: "en-US", calendar: "hebrew"});
@@ -870,25 +860,6 @@ function testDateFmtGetDaysOfWeekOtherCalendar() {
 
     assertArrayEquals(["ris", "she", "shl", "rvi", "ḥam", "shi", "sha"], arrDays);
 }
-
-function testDateFmtGetDaysOfWeekThai() {
-    var fmt = new ilib.DateFmt({locale: "th-TH", calendar: "thaisolar"});
-    assertNotNull(fmt);
-    
-    var arrDays = fmt.getDaysOfWeek({length: 'long'});
-
-    assertArrayEquals(["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."], arrDays);
-}
-
-function testDateFmtGetDaysOfWeekThaiInEnglish() {
-    var fmt = new ilib.DateFmt({locale: "en-US", calendar: "thaisolar"});
-    assertNotNull(fmt);
-    
-    var arrDays = fmt.getDaysOfWeek({length: 'long'});
-	
-    assertArrayEquals(["ath", "cha", "ang", "phu", "phr", "suk", "sao"], arrDays);
-}
-
 
 function testDateFmtWeekYear1() {
     var fmt = new ilib.DateFmt({template: "w"});
@@ -2132,7 +2103,7 @@ function testDateFmtConvertToOtherTimeZone() {
 		locale: "en-US"
 	});
     
-    assertEquals("21/9/11 6:45AM AEST", fmt.format(date));
+    assertEquals("21/9/11 6:45AM EST", fmt.format(date));
 };
 
 function testDateFmtForTZWithNonWholeOffset1() {
@@ -2726,77 +2697,4 @@ function testDateFmtTransitionFromDSTRightAfter() {
     
     // 2 minutes later
     assertEquals("1:01am PST", fmt.format(date));
-};
-
-
-function testDateFmtAltCalThaiInEnglish() {
-    var fmt = new ilib.DateFmt({
-    	locale: "en-US",
-    	length: "full",
-    	type: "datetime",
-    	timezone: "America/Los_Angeles",
-    	calendar: "thaisolar"
-    });
-    assertNotNull(fmt);
-    
-    var date = new ilib.Date.ThaiSolarDate({
-    	timezone: "America/Los_Angeles",
-    	unixtime: 1404445524043
-	});
-    
-    assertEquals("Karakadakhom 3, 2557 8:45pm", fmt.format(date));
-};
-
-function testDateFmtAltCalHebrewInEnglish() {
-    var fmt = new ilib.DateFmt({
-    	locale: "en-US",
-    	length: "full",
-    	type: "datetime",
-    	timezone: "America/Los_Angeles",
-    	calendar: "hebrew"
-    });
-    assertNotNull(fmt);
-    
-    var date = new ilib.Date.HebrewDate({
-    	timezone: "America/Los_Angeles",
-    	unixtime: 1404445524043
-	});
-    
-    assertEquals("Tammuz 6, 5774 8:45pm", fmt.format(date));
-};
-
-function testDateFmtAltCalIslamicInEnglish() {
-    var fmt = new ilib.DateFmt({
-    	locale: "en-US",
-    	length: "full",
-    	type: "datetime",
-    	timezone: "America/Los_Angeles",
-    	calendar: "islamic"
-    });
-    assertNotNull(fmt);
-    
-    var date = new ilib.Date.IslamicDate({
-    	timezone: "America/Los_Angeles",
-    	unixtime: 1404445524043
-	});
-    
-    assertEquals("Ramaḍān 5, 1435 8:45pm", fmt.format(date));
-};
-
-function testDateFmtAltCalPersianInEnglish() {
-    var fmt = new ilib.DateFmt({
-    	locale: "en-US",
-    	length: "full",
-    	type: "datetime",
-    	timezone: "America/Los_Angeles",
-    	calendar: "persian"
-    });
-    assertNotNull(fmt);
-    
-    var date = new ilib.Date.PersDate({
-    	timezone: "America/Los_Angeles",
-    	unixtime: 1404445524043
-	});
-    
-    assertEquals("Tir 12, 1393 8:45pm", fmt.format(date));
 };

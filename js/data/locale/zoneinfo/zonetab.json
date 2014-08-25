@@ -181,7 +181,8 @@
         "America/Dawson_Creek",
         "America/Vancouver",
         "America/Whitehorse",
-        "America/Dawson"
+        "America/Dawson",
+        "America/Montreal"
     ],
     "CC": [
         "Indian/Cocos"
@@ -214,7 +215,10 @@
     ],
     "CN": [
         "Asia/Shanghai",
-        "Asia/Urumqi"
+        "Asia/Harbin",
+        "Asia/Chongqing",
+        "Asia/Urumqi",
+        "Asia/Kashgar"
     ],
     "CO": [
         "America/Bogota"
@@ -681,23 +685,21 @@
     "RU": [
         "Europe/Kaliningrad",
         "Europe/Moscow",
-        "Europe/Simferopol",
         "Europe/Volgograd",
         "Europe/Samara",
+        "Europe/Simferopol",
         "Asia/Yekaterinburg",
         "Asia/Omsk",
         "Asia/Novosibirsk",
         "Asia/Novokuznetsk",
         "Asia/Krasnoyarsk",
         "Asia/Irkutsk",
-        "Asia/Chita",
         "Asia/Yakutsk",
         "Asia/Khandyga",
         "Asia/Vladivostok",
         "Asia/Sakhalin",
         "Asia/Ust-Nera",
         "Asia/Magadan",
-        "Asia/Srednekolymsk",
         "Asia/Kamchatka",
         "Asia/Anadyr"
     ],
@@ -850,13 +852,13 @@
         "America/Boise",
         "America/Phoenix",
         "America/Los_Angeles",
-        "America/Metlakatla",
         "America/Anchorage",
         "America/Juneau",
         "America/Sitka",
         "America/Yakutat",
         "America/Nome",
         "America/Adak",
+        "America/Metlakatla",
         "Pacific/Honolulu"
     ],
     "UY": [
