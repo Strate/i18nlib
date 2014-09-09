@@ -28,7 +28,8 @@ function suite() {
     
     var suites = [
 	    "testutils.js",
-	    "testlist.js"
+	    "testlist.js",
+	    "testarraylist.js"
 	];
 
     suites.forEach(function (path) {
