@@ -22,6 +22,7 @@
 // !data charmaps/ISO-8859-1 charset/ISO-8859-1 charmaps/US-ASCII charset/US-ASCII
 
 /**
+ * @class
  * Create a new character set mapping instance. Charmap instances map strings to 
  * other character sets. The charsets can be of any type, single-byte, multi-byte,
  * shifting, etc. <p>
@@ -111,7 +112,6 @@
  * 
  * Depends directive: !depends maps/charmap.js
  * 
- * @class
  * @constructor
  * @see {ilib.setLoaderCallback} for information about registering a loader callback instance
  * @param {Object=} options options which govern the construction of this instance

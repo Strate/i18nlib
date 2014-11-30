@@ -22,6 +22,7 @@
 // !data charsetaliases charset/ISO-8859-1 charset/ISO-8859-15
 
 /**
+ * @class
  * Create a new character set info instance. Charset instances give information about
  * a particular character set, such as whether or not it is single byte or multibyte,
  * and which languages commonly use that charset.<p>
@@ -63,7 +64,6 @@
  * 
  * Depends directive: !depends charset.js
  * 
- * @class
  * @constructor
  * @see {ilib.setLoaderCallback} for information about registering a loader callback instance
  * @param {Object=} options options which govern the construction of this instance
