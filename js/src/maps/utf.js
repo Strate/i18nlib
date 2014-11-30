@@ -20,8 +20,8 @@
 // !depends ilibglobal.js maps/charmap.js strings.js
 
 /**
- * Create a new UTF-8 mapping instance
  * @class
+ * Create a new UTF-8 mapping instance
  * @constructor
  */
 ilib.Charmap.UTF8 = function () {};
@@ -168,8 +168,8 @@ ilib.Charmap.UTF8.prototype.mapToNative = function(str) {
 ilib.Charmap._algorithms["UTF-8"] = ilib.Charmap.UTF8;
 
 /**
- * Create a new UTF-16LE mapping instance
  * @class
+ * Create a new UTF-16LE mapping instance
  * @constructor
  */
 ilib.Charmap.UTF16LE = function () {};
@@ -218,8 +218,8 @@ ilib.Charmap._algorithms["UTF-16"] = ilib.Charmap.UTF16LE;
 ilib.Charmap._algorithms["UTF-16LE"] = ilib.Charmap.UTF16LE;
 
 /**
- * Create a new UTF-16BE mapping instance
  * @class
+ * Create a new UTF-16BE mapping instance
  * @constructor
  */
 ilib.Charmap.UTF16BE = function () {};

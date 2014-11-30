@@ -20,8 +20,9 @@
 // !depends ilibglobal.js maps/charmap.js strings.js
 
 /**
- * Create a new ISO-2022 mapping instance
  * @class
+ * Create a new ISO-2022 mapping instance
+ * 
  * @constructor
  */
 ilib.Charmap.ISO2022 = function (charset) {
@@ -39,6 +40,9 @@ ilib.Charmap.ISO2022.prototype.mapToUnicode = function (bytes) {
 ilib.Charmap.ISO2022.prototype.mapToNative = function(str) {
 };
 
+/*
+Still in development
+
 ilib.Charmap._algorithms["ISO-2022-JP"] = ilib.Charmap.ISO2022;
 ilib.Charmap._algorithms["ISO-2022-JP-1"] = ilib.Charmap.ISO2022;
 ilib.Charmap._algorithms["ISO-2022-JP-2"] = ilib.Charmap.ISO2022;
@@ -47,3 +51,4 @@ ilib.Charmap._algorithms["ISO-2022-JP-2004"] = ilib.Charmap.ISO2022;
 ilib.Charmap._algorithms["ISO-2022-CN"] = ilib.Charmap.ISO2022;
 ilib.Charmap._algorithms["ISO-2022-CN-EXT"] = ilib.Charmap.ISO2022;
 ilib.Charmap._algorithms["ISO-2022-KR"] = ilib.Charmap.ISO2022;
+*/

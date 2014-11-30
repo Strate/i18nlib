@@ -1,5 +1,5 @@
 /*
- * testcm_JP.js - Test the charset mapping routines for the various Japanese 
+ * testcm_CN.js - Test the charset mapping routines for the various Chinese 
  * character sets
  * 
  * Copyright © 2014, JEDLSoft
@@ -18,54 +18,45 @@
  * limitations under the License.
  */
 
-var aliasesJP = {
-    "Shift_JIS": [
-      	"Shift_JIS",
-    	"Shift-JIS",
-    	"SHIFT_JIS",
-    	"SJIS"
+var aliasesCN = {
+    "ISO-2022-CN-EXT": [
+      	"ISO2022CNEXT",
+    	"ISO_2022_CN_EXT",
+    	"iso-2022-CN-ext"
 	],
-	"Shift_JIS_X0213": [
-        "Shift_JISX0213",
-        "Shift-JIS-X-0213",
-        "SJISX0213"
+	"ISO-2022-CN": [
+      	"ISO2022CN",
+    	"ISO_2022_CN",
+    	"iso-2022-CN"
     ],
-    "EUC-JP": [
-		"euc-jp",
-		"EUC_JP",
-		"Extended_Unix_Code_JP"
+    "Big5": [
+		"big5",
+		"Big-5"
     ],
-    "EUC-JIS_X0213": [
-        "Extended_Unix_Code_JIS_X_0213",
-        "EUC_JISX0213"
+    "GB18030": [
+        "GB-18030",
+        "gb18030",
+        "GB",
+        "GB-18030:2005"
     ],
-    "ISO-2022-JP": [
-        "iso2022jp",
-        "ISO_2022_JP"
+    "GB2312": [
+        "GB-2312",
+        "gb2312"
     ],
-    "ISO-2022-JP-1": [
-        "iso2022jp1",
-        "ISO_2022_JP_1"
+    "GB_2312-80": [
+       "GB-2312-80",
+       "gb231280"
     ],
-    "ISO-2022-JP-2": [
-		"iso2022jp2",
-		"ISO_2022_JP_2"
-	],
-	"ISO-2022-JP-3": [
-		"iso2022jp3",
-		"ISO_2022_JP_3"
-	],
-	"ISO-2022-JP-2004": [
-		"iso2022jp2004",
-		"ISO_2022_JP_2004"
-	]
+    "GBK": [
+        "gbk"
+    ]
 };
 
-function testCharmapJPTestAliases() {
-	for (var charset in aliasesJP) {
-		for (var i = 0; i < aliasesJP[charset].length; i++) {
+function testCharmapCNTestAliases() {
+	for (var charset in aliasesCN) {
+		for (var i = 0; i < aliasesCN[charset].length; i++) {
 			var cm = new ilib.Charmap({
-				name: aliasesJP[charset][i]
+				name: aliasesCN[charset][i]
 			});
 		    assertNotUndefined(cm);
 		    assertEquals(charset, cm.getName());
@@ -73,7 +64,7 @@ function testCharmapJPTestAliases() {
 	}
 }
 
-var testDataJP = {
+var testDataCN = {
 	"EUC-JP": {
 	    "This is a test": [
 			0x54, // T
@@ -342,84 +333,15 @@ var testDataJP = {
 			0x82, 0xB7  // す
 		]
 	}
-/*	"ISO-2022-JP-2004": {
-	    "This is a test": [
-			0x54, // T
-			0x68, // h
-			0x69, // i
-			0x73, // s
-			0x20, // 
-			0x69, // i
-			0x73, // s
-			0x20, // 
-			0x61, // a
-			0x20, //
-			0x74, // t
-			0x65, // e
-			0x73, // s
-			0x74  // t
-		],
-		"ｱｶﾓﾄ": [
-			0xB1, // ｱ
-			0xB6, // ｶ
-			0xD3, // ﾓ
-			0xC4  // ﾄ
-		],
-		"ひらがなです": [
-		    27, 36, 40, 81, // designate hiragana
-		    27, 
-			0x82, 0xD0, // ひ
-			0x82, 0xE7, // ら
-			0x82, 0xAA, // が
-			0x82, 0xC8, // な
-			0x82, 0xC5, // で
-			0x82, 0xB7  // す
-		],
-		"カタカナです": [
-			0x83, 0x4A, // カ
-			0x83, 0x5E, // タ
-			0x83, 0x4A, // カ
-			0x83, 0x69, // ナ
-			0x82, 0xC5, // で
-			0x82, 0xB7  // す
-		],
-		"Ελλασ": [
-			0x83, 0xA3, // Ε
-			0x83, 0xC9, // λ
-			0x83, 0xC9, // λ
-			0x83, 0xBF, // α
-			0x83, 0xD0  // σ
-		],
-		"Русский": [
-			0x84, 0x51, // Р
-			0x84, 0x85, // у
-			0x84, 0x83, // с
-			0x84, 0x83, // с
-			0x84, 0x7B, // к
-			0x84, 0x79, // и
-			0x84, 0x7A  // й
-		],
-		"日本語は美しいです": [
-			0x93, 0xFA, // 日
-			0x96, 0x7B, // 本
-			0x8c, 0xEA, // 語
-			0x82, 0xCD, // は
-			0x94, 0xFC, // 美
-			0x82, 0xB5, // し
-			0x82, 0xA2, // い
-			0x82, 0xC5, // で
-			0x82, 0xB7  // す
-		]
-	} */
 };
 
-function testCharmapJPMapToUnicode() {
-	for (var charset in testDataJP) {
+function testCharmapCNMapToUnicode() {
+	for (var charset in testDataCN) {
 		var cm = new ilib.Charmap({
 			name: charset
 		});
 	    assertNotUndefined(cm);
-	    var data = testDataJP[charset];
+	    var data = testDataCN[charset];
 	    for (var element in data) {
 	    	// console.log("testing " + charset + " element " + element);
 		    assertEquals("testing " + charset + " element " + element + "\n", element, cm.mapToUnicode(data[element]));
@@ -427,13 +349,13 @@ function testCharmapJPMapToUnicode() {
 	}
 }
 
-function testCharmapJPMapToNative() {
-	for (var charset in testDataJP) {
+function testCharmapCNMapToNative() {
+	for (var charset in testDataCN) {
 		var cm = new ilib.Charmap({
 			name: charset
 		});
 	    assertNotUndefined(cm);
-	    var data = testDataJP[charset];
+	    var data = testDataCN[charset];
 	    for (var element in data) {
 	    	var array = cm.mapToNative(element);
 	    	// console.log("cm.mapToNative returned " + JSON.stringify(cm.mapToUnicode(array)));
