@@ -1,5 +1,5 @@
 /*
- * ctype.isascii.js - Character type is ASCII
+ * ctype.isprint.js - Character type is printable char
  * 
  * Copyright © 2012-2013, JEDLSoft
  *
@@ -17,34 +17,19 @@
  * limitations under the License.
  */
 
-// !depends ctype.js
-
-// !data ctype
+// !depends ctype.js ctype.iscntrl.js
 
 /**
- * Return whether or not the first character is in the ASCII range.<p>
+ * Return whether or not the first character is any printable character,
+ * including space.<p>
  * 
- * Depends directive: !depends ctype.isascii.js
+ * Depends directive: !depends ctype/ctype.isprint.js
  * 
  * @param {string|ilib.String|number} ch character or code point to examine
- * @return {boolean} true if the first character is in the ASCII range.
+ * @return {boolean} true if the first character is printable.
  */
-ilib.CType.isAscii = function (ch) {
-	var num;
-	switch (typeof(ch)) {
-		case 'number':
-			num = ch;
-			break;
-		case 'string':
-			num = ilib.String.toCodePoint(ch, 0);
-			break;
-		case 'undefined':
-			return false;
-		default:
-			num = ch._toCodePoint(0);
-			break;
-	}
-	return ilib.CType._inRange(num, 'ascii', ilib.data.ctype);
+ilib.CType.isPrint = function (ch) {
+	return typeof(ch) !== 'undefined' && ch.length > 0 && !ilib.CType.isCntrl(ch);
 };
 
 /**
@@ -53,6 +38,6 @@ ilib.CType.isAscii = function (ch) {
  * @param {Object} loadParams
  * @param {function(*)|undefined} onLoad
  */
-ilib.CType.isAscii._init = function (sync, loadParams, onLoad) {
-	ilib.CType._init(sync, loadParams, onLoad);
+ilib.CType.isPrint._init = function (sync, loadParams, onLoad) {
+	ilib.CType.isCntrl._init(sync, loadParams, onLoad);
 };

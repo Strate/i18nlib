@@ -22,8 +22,8 @@
 ilibglobal.js 
 locale.js 
 strings.js 
-ctype.isdigit.js 
-ctype.isspace.js
+ctype/ctype.isdigit.js 
+ctype/ctype.isspace.js
 */
 
 /**

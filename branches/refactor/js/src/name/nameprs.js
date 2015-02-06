@@ -21,10 +21,10 @@
 ilibglobal.js 
 locale.js
 util/utils.js 
-ctype.isalpha.js 
-ctype.isideo.js 
-ctype.ispunct.js 
-ctype.isspace.js
+ctype/ctype.isalpha.js 
+ctype/ctype.isideo.js 
+ctype/ctype.ispunct.js 
+ctype/ctype.isspace.js
 util/jsutils.js 
 */
 
@@ -87,7 +87,7 @@ util/jsutils.js
  * When formatting the short version of such names, only the paternal family name will
  * be used.
  *
- * Depends directive: !depends nameprs.js
+ * Depends directive: !depends name/nameprs.js
  *
  * @constructor
  * @param {string|ilib.Name=} name the name to parse

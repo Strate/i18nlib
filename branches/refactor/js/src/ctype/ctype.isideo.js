@@ -1,5 +1,5 @@
 /*
- * ctype.ispunct.js - Character type is punctuation
+ * ctype.js - Character type definitions
  * 
  * Copyright © 2012-2013, JEDLSoft
  *
@@ -19,17 +19,17 @@
 
 // !depends ctype.js
 
-// !data ctype_p
+// !data ctype
 
 /**
- * Return whether or not the first character is punctuation.<p>
+ * Return whether or not the first character is an ideographic character.<p>
  * 
- * Depends directive: !depends ctype.isprint.js
+ * Depends directive: !depends ctype/ctype.isideo.js
  * 
  * @param {string|ilib.String|number} ch character or code point to examine
- * @return {boolean} true if the first character is punctuation.
+ * @return {boolean} true if the first character is an ideographic character.
  */
-ilib.CType.isPunct = function (ch) {
+ilib.CType.isIdeo = function (ch) {
 	var num;
 	switch (typeof(ch)) {
 		case 'number':
@@ -45,13 +45,11 @@ ilib.CType.isPunct = function (ch) {
 			break;
 	}
 
-	return ilib.CType._inRange(num, 'Pd', ilib.data.ctype_p) ||
-		ilib.CType._inRange(num, 'Ps', ilib.data.ctype_p) ||
-		ilib.CType._inRange(num, 'Pe', ilib.data.ctype_p) ||
-		ilib.CType._inRange(num, 'Pc', ilib.data.ctype_p) ||
-		ilib.CType._inRange(num, 'Po', ilib.data.ctype_p) ||
-		ilib.CType._inRange(num, 'Pi', ilib.data.ctype_p) ||
-		ilib.CType._inRange(num, 'Pf', ilib.data.ctype_p);
+	return ilib.CType._inRange(num, 'cjk', ilib.data.ctype) ||
+		ilib.CType._inRange(num, 'cjkradicals', ilib.data.ctype) ||
+		ilib.CType._inRange(num, 'enclosedcjk', ilib.data.ctype) ||
+		ilib.CType._inRange(num, 'cjkpunct', ilib.data.ctype) ||
+		ilib.CType._inRange(num, 'cjkcompatibility', ilib.data.ctype);
 };
 
 /**
@@ -60,6 +58,6 @@ ilib.CType.isPunct = function (ch) {
  * @param {Object} loadParams
  * @param {function(*)|undefined} onLoad
  */
-ilib.CType.isPunct._init = function (sync, loadParams, onLoad) {
-	ilib.CType._load("ctype_p", sync, loadParams, onLoad);
+ilib.CType.isIdeo._init = function (sync, loadParams, onLoad) {
+	ilib.CType._init(sync, loadParams, onLoad);
 };

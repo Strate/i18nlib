@@ -1,5 +1,5 @@
 /*
- * ctype.isdigit.js - Character type is digit
+ * ctype.isupper.js - Character type is upper-case letter
  * 
  * Copyright © 2012-2013, JEDLSoft
  *
@@ -19,19 +19,19 @@
 
 // !depends ctype.js
 
-// !data ctype
+// !data ctype_l
 
 /**
- * Return whether or not the first character is a hexadecimal digit written
- * in the Latin script. (0-9 or A-F)<p>
+ * Return whether or not the first character is upper-case. For alphabetic
+ * characters in scripts that do not make a distinction between upper- and 
+ * lower-case, this function always returns true.<p>
  * 
- * Depends directive: !depends ctype.isxdigit.js
+ * Depends directive: !depends ctype/ctype.isupper.js
  * 
  * @param {string|ilib.String|number} ch character or code point to examine
- * @return {boolean} true if the first character is a hexadecimal digit written
- * in the Latin script.
+ * @return {boolean} true if the first character is upper-case.
  */
-ilib.CType.isXdigit = function (ch) {
+ilib.CType.isUpper = function (ch) {
 	var num;
 	switch (typeof(ch)) {
 		case 'number':
@@ -47,7 +47,7 @@ ilib.CType.isXdigit = function (ch) {
 			break;
 	}
 
-	return ilib.CType._inRange(num, 'xdigit', ilib.data.ctype);
+	return ilib.CType._inRange(num, 'Lu', ilib.data.ctype_l);
 };
 
 /**
@@ -56,6 +56,6 @@ ilib.CType.isXdigit = function (ch) {
  * @param {Object} loadParams
  * @param {function(*)|undefined} onLoad
  */
-ilib.CType.isXdigit._init = function (sync, loadParams, onLoad) {
-	ilib.CType._init(sync, loadParams, onLoad);
+ilib.CType.isUpper._init = function (sync, loadParams, onLoad) {
+	ilib.CType._load("ctype_l", sync, loadParams, onLoad);
 };

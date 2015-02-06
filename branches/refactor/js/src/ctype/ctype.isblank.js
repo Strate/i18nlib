@@ -1,5 +1,5 @@
 /*
- * ctype.iscntrl.js - Character type is control character
+ * ctype.isblank.js - Character type is blank
  * 
  * Copyright © 2012-2013, JEDLSoft
  *
@@ -19,17 +19,18 @@
 
 // !depends ctype.js
 
-// !data ctype_c
+// !data ctype
 
 /**
- * Return whether or not the first character is a control character.<p>
+ * Return whether or not the first character is a blank character.<p>
  * 
- * Depends directive: !depends ctype.iscntrl.js
+ * Depends directive: !depends ctype/ctype.isblank.js
  * 
+ * ie. a space or a tab.
  * @param {string|ilib.String|number} ch character or code point to examine
- * @return {boolean} true if the first character is a control character.
+ * @return {boolean} true if the first character is a blank character.
  */
-ilib.CType.isCntrl = function (ch) {
+ilib.CType.isBlank = function (ch) {
 	var num;
 	switch (typeof(ch)) {
 		case 'number':
@@ -44,7 +45,7 @@ ilib.CType.isCntrl = function (ch) {
 			num = ch._toCodePoint(0);
 			break;
 	}
-	return ilib.CType._inRange(num, 'Cc', ilib.data.ctype_c);
+	return ilib.CType._inRange(num, 'blank', ilib.data.ctype);
 };
 
 /**
@@ -53,6 +54,6 @@ ilib.CType.isCntrl = function (ch) {
  * @param {Object} loadParams
  * @param {function(*)|undefined} onLoad
  */
-ilib.CType.isCntrl._init = function (sync, loadParams, onLoad) {
-	ilib.CType._load("ctype_c", sync, loadParams, onLoad);
+ilib.CType.isBlank._init = function (sync, loadParams, onLoad) {
+	ilib.CType._init(sync, loadParams, onLoad);
 };

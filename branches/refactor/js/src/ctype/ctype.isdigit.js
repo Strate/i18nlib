@@ -1,5 +1,5 @@
 /*
- * ctype.isscript.js - Character type is script
+ * ctype.isdigit.js - Character type is digit
  * 
  * Copyright © 2012-2013, JEDLSoft
  *
@@ -19,21 +19,19 @@
 
 // !depends ctype.js
 
-// !data scriptToRange
+// !data ctype
 
 /**
- * Return whether or not the first character in the given string is 
- * in the given script. The script is given as the 4-letter ISO
- * 15924 script code.<p>
+ * Return whether or not the first character is a digit character in the
+ * Latin script.<p>
  * 
- * Depends directive: !depends ctype.isscript.js
+ * Depends directive: !depends ctype/ctype.isdigit.js
  * 
  * @param {string|ilib.String|number} ch character or code point to examine
- * @param {string} script the 4-letter ISO 15924 to query against
- * @return {boolean} true if the first character is in the given script, and
- * false otherwise
+ * @return {boolean} true if the first character is a digit character in the
+ * Latin script. 
  */
-ilib.CType.isScript = function (ch, script) {
+ilib.CType.isDigit = function (ch) {
 	var num;
 	switch (typeof(ch)) {
 		case 'number':
@@ -48,8 +46,7 @@ ilib.CType.isScript = function (ch, script) {
 			num = ch._toCodePoint(0);
 			break;
 	}
-
-	return ilib.CType._inRange(num, script, ilib.data.scriptToRange);
+	return ilib.CType._inRange(num, 'digit', ilib.data.ctype);
 };
 
 /**
@@ -58,7 +55,6 @@ ilib.CType.isScript = function (ch, script) {
  * @param {Object} loadParams
  * @param {function(*)|undefined} onLoad
  */
-ilib.CType.isScript._init = function (sync, loadParams, onLoad) {
-	ilib.CType._load("scriptToRange", sync, loadParams, onLoad);
+ilib.CType.isDigit._init = function (sync, loadParams, onLoad) {
+	ilib.CType._init(sync, loadParams, onLoad);
 };
-

@@ -1,5 +1,5 @@
 /*
- * ctype.isprint.js - Character type is printable char
+ * ctype.isdigit.js - Character type is digit
  * 
  * Copyright © 2012-2013, JEDLSoft
  *
@@ -17,19 +17,37 @@
  * limitations under the License.
  */
 
-// !depends ctype.js ctype.iscntrl.js
+// !depends ctype.js
+
+// !data ctype
 
 /**
- * Return whether or not the first character is any printable character,
- * including space.<p>
+ * Return whether or not the first character is a hexadecimal digit written
+ * in the Latin script. (0-9 or A-F)<p>
  * 
- * Depends directive: !depends ctype.isprint.js
+ * Depends directive: !depends ctype/ctype.isxdigit.js
  * 
  * @param {string|ilib.String|number} ch character or code point to examine
- * @return {boolean} true if the first character is printable.
+ * @return {boolean} true if the first character is a hexadecimal digit written
+ * in the Latin script.
  */
-ilib.CType.isPrint = function (ch) {
-	return typeof(ch) !== 'undefined' && ch.length > 0 && !ilib.CType.isCntrl(ch);
+ilib.CType.isXdigit = function (ch) {
+	var num;
+	switch (typeof(ch)) {
+		case 'number':
+			num = ch;
+			break;
+		case 'string':
+			num = ilib.String.toCodePoint(ch, 0);
+			break;
+		case 'undefined':
+			return false;
+		default:
+			num = ch._toCodePoint(0);
+			break;
+	}
+
+	return ilib.CType._inRange(num, 'xdigit', ilib.data.ctype);
 };
 
 /**
@@ -38,6 +56,6 @@ ilib.CType.isPrint = function (ch) {
  * @param {Object} loadParams
  * @param {function(*)|undefined} onLoad
  */
-ilib.CType.isPrint._init = function (sync, loadParams, onLoad) {
-	ilib.CType.isCntrl._init(sync, loadParams, onLoad);
+ilib.CType.isXdigit._init = function (sync, loadParams, onLoad) {
+	ilib.CType._init(sync, loadParams, onLoad);
 };

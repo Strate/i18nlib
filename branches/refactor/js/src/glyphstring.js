@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-// !depends strings.js ctype.js
+// !depends strings.js ctype/ctype.js
 // !data norm ctype_m
 
 /**

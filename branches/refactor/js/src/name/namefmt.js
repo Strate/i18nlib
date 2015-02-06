@@ -21,8 +21,8 @@
 ilibglobal.js
 locale.js
 strings.js
-nameprs.js
-ctype.ispunct.js
+name/nameprs.js
+ctype/ctype.ispunct.js
 */
 
 // !data name

@@ -19,12 +19,12 @@
 
 /*globals console RegExp */
 
-/* !depends 
+/* depends 
 ilibglobal.js 
 locale.js 
-ctype.isideo.js 
-ctype.isascii.js
-ctype.isdigit.js
+ctype/ctype.isideo.js 
+ctype/ctype.isascii.js
+ctype/ctype.isdigit.js
 */
 
 // !data address countries nativecountries ctrynames
@@ -89,7 +89,7 @@ ctype.isdigit.js
  * When the freeformAddress is another ilib.Address, this will act like a copy
  * constructor.<p>
  * 
- * Depends directive: !depends addressprs.js
+ * Depends directive: !depends address/addressprs.js
  * 
  * @constructor
  * @param {string|ilib.Address} freeformAddress free-form address to parse, or a
