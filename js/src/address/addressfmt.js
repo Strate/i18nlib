@@ -17,9 +17,13 @@
  * limitations under the License.
  */
 
-/* !depends 
+/* depends 
 ilibglobal.js 
 locale.js
+address/addressprs.js
+*/
+
+/* !depends 
 addressprs.js
 */
 

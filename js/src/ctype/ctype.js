@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-// !depends ilibglobal.js locale.js util/search.js
+// depends ilibglobal.js locale.js util/search.js
 
 // !data ctype
 
@@ -242,7 +242,7 @@ ilib.CType = {
 	 * <li><i>noncharacters</i>
 	 * </ul><p>
 	 * 
-	 * Depends directive: !depends ctype.js
+	 * Depends directive: !depends ctype/ctype.js
 	 * 
 	 * @param {string|ilib.String|number} ch character or code point to examine
 	 * @param {string} rangeName the name of the range to check

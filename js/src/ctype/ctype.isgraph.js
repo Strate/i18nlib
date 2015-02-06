@@ -1,5 +1,5 @@
 /*
- * ctype.islpha.js - Character type is alphabetic
+ * ctype.isgraph.js - Character type is graph char
  * 
  * Copyright © 2012-2013, JEDLSoft
  *
@@ -17,19 +17,19 @@
  * limitations under the License.
  */
 
-// !depends ctype.js
-
-// !data ctype_l
+// !depends ctype.js ctype.isspace.js ctype.iscntrl.js
 
 /**
- * Return whether or not the first character is alphabetic.<p>
+ * Return whether or not the first character is any printable character
+ * other than space.<p>
  * 
- * Depends directive: !depends ctype.isalnum.js
+ * Depends directive: !depends ctype/ctype.isgraph.js
  * 
  * @param {string|ilib.String|number} ch character or code point to examine
- * @return {boolean} true if the first character is alphabetic.
+ * @return {boolean} true if the first character is any printable character
+ * other than space. 
  */
-ilib.CType.isAlpha = function (ch) {
+ilib.CType.isGraph = function (ch) {
 	var num;
 	switch (typeof(ch)) {
 		case 'number':
@@ -44,11 +44,7 @@ ilib.CType.isAlpha = function (ch) {
 			num = ch._toCodePoint(0);
 			break;
 	}
-	return ilib.CType._inRange(num, 'Lu', ilib.data.ctype_l) ||
-		ilib.CType._inRange(num, 'Ll', ilib.data.ctype_l) ||
-		ilib.CType._inRange(num, 'Lt', ilib.data.ctype_l) ||
-		ilib.CType._inRange(num, 'Lm', ilib.data.ctype_l) ||
-		ilib.CType._inRange(num, 'Lo', ilib.data.ctype_l);
+	return typeof(ch) !== 'undefined' && ch.length > 0 && !ilib.CType.isSpace(num) && !ilib.CType.isCntrl(num);
 };
 
 /**
@@ -57,8 +53,8 @@ ilib.CType.isAlpha = function (ch) {
  * @param {Object} loadParams
  * @param {function(*)|undefined} onLoad
  */
-ilib.CType.isAlpha._init = function (sync, loadParams, onLoad) {
-	ilib.CType._load("ctype_l", sync, loadParams, onLoad);
+ilib.CType.isGraph._init = function (sync, loadParams, onLoad) {
+	ilib.CType.isSpace._init(sync, loadParams, function () {
+		ilib.CType.isCntrl._init(sync, loadParams, onLoad);
+	});
 };
-
-

@@ -1,5 +1,5 @@
 /*
- * ctype.isupper.js - Character type is upper-case letter
+ * ctype.isascii.js - Character type is ASCII
  * 
  * Copyright © 2012-2013, JEDLSoft
  *
@@ -19,19 +19,17 @@
 
 // !depends ctype.js
 
-// !data ctype_l
+// !data ctype
 
 /**
- * Return whether or not the first character is upper-case. For alphabetic
- * characters in scripts that do not make a distinction between upper- and 
- * lower-case, this function always returns true.<p>
+ * Return whether or not the first character is in the ASCII range.<p>
  * 
- * Depends directive: !depends ctype.isupper.js
+ * Depends directive: !depends ctype/ctype.isascii.js
  * 
  * @param {string|ilib.String|number} ch character or code point to examine
- * @return {boolean} true if the first character is upper-case.
+ * @return {boolean} true if the first character is in the ASCII range.
  */
-ilib.CType.isUpper = function (ch) {
+ilib.CType.isAscii = function (ch) {
 	var num;
 	switch (typeof(ch)) {
 		case 'number':
@@ -46,8 +44,7 @@ ilib.CType.isUpper = function (ch) {
 			num = ch._toCodePoint(0);
 			break;
 	}
-
-	return ilib.CType._inRange(num, 'Lu', ilib.data.ctype_l);
+	return ilib.CType._inRange(num, 'ascii', ilib.data.ctype);
 };
 
 /**
@@ -56,6 +53,6 @@ ilib.CType.isUpper = function (ch) {
  * @param {Object} loadParams
  * @param {function(*)|undefined} onLoad
  */
-ilib.CType.isUpper._init = function (sync, loadParams, onLoad) {
-	ilib.CType._load("ctype_l", sync, loadParams, onLoad);
+ilib.CType.isAscii._init = function (sync, loadParams, onLoad) {
+	ilib.CType._init(sync, loadParams, onLoad);
 };

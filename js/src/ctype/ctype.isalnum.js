@@ -1,5 +1,5 @@
 /*
- * ctype.isblank.js - Character type is blank
+ * ctype.isalnum.js - Character type alphanumeric
  * 
  * Copyright © 2012-2013, JEDLSoft
  *
@@ -17,20 +17,17 @@
  * limitations under the License.
  */
 
-// !depends ctype.js
-
-// !data ctype
+// !depends ctype.js ctype.isalpha.js ctype.isdigit.js
 
 /**
- * Return whether or not the first character is a blank character.<p>
+ * Return whether or not the first character is alphabetic or numeric.<p>
  * 
- * Depends directive: !depends ctype.isblank.js
+ * Depends directive: !depends ctype/ctype.isalnum.js
  * 
- * ie. a space or a tab.
  * @param {string|ilib.String|number} ch character or code point to examine
- * @return {boolean} true if the first character is a blank character.
+ * @return {boolean} true if the first character is alphabetic or numeric
  */
-ilib.CType.isBlank = function (ch) {
+ilib.CType.isAlnum = function isAlnum(ch) {
 	var num;
 	switch (typeof(ch)) {
 		case 'number':
@@ -45,7 +42,7 @@ ilib.CType.isBlank = function (ch) {
 			num = ch._toCodePoint(0);
 			break;
 	}
-	return ilib.CType._inRange(num, 'blank', ilib.data.ctype);
+	return ilib.CType.isAlpha(num) || ilib.CType.isDigit(num);
 };
 
 /**
@@ -54,6 +51,8 @@ ilib.CType.isBlank = function (ch) {
  * @param {Object} loadParams
  * @param {function(*)|undefined} onLoad
  */
-ilib.CType.isBlank._init = function (sync, loadParams, onLoad) {
-	ilib.CType._init(sync, loadParams, onLoad);
+ilib.CType.isAlnum._init = function (sync, loadParams, onLoad) {
+	ilib.CType.isAlpha._init(sync, loadParams, function () {
+		ilib.CType.isDigit._init(sync, loadParams, onLoad);
+	});
 };

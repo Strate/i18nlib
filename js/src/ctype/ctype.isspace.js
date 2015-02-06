@@ -1,5 +1,5 @@
 /*
- * ctype.js - Character type definitions
+ * ctype.isspace.js - Character type is space char
  * 
  * Copyright © 2012-2013, JEDLSoft
  *
@@ -19,17 +19,17 @@
 
 // !depends ctype.js
 
-// !data ctype
+// !data ctype ctype_z
 
 /**
- * Return whether or not the first character is an ideographic character.<p>
+ * Return whether or not the first character is a whitespace character.<p>
  * 
- * Depends directive: !depends ctype.isideo.js
+ * Depends directive: !depends ctype/ctype.isspace.js
  * 
  * @param {string|ilib.String|number} ch character or code point to examine
- * @return {boolean} true if the first character is an ideographic character.
+ * @return {boolean} true if the first character is a whitespace character.
  */
-ilib.CType.isIdeo = function (ch) {
+ilib.CType.isSpace = function (ch) {
 	var num;
 	switch (typeof(ch)) {
 		case 'number':
@@ -45,11 +45,10 @@ ilib.CType.isIdeo = function (ch) {
 			break;
 	}
 
-	return ilib.CType._inRange(num, 'cjk', ilib.data.ctype) ||
-		ilib.CType._inRange(num, 'cjkradicals', ilib.data.ctype) ||
-		ilib.CType._inRange(num, 'enclosedcjk', ilib.data.ctype) ||
-		ilib.CType._inRange(num, 'cjkpunct', ilib.data.ctype) ||
-		ilib.CType._inRange(num, 'cjkcompatibility', ilib.data.ctype);
+	return ilib.CType._inRange(num, 'space', ilib.data.ctype) ||
+		ilib.CType._inRange(num, 'Zs', ilib.data.ctype_z) ||
+		ilib.CType._inRange(num, 'Zl', ilib.data.ctype_z) ||
+		ilib.CType._inRange(num, 'Zp', ilib.data.ctype_z);
 };
 
 /**
@@ -58,6 +57,8 @@ ilib.CType.isIdeo = function (ch) {
  * @param {Object} loadParams
  * @param {function(*)|undefined} onLoad
  */
-ilib.CType.isIdeo._init = function (sync, loadParams, onLoad) {
-	ilib.CType._init(sync, loadParams, onLoad);
+ilib.CType.isSpace._init = function (sync, loadParams, onLoad) {
+	ilib.CType._load("ctype_z", sync, loadParams, function () {
+		ilib.CType._init(sync, loadParams, onLoad);
+	});
 };

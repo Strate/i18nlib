@@ -26,7 +26,7 @@
  * characters in scripts that do not make a distinction between upper- and 
  * lower-case, this function always returns true.<p>
  * 
- * Depends directive: !depends ctype.islower.js
+ * Depends directive: !depends ctype/ctype.islower.js
  * 
  * @param {string|ilib.String|number} ch character or code point to examine
  * @return {boolean} true if the first character is lower-case.

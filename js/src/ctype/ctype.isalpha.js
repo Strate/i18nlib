@@ -1,5 +1,5 @@
 /*
- * ctype.isdigit.js - Character type is digit
+ * ctype.islpha.js - Character type is alphabetic
  * 
  * Copyright © 2012-2013, JEDLSoft
  *
@@ -19,19 +19,17 @@
 
 // !depends ctype.js
 
-// !data ctype
+// !data ctype_l
 
 /**
- * Return whether or not the first character is a digit character in the
- * Latin script.<p>
+ * Return whether or not the first character is alphabetic.<p>
  * 
- * Depends directive: !depends ctype.isdigit.js
+ * Depends directive: !depends ctype/ctype.isalnum.js
  * 
  * @param {string|ilib.String|number} ch character or code point to examine
- * @return {boolean} true if the first character is a digit character in the
- * Latin script. 
+ * @return {boolean} true if the first character is alphabetic.
  */
-ilib.CType.isDigit = function (ch) {
+ilib.CType.isAlpha = function (ch) {
 	var num;
 	switch (typeof(ch)) {
 		case 'number':
@@ -46,7 +44,11 @@ ilib.CType.isDigit = function (ch) {
 			num = ch._toCodePoint(0);
 			break;
 	}
-	return ilib.CType._inRange(num, 'digit', ilib.data.ctype);
+	return ilib.CType._inRange(num, 'Lu', ilib.data.ctype_l) ||
+		ilib.CType._inRange(num, 'Ll', ilib.data.ctype_l) ||
+		ilib.CType._inRange(num, 'Lt', ilib.data.ctype_l) ||
+		ilib.CType._inRange(num, 'Lm', ilib.data.ctype_l) ||
+		ilib.CType._inRange(num, 'Lo', ilib.data.ctype_l);
 };
 
 /**
@@ -55,6 +57,8 @@ ilib.CType.isDigit = function (ch) {
  * @param {Object} loadParams
  * @param {function(*)|undefined} onLoad
  */
-ilib.CType.isDigit._init = function (sync, loadParams, onLoad) {
-	ilib.CType._init(sync, loadParams, onLoad);
+ilib.CType.isAlpha._init = function (sync, loadParams, onLoad) {
+	ilib.CType._load("ctype_l", sync, loadParams, onLoad);
 };
+
+

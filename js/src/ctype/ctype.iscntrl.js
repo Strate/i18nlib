@@ -1,5 +1,5 @@
 /*
- * ctype.isalnum.js - Character type alphanumeric
+ * ctype.iscntrl.js - Character type is control character
  * 
  * Copyright © 2012-2013, JEDLSoft
  *
@@ -17,17 +17,19 @@
  * limitations under the License.
  */
 
-// !depends ctype.js ctype.isalpha.js ctype.isdigit.js
+// !depends ctype.js
+
+// !data ctype_c
 
 /**
- * Return whether or not the first character is alphabetic or numeric.<p>
+ * Return whether or not the first character is a control character.<p>
  * 
- * Depends directive: !depends ctype.isalnum.js
+ * Depends directive: !depends ctype/ctype.iscntrl.js
  * 
  * @param {string|ilib.String|number} ch character or code point to examine
- * @return {boolean} true if the first character is alphabetic or numeric
+ * @return {boolean} true if the first character is a control character.
  */
-ilib.CType.isAlnum = function isAlnum(ch) {
+ilib.CType.isCntrl = function (ch) {
 	var num;
 	switch (typeof(ch)) {
 		case 'number':
@@ -42,7 +44,7 @@ ilib.CType.isAlnum = function isAlnum(ch) {
 			num = ch._toCodePoint(0);
 			break;
 	}
-	return ilib.CType.isAlpha(num) || ilib.CType.isDigit(num);
+	return ilib.CType._inRange(num, 'Cc', ilib.data.ctype_c);
 };
 
 /**
@@ -51,8 +53,6 @@ ilib.CType.isAlnum = function isAlnum(ch) {
  * @param {Object} loadParams
  * @param {function(*)|undefined} onLoad
  */
-ilib.CType.isAlnum._init = function (sync, loadParams, onLoad) {
-	ilib.CType.isAlpha._init(sync, loadParams, function () {
-		ilib.CType.isDigit._init(sync, loadParams, onLoad);
-	});
+ilib.CType.isCntrl._init = function (sync, loadParams, onLoad) {
+	ilib.CType._load("ctype_c", sync, loadParams, onLoad);
 };

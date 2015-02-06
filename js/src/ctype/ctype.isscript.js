@@ -1,5 +1,5 @@
 /*
- * ctype.isgraph.js - Character type is graph char
+ * ctype.isscript.js - Character type is script
  * 
  * Copyright © 2012-2013, JEDLSoft
  *
@@ -17,19 +17,23 @@
  * limitations under the License.
  */
 
-// !depends ctype.js ctype.isspace.js ctype.iscntrl.js
+// !depends ctype.js
+
+// !data scriptToRange
 
 /**
- * Return whether or not the first character is any printable character
- * other than space.<p>
+ * Return whether or not the first character in the given string is 
+ * in the given script. The script is given as the 4-letter ISO
+ * 15924 script code.<p>
  * 
- * Depends directive: !depends ctype.isgraph.js
+ * Depends directive: !depends ctype/ctype.isscript.js
  * 
  * @param {string|ilib.String|number} ch character or code point to examine
- * @return {boolean} true if the first character is any printable character
- * other than space. 
+ * @param {string} script the 4-letter ISO 15924 to query against
+ * @return {boolean} true if the first character is in the given script, and
+ * false otherwise
  */
-ilib.CType.isGraph = function (ch) {
+ilib.CType.isScript = function (ch, script) {
 	var num;
 	switch (typeof(ch)) {
 		case 'number':
@@ -44,7 +48,8 @@ ilib.CType.isGraph = function (ch) {
 			num = ch._toCodePoint(0);
 			break;
 	}
-	return typeof(ch) !== 'undefined' && ch.length > 0 && !ilib.CType.isSpace(num) && !ilib.CType.isCntrl(num);
+
+	return ilib.CType._inRange(num, script, ilib.data.scriptToRange);
 };
 
 /**
@@ -53,8 +58,7 @@ ilib.CType.isGraph = function (ch) {
  * @param {Object} loadParams
  * @param {function(*)|undefined} onLoad
  */
-ilib.CType.isGraph._init = function (sync, loadParams, onLoad) {
-	ilib.CType.isSpace._init(sync, loadParams, function () {
-		ilib.CType.isCntrl._init(sync, loadParams, onLoad);
-	});
+ilib.CType.isScript._init = function (sync, loadParams, onLoad) {
+	ilib.CType._load("scriptToRange", sync, loadParams, onLoad);
 };
+
