@@ -1,7 +1,7 @@
 /*
  * datefmt.js - Date formatter definition
  * 
- * Copyright © 2012-2014, JEDLSoft
+ * Copyright © 2012-2015, JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +18,12 @@
  */
 
 /*
-!depends 
+depends 
 ilibglobal.js 
 locale.js 
-date.js 
 strings.js 
-calendar.js
 localeinfo.js
-timezone.js
 datefmt.js
-calendar/gregorian.js
 util/jsutils.js
 */
 

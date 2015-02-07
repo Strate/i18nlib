@@ -17,6 +17,5 @@
  */
 
 /* !depends
-address/addressprs.js
-address/addressfmt.js
+collate/collate.js
 */

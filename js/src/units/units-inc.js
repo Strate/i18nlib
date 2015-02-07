@@ -17,6 +17,17 @@
  */
 
 /* !depends
-address/addressprs.js
-address/addressfmt.js
+units/unit.js
+units/unitfmt.js
+units/length.js
+units/speed.js
+units/temperature.js
+units/digitalStorage.js
+units/unknown.js
+units/time.js
+units/mass.js
+units/area.js
+units/fuelConsumption.js
+units/volume.js	
+units/energy.js
 */

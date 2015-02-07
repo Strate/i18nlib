@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-// !depends ctype.js ctype.isalpha.js ctype.isdigit.js
+// !depends ctype/ctype.js ctype/ctype.isalpha.js ctype/ctype.isdigit.js
 
 /**
  * Return whether or not the first character is alphabetic or numeric.<p>

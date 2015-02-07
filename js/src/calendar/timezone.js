@@ -18,7 +18,7 @@
  */
 
 /*
-!depends 
+depends 
 ilibglobal.js 
 locale.js
 localeinfo.js
@@ -27,7 +27,12 @@ util/math.js
 calendar/gregratadie.js
 */
 
-// !data localeinfo zoneinfo
+/*
+!depends 
+calendar/gregratadie.js
+*/
+
+// !data zoneinfo
 
 /**
  * @class

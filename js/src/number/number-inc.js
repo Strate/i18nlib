@@ -17,6 +17,6 @@
  */
 
 /* !depends
-address/addressprs.js
-address/addressfmt.js
+number/numprs.js
+number/numfmt.js
 */

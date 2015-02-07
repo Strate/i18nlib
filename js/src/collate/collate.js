@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-// !depends locale.js ilibglobal.js numprs.js ctype/ctype.ispunct.js normstring.js util/math.js
+// depends locale.js ilibglobal.js numprs.js ctype/ctype.ispunct.js normstring.js util/math.js
 
 // !data collation
 

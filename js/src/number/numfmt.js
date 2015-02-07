@@ -17,9 +17,8 @@
  * limitations under the License.
  */
 
-// !depends ilibglobal.js locale.js strings.js currency.js
 /*
-!depends 
+depends 
 ilibglobal.js 
 locale.js
 localeinfo.js
@@ -28,6 +27,11 @@ util/math.js
 currency.js
 strings.js
 util/jsutils.js
+*/
+
+/*
+!depends
+number/numprs.js
 */
 
 // !data localeinfo currency

@@ -26,48 +26,152 @@ var runner = new JsUnit.TestRunner("../..");
 
 var suiteDefinitions = {
 	"core": {
-        "util": "util/test/testSuite.js",
+        "util": {
+			suite: "util/test/testSuite.js"
+		},
         ".": "test/testSuite.js"
 	},
 	"standard": {
-        "util": "util/test/testSuite.js",
-        ".": "test/testSuite.js",
-	    "calendar": "calendar/test/testSuite.js",
-	    "date1": "date/test/testSuite.js",
-	    "date2": "date/test/testSuite2.js",
-	    "date3": "date/test/testSuite3.js",
-	    "daterange1": "daterange/test/testSuite.js",
-	    "daterange2": "daterange/test/testSuite2.js",
-	    "daterange3": "daterange/test/testSuite3.js",
-	    "durfmt": "durfmt/test/testSuite.js",
-	    "number": "number/test/testSuite.js",
-	    "maps": "maps/test/testSuite.js",
-	    "ctype": "ctype/test/testSuite.js"
+        "util": {
+			suite: "util/test/testSuite.js"
+		},
+        ".": {
+			suite: "test/testSuite.js"
+		},
+	    "calendar": {
+			suite: "calendar/test/testSuite.js",
+			includes: ["ilib-calendar"]
+		},
+	    "date1": {
+			suite: "date/test/testSuite.js",
+			includes: ["ilib-calendar","ilib-date"]
+		},
+	    "date2": {
+			suite: "date/test/testSuite2.js",
+			includes: ["ilib-calendar","ilib-date"]
+		},
+	    "date3": {
+			suite: "date/test/testSuite3.js",
+			includes: ["ilib-calendar","ilib-date"]
+		},
+	    "daterange1": {
+			suite: "daterange/test/testSuite.js",
+			includes: ["ilib-calendar","ilib-date","ilib-daterange"]
+		},
+	    "daterange2": {
+			suite: "daterange/test/testSuite2.js",
+			includes: ["ilib-calendar","ilib-date","ilib-daterange"]
+		},
+	    "daterange3": {
+			suite: "daterange/test/testSuite3.js",
+			includes: ["ilib-calendar","ilib-date","ilib-daterange"]
+		},
+	    "durfmt": {
+			suite: "durfmt/test/testSuite.js",
+			includes: ["ilib-calendar","ilib-date","ilib-durfmt"]
+		},
+	    "number": {
+			suite: "number/test/testSuite.js",
+			includes: ["ilib-ctype","ilib-number"]
+		},
+	    "maps": {
+			suite: "maps/test/testSuite.js"
+		},
+	    "ctype": {
+	    	suite: "ctype/test/testSuite.js",
+			includes: ["ilib-ctype"]
+	    }
 	},
 	"full": {
-        "util": "util/test/testSuite.js",
-        ".": "test/testSuite.js",
-	    "calendar": "calendar/test/testSuite.js",
-	    "date1": "date/test/testSuite.js",
-	    "date2": "date/test/testSuite2.js",
-	    "date3": "date/test/testSuite3.js",
-	    "daterange1": "daterange/test/testSuite.js",
-	    "daterange2": "daterange/test/testSuite2.js",
-	    "daterange3": "daterange/test/testSuite3.js",
-	    "durfmt": "durfmt/test/testSuite.js",
-	    "number": "number/test/testSuite.js",
-	    "maps": "maps/test/testSuite.js",
-	    "ctype": "ctype/test/testSuite.js",
-	    "strings-ext": "strings-ext/test/testSuite.js",
-	    "phone1": "phone/test/testSuite.js",
-	    "phone2": "phone/test/testSuite2.js",
-	    "phone3": "phone/test/testSuite3.js",
-	    "units": "units/test/testSuite.js",
-	    "name": "name/test/testSuite.js",
-	    "address1": "address/test/testSuite.js",
-	    "address2": "address/test/testSuite2.js",
-	    "address3": "address/test/testSuite3.js",
-	    "collate": "collate/test/testSuite.js"
+        "util": {
+			suite: "util/test/testSuite.js"
+		},
+        ".": {
+			suite: "test/testSuite.js"
+		},
+	    "calendar": {
+			suite: "calendar/test/testSuite.js",
+			includes: ["ilib-calendar"]
+		},
+	    "date1": {
+			suite: "date/test/testSuite.js",
+			includes: ["ilib-calendar","ilib-date"]
+		},
+	    "date2": {
+			suite: "date/test/testSuite2.js",
+			includes: ["ilib-calendar","ilib-date"]
+		},
+	    "date3": {
+			suite: "date/test/testSuite3.js",
+			includes: ["ilib-calendar","ilib-date"]
+		},
+	    "daterange1": {
+			suite: "daterange/test/testSuite.js",
+			includes: ["ilib-calendar","ilib-date","ilib-daterange"]
+		},
+	    "daterange2": {
+			suite: "daterange/test/testSuite2.js",
+			includes: ["ilib-calendar","ilib-date","ilib-daterange"]
+		},
+	    "daterange3": {
+			suite: "daterange/test/testSuite3.js",
+			includes: ["ilib-calendar","ilib-date","ilib-daterange"]
+		},
+	    "durfmt": {
+			suite: "durfmt/test/testSuite.js",
+			includes: ["ilib-calendar","ilib-date","ilib-durfmt"]
+		},
+	    "number": {
+			suite: "number/test/testSuite.js",
+			includes: ["ilib-ctype","ilib-number"]
+		},
+	    "maps": {
+			suite: "maps/test/testSuite.js"
+		},
+	    "ctype": {
+			suite: "ctype/test/testSuite.js",
+			includes: ["ilib-ctype"]
+		},
+	    "strings-ext": {
+			suite: "strings-ext/test/testSuite.js",
+			includes: ["ilib-ctype","ilib-strings-ext"]
+		},
+	    "phone1": {
+			suite: "phone/test/testSuite.js",
+			includes: ["ilib-phone"]
+		},
+	    "phone2": {
+			suite: "phone/test/testSuite2.js",
+			includes: ["ilib-phone"]
+		},
+	    "phone3": {
+			suite: "phone/test/testSuite3.js",
+			includes: ["ilib-phone"]
+		},
+	    "units": {
+			suite: "units/test/testSuite.js",
+			includes: ["ilib-units"]
+		},
+	    "name": {
+			suite: "name/test/testSuite.js",
+			includes: ["ilib-name","ilib-ctype"]
+		},
+	    "address1": {
+			suite: "address/test/testSuite.js",
+			includes: ["ilib-address","ilib-ctype"]
+		},
+	    "address2": {
+			suite: "address/test/testSuite2.js",
+			includes: ["ilib-address","ilib-ctype"]
+		},
+	    "address3": {
+			suite: "address/test/testSuite3.js",
+			includes: ["ilib-address","ilib-ctype"]
+		},
+	    "collate": {
+			suite: "collate/test/testSuite.js",
+			includes: ["ilib-ctype","ilib-strings-ext","ilib-number","ilib-collate"]
+		}
 	}
 };
 
@@ -123,11 +227,17 @@ var s;
 for (s in suite) {
 	var ts;
 	
-	ts = new JsUnit.TestSuite(suite[s]);
+	ts = new JsUnit.TestSuite(suite[s].suite);
 	// ts.addToContext({ilib: require("./ilib-dyn-ut.js").ilib});
 	var inc = "./ilib" + ((assembly === "dynamic") ? "-dyn" : "") + "-ut" + ((compilation === "compiled") ? "-compiled" : "") + ".js";
 	ts.include(inc); 
 	ts.include("testglue.js");
+	for (var i in suite[s].includes) {
+		inc = "../output/js/" + suite[s].includes[i] + ((assembly === "dynamic") ? "-dyn" : "") + ((compilation === "compiled") ? "-compiled" : "") + ".js";
+		util.print("for test " + s + " I am adding inc " + inc + "\n");
+		ts.include(inc);
+	}
+	
 	runner.addSuite(ts);
 	// util.print("Adding suite " + suite[s] + " and including ilib file " + inc + "\n");
 }

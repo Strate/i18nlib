@@ -18,8 +18,13 @@
  */
 
 /*
-!depends 
+depends 
 ilibglobal.js 
+phone/phoneloc.js
+*/
+
+/*
+!depends 
 phone/phoneloc.js
 */
 

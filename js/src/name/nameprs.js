@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-/* !depends 
+/* depends 
 ilibglobal.js 
 locale.js
 util/utils.js 

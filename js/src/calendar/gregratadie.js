@@ -17,13 +17,20 @@
  * limitations under the License.
  */
 
-/* !depends 
+/* depends 
 date.js
 calendar/gregorian.js
 calendar/ratadie.js
 util/utils.js
 util/math.js
 julianday.js 
+*/
+
+/* !depends 
+calendar/date.js
+calendar/gregorian.js
+calendar/ratadie.js
+calendar/julianday.js 
 */
 
 /**

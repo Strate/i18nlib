@@ -17,6 +17,6 @@
  */
 
 /* !depends
-nameprs.js
-namefmt.js
+name/nameprs.js
+name/namefmt.js
 */

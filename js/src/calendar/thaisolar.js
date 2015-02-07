@@ -18,7 +18,14 @@
  */
 
 
-/* !depends calendar.js locale.js date.js julianday.js calendar/gregorian.js util/utils.js util/math.js */
+/* depends calendar.js locale.js date.js julianday.js calendar/gregorian.js util/utils.js util/math.js */
+
+/* !depends
+calendar/calendar.js 
+calendar/date.js 
+calendar/julianday.js 
+calendar/gregorian.js
+*/
 
 /**
  * @class

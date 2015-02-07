@@ -17,10 +17,15 @@
  * limitations under the License.
  */
 
-/* !depends 
+/* depends 
 date.js 
 calendar/gregorian.js 
 util/jsutils.js
+*/
+
+/* !depends 
+calendar/date.js 
+calendar/gregorian.js 
 */
 
 /**
