@@ -18,8 +18,7 @@
  */
 
 /* !depends
-ilibglobal.js
-date.js
+calendar/date.js
 calendar/gregoriandate.js
 calendar/gregratadie.js
 */

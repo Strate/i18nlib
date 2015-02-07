@@ -1,7 +1,7 @@
 /*
  * durfmt.js - Date formatter definition
  * 
- * Copyright © 2012-2014, JEDLSoft
+ * Copyright © 2012-2015, JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,9 @@
  */
 
 /*
-!depends 
+depends 
 ilibglobal.js 
 locale.js 
-date.js 
 strings.js 
 resources.js 
 localeinfo.js

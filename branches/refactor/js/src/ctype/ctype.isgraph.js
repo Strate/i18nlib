@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-// !depends ctype.js ctype.isspace.js ctype.iscntrl.js
+// !depends ctype/ctype.js ctype/ctype.isspace.js ctype/ctype.iscntrl.js
 
 /**
  * Return whether or not the first character is any printable character

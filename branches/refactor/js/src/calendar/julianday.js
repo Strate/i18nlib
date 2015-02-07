@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-/* !depends locale.js */
+/* depends locale.js */
 
 /**
  * @class

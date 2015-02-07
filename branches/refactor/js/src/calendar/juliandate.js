@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-/* !depends 
+/* depends 
 date.js 
 calendar/julian.js 
 util/utils.js
@@ -25,6 +25,12 @@ util/search.js
 util/math.js
 localeinfo.js 
 julianday.js 
+*/
+
+/* !depends 
+calendar/date.js 
+calendar/julian.js 
+calendar/julianday.js 
 */
 
 /**

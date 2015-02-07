@@ -17,6 +17,5 @@
  */
 
 /* !depends
-address/addressprs.js
-address/addressfmt.js
+daterange/daterangefmt.js
 */

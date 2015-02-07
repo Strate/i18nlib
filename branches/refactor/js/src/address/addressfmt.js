@@ -24,7 +24,7 @@ address/addressprs.js
 */
 
 /* !depends 
-addressprs.js
+address/addressprs.js
 */
 
 // !data address

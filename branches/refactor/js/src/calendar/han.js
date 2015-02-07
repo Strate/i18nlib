@@ -17,7 +17,14 @@
  * limitations under the License.
  */
 
-/* !depends calendar.js locale.js date.js julianday.js util/utils.js util/math.js calendar/astro.js */
+/* depends calendar.js locale.js date.js julianday.js util/utils.js util/math.js calendar/astro.js */
+
+/* !depends 
+calendar/calendar.js
+calendar/date.js 
+calendar/julianday.js 
+calendar/astro.js 
+*/
 
 /**
  * @class

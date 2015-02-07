@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-/* !depends 
+/* depends 
 date.js
 calendar/persratadie.js
 calendar/persianastro.js 
@@ -27,6 +27,14 @@ util/math.js
 localeinfo.js 
 julianday.js 
 */
+
+/* !depends 
+calendar/persratadie.js
+calendar/persianastro.js 
+calendar/date.js 
+calendar/julianday.js 
+*/
+
 
 // !data astro
 

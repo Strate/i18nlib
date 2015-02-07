@@ -17,20 +17,20 @@
  */
 
 /* !depends
-ctype.js
-ctype.isalnum.js
-ctype.isalpha.js
-ctype.isascii.js
-ctype.isblank.js
-ctype.iscntrl.js
-ctype.isdigit.js
-ctype.isgraph.js
-ctype.isideo.js
-ctype.islower.js
-ctype.isprint.js
-ctype.ispunct.js
-ctype.isscript.js
-ctype.isspace.js
-ctype.isupper.js
-ctype.isxdigit.js
+ctype/ctype.js
+ctype/ctype.isalnum.js
+ctype/ctype.isalpha.js
+ctype/ctype.isascii.js
+ctype/ctype.isblank.js
+ctype/ctype.iscntrl.js
+ctype/ctype.isdigit.js
+ctype/ctype.isgraph.js
+ctype/ctype.isideo.js
+ctype/ctype.islower.js
+ctype/ctype.isprint.js
+ctype/ctype.ispunct.js
+ctype/ctype.isscript.js
+ctype/ctype.isspace.js
+ctype/ctype.isupper.js
+ctype/ctype.isxdigit.js
 */

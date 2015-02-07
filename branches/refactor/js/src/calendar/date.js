@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-/* !depends ilibglobal.js localeinfo.js */
+/* depends ilibglobal.js localeinfo.js */
 
 /**
  * @class

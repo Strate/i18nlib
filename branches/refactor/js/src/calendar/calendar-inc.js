@@ -17,6 +17,22 @@
  */
 
 /* !depends
-address/addressprs.js
-address/addressfmt.js
+calendar/calendar.js
+calendar/date.js
+calendar/hebrewdate.js
+calendar/hebrew.js
+calendar/islamic.js
+calendar/islamicdate.js
+calendar/julian.js
+calendar/juliandate.js
+calendar/gregorian.js
+calendar/gregoriandate.js
+calendar/thaisolar.js
+calendar/thaisolardate.js
+calendar/persian.js
+calendar/persiandate.js
+calendar/persianastro.js
+calendar/persianastrodate.js
+calendar/han.js
+calendar/handate.js
 */

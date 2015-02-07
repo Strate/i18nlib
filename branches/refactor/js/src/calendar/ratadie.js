@@ -17,10 +17,14 @@
  * limitations under the License.
  */
 
-/* !depends 
+/* depends 
 util/utils.js
 util/math.js
 julianday.js 
+*/
+
+/* !depends 
+calendar/julianday.js 
 */
 
 /**

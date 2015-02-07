@@ -18,7 +18,7 @@
  */
 
 /*
-!depends 
+depends 
 ilibglobal.js 
 locale.js 
 strings.js 

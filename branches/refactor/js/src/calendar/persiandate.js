@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-/* !depends 
+/* depends 
 date.js 
 calendar/persian.js 
 util/utils.js
@@ -26,6 +26,13 @@ util/math.js
 localeinfo.js 
 julianday.js 
 */
+
+/* !depends 
+calendar/persian.js
+calendar/date.js 
+calendar/julianday.js 
+*/
+
 
 /**
  * Construct a new Persian RD date number object. The constructor parameters can 

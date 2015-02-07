@@ -18,10 +18,17 @@
  */
 
 /*
-!depends 
+depends 
 ilibglobal.js
 locale.js 
 localeinfo.js
+phone/numplan.js
+phone/phoneloc.js
+phone/handler.js
+*/
+
+/*
+!depends 
 phone/numplan.js
 phone/phoneloc.js
 phone/handler.js

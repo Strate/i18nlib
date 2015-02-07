@@ -17,6 +17,7 @@
  */
 
 /* !depends
-address/addressprs.js
-address/addressfmt.js
+phone/phonenum.js
+phone/phonefmt.js
+phone/phonegeo.js
 */

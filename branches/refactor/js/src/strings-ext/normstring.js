@@ -17,7 +17,8 @@
  * limitations under the License.
  */
 
-// !depends strings.js glyphstring.js
+// depends strings.js glyphstring.js
+// !depends strings-ext/glyphstring.js
 
 /**
  * @class

@@ -17,6 +17,6 @@
  */
 
 /* !depends
-address/addressprs.js
-address/addressfmt.js
+strings-ext/normstring.js
+strings-ext/glyphstring.js
 */

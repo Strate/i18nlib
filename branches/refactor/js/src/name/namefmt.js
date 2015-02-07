@@ -17,12 +17,16 @@
  * limitations under the License.
  */
 
-/* !depends 
+/* depends 
 ilibglobal.js
 locale.js
 strings.js
 name/nameprs.js
 ctype/ctype.ispunct.js
+*/
+
+/* !depends 
+name/nameprs.js
 */
 
 // !data name

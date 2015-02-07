@@ -161,5 +161,5 @@ ilib.setLoaderCallback(new nodeLoader());
 
 //initialize some things statically because the constructors do not load 
 // the locale-independent data
-ilib.CType._init(true);
-ilib.NormString.init();
+// ilib.CType._init(true);
+// ilib.NormString.init();

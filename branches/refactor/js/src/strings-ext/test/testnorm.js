@@ -163,3 +163,13 @@ function testCharIteratorAgrave() {
 	assertFalse(it.hasNext());
 	assertEquals(undefined, it.next());
 }
+
+// because NormString is a subclass of String, this should work
+function testStringConstructorWithIlibNormStringObj() {
+    var str = new ilib.String(new ilib.NormString("test test test"));
+    
+    assertNotNull(str);
+
+    assertEquals(14, str.length);
+    assertEquals("test test test", str.toString());
+}

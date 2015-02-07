@@ -18,13 +18,21 @@
  */
 
 
-/* !depends 
+/* depends 
 calendar/astro.js 
 calendar.js 
 locale.js 
 date.js 
 julianday.js 
 util/utils.js
+calendar/persratadie.js 
+*/
+
+/* !depends 
+calendar/astro.js 
+calendar/calendar.js 
+calendar/date.js 
+calendar/julianday.js 
 calendar/persratadie.js 
 */
 
