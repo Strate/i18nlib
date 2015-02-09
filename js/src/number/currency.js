@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-// !depends ilibglobal.js locale.js
+// depends ilibglobal.js locale.js
 
 // !data currency
 

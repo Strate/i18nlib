@@ -27,8 +27,6 @@ util/utils.js
 util/search.js
 util/math.js
 util/jsutils.js
-currency.js
-nfkc/all.js
 strings.js
 resources.js
 localeinfo.js

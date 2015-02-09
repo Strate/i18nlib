@@ -150,7 +150,7 @@ var suiteDefinitions = {
 		},
 	    "units": {
 			suite: "units/test/testSuite.js",
-			includes: ["ilib-units"]
+			includes: ["ilib-units","ilib-number"]
 		},
 	    "name": {
 			suite: "name/test/testSuite.js",

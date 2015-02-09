@@ -17,6 +17,7 @@
  */
 
 /* !depends
+number/currency.js
 number/numprs.js
 number/numfmt.js
 */
