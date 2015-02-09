@@ -19,7 +19,8 @@
  */
 
 // depends strings.js ctype/ctype.js
-// !data norm ctype_m
+// data norm ctype_m
+// !data norm
 
 /**
  * @class

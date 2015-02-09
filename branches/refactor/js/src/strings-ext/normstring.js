@@ -26,13 +26,68 @@
  * the ilib.GlyphString class, and adds the normalize method. It can be
  * used anywhere that a normal Javascript string is used. <p>
  * 
+ * The options parameter is optional, and may contain any combination
+ * of the following properties:<p>
+ * 
+ * <ul>
+ * <li><i>form</i> - {string} the normalization form to load. Default: data
+ * for all forms are loaded into memory.
+ * 
+ * <li><i>script</i> - {string} load the normalization data for this writing 
+ * script. If the script is given as "all" then the normalization data for 
+ * all writing scripts are loaded at the same time. Default: "all"
+ * 
+ * <li><i>onLoad</i> - a callback function to call when the locale data are
+ * fully loaded. When the onLoad option is given, this object will attempt to
+ * load any missing locale data using the ilib loader callback.
+ * When the constructor is done (even if the data is already preassembled), the 
+ * onLoad function is called with the current instance as a parameter, so this
+ * callback can be used with preassembled or dynamic loading or a mix of the two.
+ * 
+ * <li><i>sync</i> - tell whether to load any missing locale data synchronously or 
+ * asynchronously. If this option is given as "false", then the "onLoad"
+ * callback must be given, as the instance returned from this constructor will
+ * not be usable for a while.
+ *  
+ * <li><i>loadParams</i> - an object containing parameters to pass to the 
+ * loader callback function when locale data is missing. The parameters are not
+ * interpretted or modified in any way. They are simply passed along. The object 
+ * may contain any property/value pairs as long as the calling code is in
+ * agreement with the loader callback function as to what those parameters mean.
+ * </ul>
+ * 
  * Depends directive: !depends normstring.js
  * 
  * @constructor
- * @param {string|ilib.String=} str initialize this instance with this string 
+ * @param {string|ilib.String=} str initialize this instance with this string
+ * @param {Object=} options options to initialize this string
  */
-ilib.NormString = function (str) {
-	ilib.GlyphString.call(this, str);
+ilib.NormString = function (str, options) {
+	var form, script;
+	var sync = true;
+	var onLoad = undefined;
+	var loadParams = undefined;
+	if (options) {
+		form = options.form;
+		script = options.script;
+		sync = typeof(options.sync) === 'boolean' ? options.sync : true;
+		onLoad = typeof(options.onLoad) === 'function' ? options.onLoad : undefined;
+		loadParams = options.loadParams;
+	}
+
+	ilib.NormString.init({
+		form: form,
+		script: script,
+		sync: sync,
+		loadParams: loadParams,
+		onLoad: ilib.bind(this, function() {
+			ilib.GlyphString.call(this, str);
+
+			if (onLoad) {
+				onLoad(this);
+			}
+		})
+	});
 };
 
 ilib.NormString.prototype = new ilib.GlyphString();
@@ -66,44 +121,53 @@ ilib.NormString.init = function(options) {
 		// can't do anything
 		return;
 	}
-	var form = "nfkc";
-	var script = "all";
-	var sync = true;
-	var onLoad = undefined;
-	var loadParams = undefined;
-	if (options) {
-		form = options.form || "nfkc";
-		script = options.script || "all";
-		sync = typeof(options.sync) !== 'undefined' ? options.sync : true;
-		onLoad = typeof(options.onLoad) === 'function' ? options.onLoad : undefined;
-		if (options.loadParams) {
-			loadParams = options.loadParams;
-		}
-	}
-	var formDependencies = {
-		"nfd": ["nfd"],
-		"nfc": ["nfd"],
-		"nfkd": ["nfkd", "nfd"],
-		"nfkc": ["nfkd", "nfd"]
-	};
-	var files = ["norm.json"];
-	var forms = formDependencies[form];
-	for (var f in forms) {
-		files.push(forms[f] + "/" + script + ".json");
-	}
 	
-	ilib._callLoadData(files, sync, loadParams, function(arr) {
-		ilib.data.norm = arr[0];
-		for (var i = 1; i < arr.length; i++) {
-			if (typeof(arr[i]) !== 'undefined') {
-				ilib.data.norm[forms[i-1]] = arr[i];
+	var onLoad = undefined;
+	onLoad = options && typeof(options.onLoad) === 'function' ? options.onLoad : undefined;
+	
+	if (!ilib.data.norm || !ilib.data.norm.initialized) {
+		var form = "nfkc";
+		var script = "all";
+		var sync = true;
+		var loadParams = undefined;
+		if (options) {
+			form = options.form || "nfkc";
+			script = options.script || "all";
+			sync = typeof(options.sync) !== 'undefined' ? options.sync : true;
+			if (options.loadParams) {
+				loadParams = options.loadParams;
 			}
 		}
-		
-		if (onLoad) {
-			onLoad(arr);
+		var formDependencies = {
+			"nfd": ["nfd"],
+			"nfc": ["nfd"],
+			"nfkd": ["nfkd", "nfd"],
+			"nfkc": ["nfkd", "nfd"]
+		};
+		var files = ["norm.json"];
+		var forms = formDependencies[form];
+		for (var f in forms) {
+			files.push(forms[f] + "/" + script + ".json");
 		}
-	});
+		
+		ilib._callLoadData(files, sync, loadParams, function(arr) {
+			ilib.data.norm = arr[0];
+			for (var i = 1; i < arr.length; i++) {
+				if (typeof(arr[i]) !== 'undefined') {
+					ilib.data.norm[forms[i-1]] = arr[i];
+				}
+			}
+			ilib.data.norm.initialized = true;
+			
+			if (onLoad) {
+				onLoad(arr);
+			}
+		});
+	} else {
+		if (onLoad) {
+			onLoad(undefined);
+		}
+	}
 };
 
 /**

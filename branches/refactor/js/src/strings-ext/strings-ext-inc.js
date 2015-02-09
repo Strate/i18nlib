@@ -17,6 +17,7 @@
  */
 
 /* !depends
+nfkc/all.js
 strings-ext/normstring.js
 strings-ext/glyphstring.js
 */
