@@ -465,6 +465,9 @@ limitations under the License.
 			<externs dir="${build.src}">
 				<file name="externs.js"/>
 			</externs>
+			<externs dir="${build.output.js}">
+				<file name="externs-ilib.js"/>
+			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-address.js"/>
 			</sources>
@@ -481,6 +484,9 @@ limitations under the License.
 			<externs dir="${build.src}">
 				<file name="externs.js"/>
 			</externs>
+			<externs dir="${build.output.js}">
+				<file name="externs-ilib.js"/>
+			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-address-dyn.js"/>
 			</sources>
@@ -495,7 +501,7 @@ limitations under the License.
 		</uptodate>
 	</target>
 
-	<target name="assemble.ctype" depends="prepare,gen.manifest.locale,testilib.ctype" unless="core.ilib.core.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
+	<target name="assemble.ctype" depends="prepare,gen.manifest.locale,assemble.dyn.core,testilib.ctype" unless="core.ilib.core.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
 		<runassemble
 			tgtfilename="${build.output.js}/ilib-ctype.js" 
 			srcfilename="ctype/ctype-inc.js" 
@@ -507,6 +513,9 @@ limitations under the License.
 			description="Use the google closure compiler to compress code">
 			<externs dir="${build.src}">
 				<file name="externs.js"/>
+			</externs>
+			<externs dir="${build.output.js}">
+				<file name="externs-ilib.js"/>
 			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-ctype.js"/>
@@ -523,6 +532,9 @@ limitations under the License.
 			description="Use the google closure compiler to compress code">
 			<externs dir="${build.src}">
 				<file name="externs.js"/>
+			</externs>
+			<externs dir="${build.output.js}">
+				<file name="externs-ilib.js"/>
 			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-ctype-dyn.js"/>
@@ -1157,7 +1169,7 @@ limitations under the License.
 	<target depends="assemble.dyn.unittest" name="test.maps">
 		<runtests suite="maps" assembly="dynamic" compilation="compiled"/>
 	</target>
-	<target depends="assemble.dyn.unittest" name="test.ctype">
+	<target depends="assemble.ctype,assemble.dyn.unittest" name="test.ctype">
 		<runtests suite="ctype" assembly="dynamic" compilation="compiled"/>
 	</target>
 	<target depends="assemble.dyn.unittest" name="test.strings-ext">
@@ -1174,7 +1186,7 @@ limitations under the License.
 	<target depends="assemble.dyn.unittest" name="test.name">
 		<runtests suite="name" assembly="dynamic" compilation="compiled"/>
 	</target>
-	<target depends="assemble.dyn.unittest" name="test.address">
+	<target depends="assemble.address,assemble.dyn.unittest" name="test.address">
 		<runtests suite="address1" assembly="dynamic" compilation="compiled"/>
 		<runtests suite="address2" assembly="dynamic" compilation="compiled"/>
 		<runtests suite="address3" assembly="dynamic" compilation="compiled"/>
