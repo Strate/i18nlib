@@ -22,6 +22,7 @@
 var fs = require('fs');
 var util = require('util');
 var common = require('../cldr/common');
+var path = require('path');
 
 function usage() {
 	util.print("Usage: mkexterns.js [-h] [-o ouputfile] js_file [js_file ...]\n" +
@@ -36,7 +37,11 @@ function usage() {
 var outputFileName = "externs.js";
 var inputFiles = [];
 
-for (var i = 1; i < process.argv.length; i++) {
+if (process.argv.length < 3) {
+	usage();
+}
+
+for (var i = 2; i < process.argv.length; i++) {
 	if (process.argv[i].toUpperCase() === "-H") {
 		usage();
 	} else if (process.argv[i].toUpperCase() === "-O") {
@@ -52,9 +57,46 @@ for (var i = 1; i < process.argv.length; i++) {
 	}
 }
 
+function loadFile(fileName) {
+	var fileContents = fs.readFileSync(fileName, "utf-8");
+	return eval(fileContents);
+}
+
+function getName(name, prop) {
+	if (!name || name.length < 1) {
+		return prop;
+	}
+	return name + "." + prop;
+}
+
+function checkObject(obj, name) {
+	for (var prop in obj) {
+		//util.print("Checking " + getName(name, prop) + "\n");
+		if (obj.hasOwnProperty(prop)) {
+			if (typeof(obj[prop]) === 'function') {
+				util.print(getName(name, prop) + " = function() {};\n");
+				global[getName(name, prop)] = function() {};
+			} else if (typeof(obj[prop]) === 'object') {
+				if (obj[prop] instanceof Array) {
+					util.print(getName(name, prop) + " = [];\n");
+					global[getName(name, prop)] = [];
+				} else {
+					util.print(getName(name, prop) + " = {};\n");
+					global[getName(name, prop)] = {};
+					checkObject(obj[prop], getName(name, prop));
+				}
+			}
+		}
+	}
+}
+
 for (var i = 0; i < inputFiles.length; i++) {
-	util.print("Processing " + inputFiles[i] + "\n");
+	util.print("Processing ./" + inputFiles[i] + "\n");
 	
-	var f = fs.readFileSync(inputFiles[i], "utf-8");
+	//var f = fs.readFileSync(inputFiles[i], "utf-8");
 	
+	util.print("Current dir is " + process.cwd() + "\n");
+	
+	var mod = loadFile(process.cwd() + "/" + inputFiles[i]);
+	checkObject(mod, "");
 }
