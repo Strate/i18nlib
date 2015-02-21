@@ -20,4 +20,5 @@
 function console(str){};
 function JSON(str){};
 console.log = function (str){};
-var PalmSystem, process, require, module, environment, exports, global, Intl;
+function require(str){};
+var PalmSystem, process, module, environment, exports, global, Intl, XHRHttpRequest;

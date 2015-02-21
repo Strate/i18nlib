@@ -561,6 +561,13 @@ public class JSFile
                                 sb.append('"');
                                 str = str.replace(matcher.start(), matcher.end(), sb.toString());
                                 matcher.reset();
+                            } else if ( macroName.equalsIgnoreCase("ilibLoadType") ) {
+                                StringBuffer sb = new StringBuffer();
+                                sb.append('"');
+                                sb.append((locales.size() == 0) ? "dynamic" : "assembled");
+                                sb.append('"');
+                                str = str.replace(matcher.start(), matcher.end(), sb.toString());
+                                matcher.reset();
                             }
                         }
                     }

@@ -35,6 +35,36 @@ ilib.getVersion = function () {
 };
 
 /**
+ * Return how this copy of ilib gets its locale Data. This copy
+ * can be either be assembled with all its data right in the js
+ * file, or dynamic, where it loads all its locale data dynamically 
+ * from json files.
+ * 
+ * @static
+ * @return {string} returns whether or not this copy of ilib is
+ * "assembled" or "dynamic"
+ */
+ilib.getLoadType = function() {
+    return // !macro ilibLoadType
+    ;
+};
+
+/**
+ * Return whether or not this copy of ilib is compiled/compressed
+ * where the code has been minified, or if it is uncompiled with 
+ * all its comments, white space, and variable names intact.
+ * 
+ * @static
+ * @return {string} returns whether or not this copy of ilib is
+ * "original" or "compiled"
+ *
+ilib.getCompilationType = function() {
+    return // !macro ilibCompilationType
+    ;
+};
+*/
+
+/**
  * Place where resources and such are eventually assigned.
  */
 ilib.data = {
@@ -65,6 +95,7 @@ if (typeof(window) !== 'undefined') {
 // export ilib for use as a module in nodejs
 if (typeof(exports) !== 'undefined') {
     exports.ilib = ilib;
+    exports.module = module;
 }
 
 ilib.pseudoLocales = ["zxx-XX"];
@@ -473,4 +504,62 @@ ilib.setLoaderCallback = function(loader) {
         return true;
     }
     return false;
+};
+
+
+/**
+ * @static
+ * @param {Array.<string>} names array of names of module to depend on
+ */
+ilib.depends = function (names) {
+	var name;
+	var suffix = (ilib.getLoadType() === "dynamic") ? "-dyn" : "";
+	
+	switch (ilib._getPlatform()) {
+	case "nodejs":
+		/** @type {{sep:string,isAbsolute:function(string)}} */
+		var path = require("path");
+		// we can require() a module multiple times and node's path will take care of caching
+		// for us and only load the module once, so we don't have to worry about caching the 
+		// names ourselves
+		for (var i = 0; i < names.length; i++) {
+			if (typeof(names[i]) === 'string') {
+				name = !path.isAbsolute(names[i]) && names[i].substring(0,1) !== "." ? "./" : "";
+				name += names[i];
+				name += suffix;
+				name += ".js";
+				console.log("Trying to require " + name + "\n");
+				require(name);
+			}
+		}
+		break;
+	
+	case "rhino":
+		// TODO: implement rhino depends support
+		break;
+	
+	case "webos":
+		// TODO: implement webOS depends support
+		break;
+
+	case "unknown": 		// treat unknown as if it was the browser
+	case "browser":
+		var xhr = new XHRHttpRequest();
+		for (var i = 0; i < names.length; i++) {
+			if (typeof(names[i]) === 'string' && !this.cache[names[i]]) {
+				this.cache[names[i]] = true;
+				name = "file:" + names[i] + suffix + ".js";
+				xhr.open("GET", name, false);
+				xhr.onload = function(x) {
+					console.log("Successfully loaded module " + names[i]);
+					eval(xhr.responseText);
+				};
+				xhr.onerror = function(e) {
+					throw "Cannot load file " + names[i];
+				};
+				xhr.send();
+			}
+		}
+		break;
+	}
 };
