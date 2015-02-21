@@ -57,9 +57,10 @@ for (var i = 2; i < process.argv.length; i++) {
 	}
 }
 
-function loadFile(fileName) {
-	var fileContents = fs.readFileSync(fileName, "utf-8");
-	return eval(fileContents);
+function loadFile(mod, fileName) {
+	return mod.require(fileName);
+	// var fileContents = fs.readFileSync(fileName, "utf-8");
+	// return eval(fileContents);
 }
 
 function getName(name, prop) {
@@ -70,33 +71,42 @@ function getName(name, prop) {
 }
 
 function checkObject(obj, name) {
+	var ret = "";
 	for (var prop in obj) {
 		//util.print("Checking " + getName(name, prop) + "\n");
 		if (obj.hasOwnProperty(prop)) {
 			if (typeof(obj[prop]) === 'function') {
-				util.print(getName(name, prop) + " = function() {};\n");
+				if (obj[prop].prototype.constructor !== obj[prop]) {
+					ret += "/** @constructor */\n";
+				}
+				ret += getName(name, prop) + " = function() {};\n";
 				global[getName(name, prop)] = function() {};
 			} else if (typeof(obj[prop]) === 'object') {
 				if (obj[prop] instanceof Array) {
-					util.print(getName(name, prop) + " = [];\n");
+					ret += getName(name, prop) + " = [];\n";
 					global[getName(name, prop)] = [];
 				} else {
-					util.print(getName(name, prop) + " = {};\n");
+					ret += getName(name, prop) + " = {};\n";
 					global[getName(name, prop)] = {};
-					checkObject(obj[prop], getName(name, prop));
+					ret += checkObject(obj[prop], getName(name, prop));
 				}
 			}
 		}
 	}
+	return ret;
 }
 
 for (var i = 0; i < inputFiles.length; i++) {
 	util.print("Processing ./" + inputFiles[i] + "\n");
 	
-	//var f = fs.readFileSync(inputFiles[i], "utf-8");
+	// var f = fs.readFileSync(inputFiles[i], "utf-8");
 	
-	util.print("Current dir is " + process.cwd() + "\n");
+	// util.print("Current dir is " + process.cwd() + "\n");
+
+	var newmod = loadFile(module, process.cwd() + "/" + inputFiles[i]);
+	//util.print("mod is " + JSON.stringify(mod, undefined, 4) + "\n");
+	var externs = checkObject(newmod, "");
 	
-	var mod = loadFile(process.cwd() + "/" + inputFiles[i]);
-	checkObject(mod, "");
+	util.print("Writing externs to " + outputFileName + "\n");
+	fs.writeFileSync(outputFileName, externs, "utf-8");
 }
