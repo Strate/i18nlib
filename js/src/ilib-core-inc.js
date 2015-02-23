@@ -22,7 +22,9 @@
 
 /* !depends
 util/jsutils.js
+util/search.js
 strings.js
 resources.js
 scriptinfo.js
+iterator.js
 */

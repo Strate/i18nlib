@@ -37,7 +37,7 @@ limitations under the License.
 	<property name="build.dist"						value="${build.base}/../dist"/>
 	<property name="build.export"					value="${build.base}/../export"/>
 	<property name="build.demo"						value="${build.base}/../doc/demo"/>
-	<property name="build.tools"					value="${build.base}/../tools"/>
+	<property name="build.tools"					value="${build.base}/../tools/build"/>
 	
 	<property name="build.lib"						value="${build.base}/lib"/>
 	<property name="build.output"					value="${build.base}/output"/>
@@ -144,6 +144,29 @@ limitations under the License.
 				<arg value="${version}"/>
 				<arg value="@{srcfilename}"/>
 			</java>
+		</sequential>
+	</macrodef>
+	<macrodef name="runmkexterns">
+        <attribute name="name"/>
+		<sequential>
+			<exec osfamily="unix" executable="node" dir="${build.src}" failifexecutionfails="true" failonerror="true">
+				<arg line="${build.tools}/mkexterns.js"/>
+				<arg line="-o"/>
+				<arg line="${build.output.js}/externs-@{name}.js"/>
+				<arg line="${build.output.js}/ilib-@{name}-dyn.js"/>
+			</exec>
+			<exec osfamily="mac" executable="node" dir="${build.src}" failifexecutionfails="true" failonerror="true">
+				<arg line="${build.tools}/mkexterns.js"/>
+				<arg line="-o"/>
+				<arg line="${build.output.js}/externs-@{name}.js"/>
+				<arg line="${build.output.js}/ilib-@{name}-dyn.js"/>
+			</exec>
+			<exec osfamily="windows" executable="node.exe" dir="${build.src}" failifexecutionfails="true"  failonerror="true">
+				<arg line="${build.tools}/mkexterns.js"/>
+				<arg line="-o"/>
+				<arg line="${build.output.js}/externs-@{name}.js"/>
+				<arg line="${build.output.js}/ilib-@{name}-dyn.js"/>
+			</exec>
 		</sequential>
 	</macrodef>
 	
@@ -388,6 +411,7 @@ limitations under the License.
 				<file name="ilib-core-dyn.js"/>
 			</sources>
 		</jscomp>
+		<runmkexterns name="core"/>
 	</target>
 
 	<target name="testilib.dyn.full" description="test whether or not the ilib-full file needs to be rebuilt">
@@ -449,10 +473,12 @@ limitations under the License.
 			<srcfiles dir="${build.src}" includes="address/**/*.js" excludes="ilib-*.js,**/test/**,testcli/**" />
 			<srcfiles dir="${build.src}" includes="address/address-inc.js"/>
 			<srcfiles dir="${build.localetemp}" includes="**/*.json" />
+			<srcfiles dir="${build.output.js}" includes="externs-core.js" />
+			<srcfiles dir="${build.output.js}" includes="externs-ctype.js" />
 		</uptodate>
 	</target>
 
-	<target name="assemble.address" depends="prepare,gen.manifest.locale,assemble.core,assemble.dyn.core,testilib.address" unless="core.ilib.core.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
+	<target name="assemble.address" depends="prepare,gen.manifest.locale,assemble.dyn.core,assemble.ctype,testilib.address" unless="core.ilib.address.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
 		<runassemble
 			tgtfilename="${build.output.js}/ilib-address.js" 
 			srcfilename="address/address-inc.js" 
@@ -466,7 +492,8 @@ limitations under the License.
 				<file name="externs.js"/>
 			</externs>
 			<externs dir="${build.output.js}">
-				<file name="externs-ilib.js"/>
+				<file name="externs-core.js"/>
+				<file name="externs-ctype.js"/>
 			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-address.js"/>
@@ -485,12 +512,14 @@ limitations under the License.
 				<file name="externs.js"/>
 			</externs>
 			<externs dir="${build.output.js}">
-				<file name="externs-ilib.js"/>
+				<file name="externs-core.js"/>
+				<file name="externs-ctype.js"/>
 			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-address-dyn.js"/>
 			</sources>
 		</jscomp>
+		<runmkexterns name="address"/>
 	</target>
 
 	<target name="testilib.ctype" description="test whether or not the ilib-ctype files need to be rebuilt">
@@ -498,10 +527,11 @@ limitations under the License.
 			<srcfiles dir="${build.src}" includes="ctype/**/*.js" excludes="ilib-*.js,**/test/**,testcli/**" />
 			<srcfiles dir="${build.src}" includes="ctype/ctype-inc.js"/>
 			<srcfiles dir="${build.localetemp}" includes="**/*.json" />
+			<srcfiles dir="${build.output.js}" includes="externs-core.js" />
 		</uptodate>
 	</target>
 
-	<target name="assemble.ctype" depends="prepare,gen.manifest.locale,assemble.dyn.core,testilib.ctype" unless="core.ilib.core.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
+	<target name="assemble.ctype" depends="prepare,gen.manifest.locale,assemble.dyn.core,testilib.ctype" unless="core.ilib.ctype.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
 		<runassemble
 			tgtfilename="${build.output.js}/ilib-ctype.js" 
 			srcfilename="ctype/ctype-inc.js" 
@@ -515,7 +545,7 @@ limitations under the License.
 				<file name="externs.js"/>
 			</externs>
 			<externs dir="${build.output.js}">
-				<file name="externs-ilib.js"/>
+				<file name="externs-core.js"/>
 			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-ctype.js"/>
@@ -534,12 +564,13 @@ limitations under the License.
 				<file name="externs.js"/>
 			</externs>
 			<externs dir="${build.output.js}">
-				<file name="externs-ilib.js"/>
+				<file name="externs-core.js"/>
 			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-ctype-dyn.js"/>
 			</sources>
 		</jscomp>
+		<runmkexterns name="ctype"/>
 	</target>
 
 	<target name="testilib.calendar" description="test whether or not the ilib-calendar files need to be rebuilt">
@@ -547,10 +578,11 @@ limitations under the License.
 			<srcfiles dir="${build.src}" includes="calendar/**/*.js" excludes="ilib-*.js,**/test/**,testcli/**" />
 			<srcfiles dir="${build.src}" includes="calendar/calendar-inc.js"/>
 			<srcfiles dir="${build.localetemp}" includes="**/*.json" />
+			<srcfiles dir="${build.output.js}" includes="externs-core.js" />
 		</uptodate>
 	</target>
 
-	<target name="assemble.calendar" depends="prepare,gen.manifest.locale,testilib.calendar" unless="core.ilib.core.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
+	<target name="assemble.calendar" depends="prepare,gen.manifest.locale,assemble.dyn.core,testilib.calendar" unless="core.ilib.calendar.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
 		<runassemble
 			tgtfilename="${build.output.js}/ilib-calendar.js" 
 			srcfilename="calendar/calendar-inc.js" 
@@ -562,6 +594,9 @@ limitations under the License.
 			description="Use the google closure compiler to compress code">
 			<externs dir="${build.src}">
 				<file name="externs.js"/>
+			</externs>
+			<externs dir="${build.output.js}">
+				<file name="externs-core.js"/>
 			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-calendar.js"/>
@@ -579,10 +614,14 @@ limitations under the License.
 			<externs dir="${build.src}">
 				<file name="externs.js"/>
 			</externs>
+			<externs dir="${build.output.js}">
+				<file name="externs-core.js"/>
+			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-calendar-dyn.js"/>
 			</sources>
 		</jscomp>
+		<runmkexterns name="calendar"/>
 	</target>
 
 	<target name="testilib.collate" description="test whether or not the ilib-collate files need to be rebuilt">
@@ -590,10 +629,14 @@ limitations under the License.
 			<srcfiles dir="${build.src}" includes="collate/**/*.js" excludes="ilib-*.js,**/test/**,testcli/**" />
 			<srcfiles dir="${build.src}" includes="collate/collate-inc.js"/>
 			<srcfiles dir="${build.localetemp}" includes="**/*.json" />
+			<srcfiles dir="${build.output.js}" includes="externs-core.js" />
+			<srcfiles dir="${build.output.js}" includes="externs-ctype.js" />
+			<srcfiles dir="${build.output.js}" includes="externs-strings-ext.js" />
+			<srcfiles dir="${build.output.js}" includes="externs-number.js" />
 		</uptodate>
 	</target>
 
-	<target name="assemble.collate" depends="prepare,gen.manifest.locale,testilib.collate" unless="core.ilib.core.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
+	<target name="assemble.collate" depends="prepare,gen.manifest.locale,assemble.dyn.core,assemble.ctype,assemble.strings-ext,assemble.number,testilib.collate" unless="core.ilib.collate.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
 		<runassemble
 			tgtfilename="${build.output.js}/ilib-collate.js" 
 			srcfilename="collate/collate-inc.js" 
@@ -605,6 +648,12 @@ limitations under the License.
 			description="Use the google closure compiler to compress code">
 			<externs dir="${build.src}">
 				<file name="externs.js"/>
+			</externs>
+			<externs dir="${build.output.js}">
+				<file name="externs-core.js"/>
+				<file name="externs-ctype.js"/>
+				<file name="externs-strings-ext.js"/>
+				<file name="externs-number.js"/>
 			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-collate.js"/>
@@ -622,10 +671,17 @@ limitations under the License.
 			<externs dir="${build.src}">
 				<file name="externs.js"/>
 			</externs>
+			<externs dir="${build.output.js}">
+				<file name="externs-core.js"/>
+				<file name="externs-ctype.js"/>
+				<file name="externs-strings-ext.js"/>
+				<file name="externs-number.js"/>
+			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-collate-dyn.js"/>
 			</sources>
 		</jscomp>
+		<runmkexterns name="collate"/>
 	</target>
 
 	<target name="testilib.date" description="test whether or not the ilib-date files need to be rebuilt">
@@ -633,10 +689,12 @@ limitations under the License.
 			<srcfiles dir="${build.src}" includes="date/**/*.js" excludes="ilib-*.js,**/test/**,testcli/**" />
 			<srcfiles dir="${build.src}" includes="date/date-inc.js"/>
 			<srcfiles dir="${build.localetemp}" includes="**/*.json" />
+			<srcfiles dir="${build.output.js}" includes="externs-core.js" />
+			<srcfiles dir="${build.output.js}" includes="externs-calendar.js" />
 		</uptodate>
 	</target>
 
-	<target name="assemble.date" depends="prepare,gen.manifest.locale,testilib.date" unless="core.ilib.core.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
+	<target name="assemble.date" depends="prepare,gen.manifest.locale,assemble.dyn.core,assemble.calendar,testilib.date" unless="core.ilib.date.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
 		<runassemble
 			tgtfilename="${build.output.js}/ilib-date.js" 
 			srcfilename="date/date-inc.js" 
@@ -648,6 +706,10 @@ limitations under the License.
 			description="Use the google closure compiler to compress code">
 			<externs dir="${build.src}">
 				<file name="externs.js"/>
+			</externs>
+			<externs dir="${build.output.js}">
+				<file name="externs-core.js"/>
+				<file name="externs-calendar.js"/>
 			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-date.js"/>
@@ -665,10 +727,15 @@ limitations under the License.
 			<externs dir="${build.src}">
 				<file name="externs.js"/>
 			</externs>
+			<externs dir="${build.output.js}">
+				<file name="externs-core.js"/>
+				<file name="externs-calendar.js"/>
+			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-date-dyn.js"/>
 			</sources>
 		</jscomp>
+		<runmkexterns name="date"/>
 	</target>
 	
 	<target name="testilib.daterange" description="test whether or not the ilib-daterange files need to be rebuilt">
@@ -676,10 +743,13 @@ limitations under the License.
 			<srcfiles dir="${build.src}" includes="daterange/**/*.js" excludes="ilib-*.js,**/test/**,testcli/**" />
 			<srcfiles dir="${build.src}" includes="daterange/daterange-inc.js"/>
 			<srcfiles dir="${build.localetemp}" includes="**/*.json" />
+			<srcfiles dir="${build.output.js}" includes="externs-core.js" />
+			<srcfiles dir="${build.output.js}" includes="externs-calendar.js" />
+			<srcfiles dir="${build.output.js}" includes="externs-date.js" />
 		</uptodate>
 	</target>
 
-	<target name="assemble.daterange" depends="prepare,gen.manifest.locale,testilib.daterange" unless="core.ilib.core.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
+	<target name="assemble.daterange" depends="prepare,gen.manifest.locale,assemble.dyn.core,assemble.calendar,assemble.date,testilib.daterange" unless="core.ilib.daterange.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
 		<runassemble
 			tgtfilename="${build.output.js}/ilib-daterange.js" 
 			srcfilename="daterange/daterange-inc.js" 
@@ -691,6 +761,11 @@ limitations under the License.
 			description="Use the google closure compiler to compress code">
 			<externs dir="${build.src}">
 				<file name="externs.js"/>
+			</externs>
+			<externs dir="${build.output.js}">
+				<file name="externs-core.js"/>
+				<file name="externs-calendar.js"/>
+				<file name="externs-date.js"/>
 			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-daterange.js"/>
@@ -708,10 +783,16 @@ limitations under the License.
 			<externs dir="${build.src}">
 				<file name="externs.js"/>
 			</externs>
+			<externs dir="${build.output.js}">
+				<file name="externs-core.js"/>
+				<file name="externs-calendar.js"/>
+				<file name="externs-date.js"/>
+			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-daterange-dyn.js"/>
 			</sources>
 		</jscomp>
+		<runmkexterns name="daterange"/>
 	</target>
 	
 	<target name="testilib.durfmt" description="test whether or not the ilib-durfmt files need to be rebuilt">
@@ -719,10 +800,13 @@ limitations under the License.
 			<srcfiles dir="${build.src}" includes="durfmt/**/*.js" excludes="ilib-*.js,**/test/**,testcli/**" />
 			<srcfiles dir="${build.src}" includes="durfmt/durfmt-inc.js"/>
 			<srcfiles dir="${build.localetemp}" includes="**/*.json" />
+			<srcfiles dir="${build.output.js}" includes="externs-core.js" />
+			<srcfiles dir="${build.output.js}" includes="externs-calendar.js" />
+			<srcfiles dir="${build.output.js}" includes="externs-date.js" />
 		</uptodate>
 	</target>
 
-	<target name="assemble.durfmt" depends="prepare,gen.manifest.locale,testilib.durfmt" unless="core.ilib.core.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
+	<target name="assemble.durfmt" depends="prepare,gen.manifest.locale,assemble.dyn.core,assemble.calendar,assemble.date,testilib.durfmt" unless="core.ilib.durfmt.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
 		<runassemble
 			tgtfilename="${build.output.js}/ilib-durfmt.js" 
 			srcfilename="durfmt/durfmt-inc.js" 
@@ -734,6 +818,11 @@ limitations under the License.
 			description="Use the google closure compiler to compress code">
 			<externs dir="${build.src}">
 				<file name="externs.js"/>
+			</externs>
+			<externs dir="${build.output.js}">
+				<file name="externs-core.js"/>
+				<file name="externs-calendar.js"/>
+				<file name="externs-date.js"/>
 			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-durfmt.js"/>
@@ -751,10 +840,16 @@ limitations under the License.
 			<externs dir="${build.src}">
 				<file name="externs.js"/>
 			</externs>
+			<externs dir="${build.output.js}">
+				<file name="externs-core.js"/>
+				<file name="externs-calendar.js"/>
+				<file name="externs-date.js"/>
+			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-durfmt-dyn.js"/>
 			</sources>
 		</jscomp>
+		<runmkexterns name="durfmt"/>
 	</target>
 
 	<target name="testilib.name" description="test whether or not the ilib-name files need to be rebuilt">
@@ -762,10 +857,12 @@ limitations under the License.
 			<srcfiles dir="${build.src}" includes="name/**/*.js" excludes="ilib-*.js,**/test/**,testcli/**" />
 			<srcfiles dir="${build.src}" includes="name/name-inc.js"/>
 			<srcfiles dir="${build.localetemp}" includes="**/*.json" />
+			<srcfiles dir="${build.output.js}" includes="externs-core.js" />
+			<srcfiles dir="${build.output.js}" includes="externs-ctype.js" />
 		</uptodate>
 	</target>
 
-	<target name="assemble.name" depends="prepare,gen.manifest.locale,testilib.name" unless="core.ilib.core.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
+	<target name="assemble.name" depends="prepare,gen.manifest.locale,assemble.dyn.core,assemble.ctype,testilib.name" unless="core.ilib.name.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
 		<runassemble
 			tgtfilename="${build.output.js}/ilib-name.js" 
 			srcfilename="name/name-inc.js" 
@@ -777,6 +874,10 @@ limitations under the License.
 			description="Use the google closure compiler to compress code">
 			<externs dir="${build.src}">
 				<file name="externs.js"/>
+			</externs>
+			<externs dir="${build.output.js}">
+				<file name="externs-core.js"/>
+				<file name="externs-ctype.js"/>
 			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-name.js"/>
@@ -794,10 +895,15 @@ limitations under the License.
 			<externs dir="${build.src}">
 				<file name="externs.js"/>
 			</externs>
+			<externs dir="${build.output.js}">
+				<file name="externs-core.js"/>
+				<file name="externs-ctype.js"/>
+			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-name-dyn.js"/>
 			</sources>
 		</jscomp>
+		<runmkexterns name="name"/>
 	</target>
 
 	<target name="testilib.number" description="test whether or not the ilib-number files need to be rebuilt">
@@ -805,10 +911,12 @@ limitations under the License.
 			<srcfiles dir="${build.src}" includes="number/**/*.js" excludes="ilib-*.js,**/test/**,testcli/**" />
 			<srcfiles dir="${build.src}" includes="number/number-inc.js"/>
 			<srcfiles dir="${build.localetemp}" includes="**/*.json" />
+			<srcfiles dir="${build.output.js}" includes="externs-core.js" />
+			<srcfiles dir="${build.output.js}" includes="externs-ctype.js" />
 		</uptodate>
 	</target>
 
-	<target name="assemble.number" depends="prepare,gen.manifest.locale,testilib.number" unless="core.ilib.core.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
+	<target name="assemble.number" depends="prepare,gen.manifest.locale,assemble.dyn.core,assemble.ctype,testilib.number" unless="core.ilib.number.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
 		<runassemble
 			tgtfilename="${build.output.js}/ilib-number.js" 
 			srcfilename="number/number-inc.js" 
@@ -820,6 +928,10 @@ limitations under the License.
 			description="Use the google closure compiler to compress code">
 			<externs dir="${build.src}">
 				<file name="externs.js"/>
+			</externs>
+			<externs dir="${build.output.js}">
+				<file name="externs-core.js"/>
+				<file name="externs-ctype.js"/>
 			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-number.js"/>
@@ -837,10 +949,15 @@ limitations under the License.
 			<externs dir="${build.src}">
 				<file name="externs.js"/>
 			</externs>
+			<externs dir="${build.output.js}">
+				<file name="externs-core.js"/>
+				<file name="externs-ctype.js"/>
+			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-number-dyn.js"/>
 			</sources>
 		</jscomp>
+		<runmkexterns name="number"/>
 	</target>
 
 	<target name="testilib.phone" description="test whether or not the ilib-phone files need to be rebuilt">
@@ -848,10 +965,11 @@ limitations under the License.
 			<srcfiles dir="${build.src}" includes="phone/**/*.js" excludes="ilib-*.js,**/test/**,testcli/**" />
 			<srcfiles dir="${build.src}" includes="phone/phone-inc.js"/>
 			<srcfiles dir="${build.localetemp}" includes="**/*.json" />
+			<srcfiles dir="${build.output.js}" includes="externs-core.js" />
 		</uptodate>
 	</target>
 
-	<target name="assemble.phone" depends="prepare,gen.manifest.locale,testilib.phone" unless="core.ilib.core.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
+	<target name="assemble.phone" depends="prepare,gen.manifest.locale,assemble.dyn.core,testilib.phone" unless="core.ilib.phone.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
 		<runassemble
 			tgtfilename="${build.output.js}/ilib-phone.js" 
 			srcfilename="phone/phone-inc.js" 
@@ -863,6 +981,9 @@ limitations under the License.
 			description="Use the google closure compiler to compress code">
 			<externs dir="${build.src}">
 				<file name="externs.js"/>
+			</externs>
+			<externs dir="${build.output.js}">
+				<file name="externs-core.js"/>
 			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-phone.js"/>
@@ -880,10 +1001,14 @@ limitations under the License.
 			<externs dir="${build.src}">
 				<file name="externs.js"/>
 			</externs>
+			<externs dir="${build.output.js}">
+				<file name="externs-core.js"/>
+			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-phone-dyn.js"/>
 			</sources>
 		</jscomp>
+		<runmkexterns name="phone"/>
 	</target>
 
 	<target name="testilib.strings-ext" description="test whether or not the ilib-strings-ext files need to be rebuilt">
@@ -891,10 +1016,12 @@ limitations under the License.
 			<srcfiles dir="${build.src}" includes="strings-ext/**/*.js" excludes="ilib-*.js,**/test/**,testcli/**" />
 			<srcfiles dir="${build.src}" includes="strings-ext/strings-ext-inc.js"/>
 			<srcfiles dir="${build.localetemp}" includes="**/*.json" />
+			<srcfiles dir="${build.output.js}" includes="externs-core.js" />
+			<srcfiles dir="${build.output.js}" includes="externs-ctype.js" />
 		</uptodate>
 	</target>
 
-	<target name="assemble.strings-ext" depends="prepare,gen.manifest.locale,testilib.strings-ext" unless="core.ilib.core.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
+	<target name="assemble.strings-ext" depends="prepare,gen.manifest.locale,assemble.dyn.core,assemble.ctype,testilib.strings-ext" unless="core.ilib.strings-ext.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
 		<runassemble
 			tgtfilename="${build.output.js}/ilib-strings-ext.js" 
 			srcfilename="strings-ext/strings-ext-inc.js" 
@@ -906,6 +1033,10 @@ limitations under the License.
 			description="Use the google closure compiler to compress code">
 			<externs dir="${build.src}">
 				<file name="externs.js"/>
+			</externs>
+			<externs dir="${build.output.js}">
+				<file name="externs-core.js"/>
+				<file name="externs-ctype.js"/>
 			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-strings-ext.js"/>
@@ -923,10 +1054,15 @@ limitations under the License.
 			<externs dir="${build.src}">
 				<file name="externs.js"/>
 			</externs>
+			<externs dir="${build.output.js}">
+				<file name="externs-core.js"/>
+				<file name="externs-ctype.js"/>
+			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-strings-ext-dyn.js"/>
 			</sources>
 		</jscomp>
+		<runmkexterns name="strings-ext"/>
 	</target>
 	
 	<target name="testilib.units" description="test whether or not the ilib-units files need to be rebuilt">
@@ -934,10 +1070,12 @@ limitations under the License.
 			<srcfiles dir="${build.src}" includes="units/**/*.js" excludes="ilib-*.js,**/test/**,testcli/**" />
 			<srcfiles dir="${build.src}" includes="units/units-inc.js"/>
 			<srcfiles dir="${build.localetemp}" includes="**/*.json" />
+			<srcfiles dir="${build.output.js}" includes="externs-core.js" />
+			<srcfiles dir="${build.output.js}" includes="externs-number.js" />
 		</uptodate>
 	</target>
 
-	<target name="assemble.units" depends="prepare,gen.manifest.locale,testilib.units" unless="core.ilib.core.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
+	<target name="assemble.units" depends="prepare,gen.manifest.locale,assemble.dyn.core,assemble.number,testilib.units" unless="core.ilib.units.not.needed" description="assembles the js files into a single file in the right order to satisfy dependencies">
 		<runassemble
 			tgtfilename="${build.output.js}/ilib-units.js" 
 			srcfilename="units/units-inc.js" 
@@ -949,6 +1087,10 @@ limitations under the License.
 			description="Use the google closure compiler to compress code">
 			<externs dir="${build.src}">
 				<file name="externs.js"/>
+			</externs>
+			<externs dir="${build.output.js}">
+				<file name="externs-core.js"/>
+				<file name="externs-number.js"/>
 			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-units.js"/>
@@ -966,12 +1108,19 @@ limitations under the License.
 			<externs dir="${build.src}">
 				<file name="externs.js"/>
 			</externs>
+			<externs dir="${build.output.js}">
+				<file name="externs-core.js"/>
+				<file name="externs-number.js"/>
+			</externs>
 			<sources dir="${build.output.js}">
 				<file name="ilib-units-dyn.js"/>
 			</sources>
 		</jscomp>
+		<runmkexterns name="units"/>
 	</target>
 
+	<target name="assemble.all" depends="assemble.dyn.core,assemble.address,assemble.ctype,assemble.calendar,assemble.collate,assemble.date,assemble.daterange,assemble.durfmt,assemble.name,assemble.number,assemble.phone,assemble.strings-ext,assemble.units" description="assembles all of the plugin modules"/>
+	
 	<target name="export" depends="assemble.core,assemble.standard,assemble.full,assemble.dyn.core,assemble.dyn.standard,assemble.dyn.full,doc,demo" description="Create all objects and export them to the top level dir for packaging">
 		<mkdir dir="${build.export}/js"/>
 		<copy todir="${build.export}/js">
@@ -1122,13 +1271,13 @@ limitations under the License.
         <attribute name="compilation"/>
         <attribute name="suite"/>
 		<sequential>
-			<exec os="Linux" executable="node" dir="${build.src}" failifexecutionfails="true" failonerror="true">
+			<exec osfamily="unix" executable="node" dir="${build.src}" failifexecutionfails="true" failonerror="true">
 				<arg line="testSuite.js"/>
 				<arg line="@{assembly}"/>
 				<arg line="@{compilation}"/>
 				<arg line="@{suite}"/>
 			</exec>
-			<exec os="Mac OS X" executable="node" dir="${build.src}" failifexecutionfails="true" failonerror="true">
+			<exec osfamily="mac" executable="node" dir="${build.src}" failifexecutionfails="true" failonerror="true">
 				<arg value="testSuite.js"/>
 				<arg line="@{assembly}"/>
 				<arg line="@{compilation}"/>
@@ -1362,14 +1511,14 @@ limitations under the License.
 			depends="testinfo"
 			description="generates the localeinfo.json files out of the *.jf files"
 			unless="info.not.needed">
-		<exec os="Linux" executable="node" dir="${build.locale}">
-			<arg value="${build.tools}/build/mkli.js"/>
+		<exec osfamily="unix" executable="node" dir="${build.locale}">
+			<arg value="${build.tools}/mkli.js"/>
 		</exec>
-		<exec os="Mac OS X" executable="node" dir="${build.locale}">
-			<arg value="${build.tools}/build/mkli.js"/>
+		<exec osfamily="mac" executable="node" dir="${build.locale}">
+			<arg value="${build.tools}/mkli.js"/>
 		</exec>
 		<exec osfamily="windows" executable="node.exe" dir="${build.locale}">
-			<arg value="${build.tools}/build/mkli.js"/>
+			<arg value="${build.tools}/mkli.js"/>
 		</exec>
 		<touch file="${build.locale}/localeinfo.stamp"/>
 	</target>
@@ -1384,18 +1533,18 @@ limitations under the License.
 			depends="geninfo,testlocalejson"
 			description="compresses the json files"
 			unless="json.compress.not.needed">
-		<exec os="Linux" executable="node" dir="${build.locale}" failifexecutionfails="true" failonerror="true">
-			<arg value="${build.tools}/build/jsoncompress.js"/>
+		<exec osfamily="unix" executable="node" dir="${build.locale}" failifexecutionfails="true" failonerror="true">
+			<arg value="${build.tools}/jsoncompress.js"/>
 			<arg value="."/>
 			<arg value="${build.localetemp}"/>
 		</exec>
-		<exec os="Mac OS X" executable="node" dir="${build.locale}">
-			<arg value="${build.tools}/build/jsoncompress.js"/>
+		<exec osfamily="mac" executable="node" dir="${build.locale}">
+			<arg value="${build.tools}/jsoncompress.js"/>
 			<arg value="."/>
 			<arg value="${build.localetemp}"/>
 		</exec>
 		<exec osfamily="windows" executable="node.exe" dir="${build.locale}">
-			<arg value="${build.tools}/build/jsoncompress.js"/>
+			<arg value="${build.tools}/jsoncompress.js"/>
 			<arg value="."/>
 			<arg value="${build.localetemp}"/>
 		</exec>
@@ -1412,14 +1561,14 @@ limitations under the License.
 			depends="compress.locale.json,test.locale.manifest"
 			description="produces the ilibmanifest.json file"
 			unless="locale.manifest.not.needed">
-		<exec os="Linux" executable="node" dir="${build.localetemp}">
-			<arg value="${build.tools}/build/mkmf.js"/>
+		<exec osfamily="unix" executable="node" dir="${build.localetemp}">
+			<arg value="${build.tools}/mkmf.js"/>
 		</exec>
-		<exec os="Mac OS X" executable="node" dir="${build.localetemp}">
-			<arg value="${build.tools}/build/mkmf.js"/>
+		<exec osfamily="mac" executable="node" dir="${build.localetemp}">
+			<arg value="${build.tools}/mkmf.js"/>
 		</exec>
 		<exec osfamily="windows" executable="node.exe" dir="${build.localetemp}">
-			<arg value="${build.tools}/build/mkmf.js"/>
+			<arg value="${build.tools}/mkmf.js"/>
 		</exec>
 	</target>
 </project>

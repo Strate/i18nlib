@@ -276,7 +276,7 @@ ilib.GlyphString._compose = function (lead, trail) {
  * and next() which returns the next character.<p>
  * 
  * @override
- * @return {Object} an iterator 
+ * @return {ilib.StringIterator} an iterator 
  * that iterates through all the characters in the string
  */
 ilib.GlyphString.prototype.charIterator = function() {
@@ -284,6 +284,7 @@ ilib.GlyphString.prototype.charIterator = function() {
 	
 	/**
 	 * @constructor
+	 * @implements ilib.StringIterator
 	 */
 	function _chiterator (istring) {
 		this.index = 0;

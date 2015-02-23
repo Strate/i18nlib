@@ -153,7 +153,7 @@ ilib.AddressFmt.prototype._init = function () {
  * country is on the last line, but in China the country is usually on the first line.
  *
  * @param {ilib.Address} address Address to format
- * @eturns {string} Returns a string containing the formatted address
+ * @returns {string} Returns a string containing the formatted address
  */
 ilib.AddressFmt.prototype.format = function (address) {
 	var ret, template, other, format;
