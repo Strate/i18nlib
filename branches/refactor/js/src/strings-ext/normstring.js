@@ -527,7 +527,7 @@ ilib.NormString.prototype.normalize = function (form) {
  * returns true if the iterator has more characters to iterate through,
  * and next() which returns the next character.<p>
  * 
- * @return {Object} an iterator 
+ * @return {ilib.StringIterator} an iterator 
  * that iterates through all the characters in the string
  */
 ilib.NormString.prototype.charIterator = function() {
@@ -535,6 +535,7 @@ ilib.NormString.prototype.charIterator = function() {
 	
 	/**
 	 * @constructor
+	 * @implements ilib.StringIterator
 	 */
 	function _chiterator (istring) {
 		/**

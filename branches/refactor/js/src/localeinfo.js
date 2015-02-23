@@ -148,7 +148,8 @@ ilib.LocaleInfo = function(locale, options) {
 	});
 };
 
-ilib.LocaleInfo.defaultInfo = /** @type {{
+ilib.LocaleInfo.defaultInfo = 
+/** @type {{
 	scripts:Array.<string>,
 	timezone:string,
 	units:string,
