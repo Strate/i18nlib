@@ -238,7 +238,7 @@ ilib.getLocale = function () {
     if (typeof(ilib.locale) !== 'string') {
         if (typeof(navigator) !== 'undefined' && typeof(navigator.language) !== 'undefined') {
             // running in a browser
-            ilib.locale = navigator.language;  // FF/Opera/Chrome/Webkit
+            ilib.locale = navigator.language.substring(0,3) + navigator.language.substring(3,5).toUpperCase();  // FF/Opera/Chrome/Webkit
             if (!ilib.locale) {
                 // IE on Windows
                 var lang = typeof(navigator.browserLanguage) !== 'undefined' ? 
@@ -510,14 +510,14 @@ ilib.setLoaderCallback = function(loader) {
 /**
  * @static
  * @param {Array.<string>} names array of names of module to depend on
- */
+ *
 ilib.depends = function (names) {
 	var name;
 	var suffix = (ilib.getLoadType() === "dynamic") ? "-dyn" : "";
 	
 	switch (ilib._getPlatform()) {
 	case "nodejs":
-		/** @type {{sep:string,isAbsolute:function(string)}} */
+		/** @type {{sep:string,isAbsolute:function(string)}} * /
 		var path = require("path");
 		// we can require() a module multiple times and node's path will take care of caching
 		// for us and only load the module once, so we don't have to worry about caching the 
@@ -563,3 +563,4 @@ ilib.depends = function (names) {
 		break;
 	}
 };
+*/
