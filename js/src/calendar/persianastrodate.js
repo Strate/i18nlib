@@ -32,7 +32,8 @@ julianday.js
 calendar/persratadie.js
 calendar/persianastro.js 
 calendar/date.js 
-calendar/julianday.js 
+calendar/julianday.js
+calendar/timezone.js 
 */
 
 
