@@ -228,8 +228,8 @@ for (s in suite) {
 	var ts;
 	
 	ts = new JsUnit.TestSuite(suite[s].suite);
-	// ts.addToContext({ilib: require("./ilib-dyn-ut.js").ilib});
-	var inc = "./ilib" + ((assembly === "dynamic") ? "-dyn" : "") + "-ut" + ((compilation === "compiled") ? "-compiled" : "") + ".js";
+	// ts.addToContext({ilib: require("../output/js/ilib-ut-dyn.js").ilib});
+	var inc = "../output/js/ilib-ut" + ((assembly === "dynamic") ? "-dyn" : "") + ((compilation === "compiled") ? "-compiled" : "") + ".js";
 	ts.include(inc); 
 	ts.include("testglue.js");
 	for (var i in suite[s].includes) {
