@@ -2,7 +2,7 @@
 <!--
 build.xml - build the javascript parts
 
-Copyright © 2012-2014, JEDLSoft
+Copyright © 2012-2015, JEDLSoft
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -315,19 +315,19 @@ limitations under the License.
 	
 	<target name="assemble.dyn.unittest" depends="prepare,gen.manifest.locale,testilib.dyn.ut" unless="ilib-dyn-ut.not.needed" description="assembles only the locales needed for the unit tests">
 		<runassemble 
-			tgtfilename="${build.output.js}/ilib-dyn-ut.js" 
+			tgtfilename="${build.output.js}/ilib-ut-dyn.js" 
 			srcfilename="${build.src}/ilib-ut-inc.js" 
 			locales=""/>
 		<jscomp compilationlevel="simple" 
 			warning="verbose" 
 			debug="true"
-			output="${build.output.js}/ilib-dyn-ut-compiled.js"
+			output="${build.output.js}/ilib-ut-dyn-compiled.js"
 			description="Use the google closure compiler to compress code">
 			<externs dir="${build.src}">
 				<file name="externs.js"/>
 			</externs>
 			<sources dir="${build.output.js}">
-				<file name="ilib-dyn-ut.js"/>
+				<file name="ilib-ut-dyn.js"/>
 			</sources>
 		</jscomp>
 	</target>
