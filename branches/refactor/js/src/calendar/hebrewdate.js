@@ -31,6 +31,7 @@ calendar/date.js
 calendar/hebrew.js
 calendar/ratadie.js
 calendar/julianday.js 
+calendar/timezone.js
 */
 
 /**

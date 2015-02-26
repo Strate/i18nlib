@@ -36,7 +36,8 @@ calendar/gregratadie.js
 calendar/gregoriandate.js 
 calendar/han.js
 calendar/astro.js 
-calendar/julianday.js 
+calendar/julianday.js
+calendar/timezone.js
 */
 
 /**
