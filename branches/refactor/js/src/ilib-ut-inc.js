@@ -22,16 +22,28 @@
 
 /* !depends
 ilibglobal.js
-locale.js
 util/utils.js
 util/search.js
 util/math.js
 util/jsutils.js
+locale.js
 strings.js
-resources.js
 localeinfo.js
+resources.js
 scriptinfo.js
+iterator.js
 localematch.js
-mapper.js
+ctype/ctype-inc.js
+number/number-inc.js
+calendar/calendar-inc.js
+date/date-inc.js
+daterange/daterange-inc.js
+durfmt/durfmt.js
+strings-ext/strings-ext-inc.js
 maps/casemapper.js
+name/name-inc.js
+address/address-inc.js
+collate/collate-inc.js
+phone/phone-inc.js
+units/units-inc.js
 */
