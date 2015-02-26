@@ -22,26 +22,25 @@
 
 /* !depends
 ilibglobal.js
-daterangefmt.js
-date.js
+daterange/daterangefmt.js
+calendar/date.js
 calendar/gregorian.js
 calendar/gregoriandate.js
 calendar/thaisolar.js
 calendar/thaisolardate.js
 calendar/persianastro.js
 calendar/persianastrodate.js
-numprs.js
-numfmt.js
-julianday.js
-datefmt.js
-calendar.js
+number/numprs.js
+number/numfmt.js
+calendar/julianday.js
+date/datefmt.js
+calendar/calendar.js
 util/utils.js
 locale.js
 strings.js
-durfmt.js
+durfmt/durfmt.js
 resources.js
 localeinfo.js
-daterangefmt.js
 scriptinfo.js
 maps/casemapper.js
 */
