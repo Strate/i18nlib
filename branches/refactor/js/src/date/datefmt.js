@@ -437,10 +437,11 @@ ilib.DateFmt = function(options) {
 							loadParams: loadParams, 
 							callback: ilib.bind(this, function (formats) {
 								if (!formats) {
-									formats = ilib.data.dateformats || ilib.DateFmt.defaultFmt;
+									formats = ilib.data.dateformats && JSON.parse(ilib.data.formats) || ilib.DateFmt.defaultFmt;
 									var spec = this.locale.getSpec().replace(/-/g, '_');
 									ilib.DateFmt.cache[spec] = formats;
 								}
+								formats = (typeof(formats) === "string" ? JSON.parse(formats) : formats);
 								if (typeof(this.clock) === 'undefined') {
 									// default to the locale instead
 									this.clock = this.locinfo.getClock();

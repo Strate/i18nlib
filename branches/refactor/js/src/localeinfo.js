@@ -178,7 +178,7 @@ ilib.LocaleInfo.defaultInfo =
 		exponential:string,
 		digits:string
 	}>
-}}*/ ilib.data.localeinfo;
+}}*/ JSON.parse(ilib.data.localeinfo);
 ilib.LocaleInfo.defaultInfo = ilib.LocaleInfo.defaultInfo || {
 	"scripts": ["Latn"],
     "timezone": "Etc/UTC",

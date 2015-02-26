@@ -6539,7 +6539,7 @@ function testLocaleInfoGetPercentageSymbol2() {
 function mockLoader(paths, sync, params, callback) {
 	var data = [];
 	// for the generic, shared stuff
-	data.push(ilib.data.localeinfo || {
+	data.push(JSON.parse(ilib.data.localeinfo) || {
 	    "calendar": "gregorian",
 	    "clock": "24",
 	    "currency": "USD",
@@ -6764,11 +6764,7 @@ function testLocaleInfoLoadPreassembledDataAsynch() {
 }
 
 // locale with no script
-ilib.data.localeinfo_fr_FR_overseas = {
-	"currency": "USD",
-	"locale": "fr-FR-overseas",
-	"timezone": "Pacific/Tahiti"
-};
+ilib.data.localeinfo_fr_FR_overseas = '{"currency": "USD","locale": "fr-FR-overseas","timezone": "Pacific/Tahiti"}';
 
 function testLocaleInfoLoadMissingLocaleParts() {
 	if (typeof(ilib.data.localeinfo) === 'undefined' && typeof(ilib._load) !== 'undefined') {

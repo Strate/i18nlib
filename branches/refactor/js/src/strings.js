@@ -144,7 +144,7 @@ ilib.String.loadPlurals = function (sync, locale, loadParams, onLoad) {
 		loc = new ilib.Locale(ilib.getLocale());
 	}
 	var spec = loc.getLanguage();
-	if (!ilib.data["plurals_" + spec]) {
+	if (!ilib.data["plurals_" + spec] && !ilib.data["oplurals_" + spec]) {
 		ilib.loadData({
 			name: "plurals.json",
 			object: ilib.String,
@@ -155,15 +155,16 @@ ilib.String.loadPlurals = function (sync, locale, loadParams, onLoad) {
 				if (!plurals) {
 					ilib.String.cache[spec] = {};
 				}
-				ilib.data["plurals_" + spec] = plurals || {};
+				ilib.data["oplurals_" + spec] = plurals || {};
 				if (onLoad && typeof(onLoad) === 'function') {
-					onLoad(ilib.data["plurals_" + spec]);
+					onLoad(ilib.data["oplurals_" + spec]);
 				}
 			})
 		});
 	} else {
 		if (onLoad && typeof(onLoad) === 'function') {
-			onLoad(ilib.data["plurals_" + spec]);
+			var plurals = ilib.data["oplurals_" + spec] || JSON.parse(ilib.data["plurals_" + spec]);
+			onLoad(plurals);
 		}
 	}
 };
@@ -604,7 +605,8 @@ ilib.String.prototype = {
 								case "few":
 								case "many":
 									// CLDR locale-dependent number classes
-									var ruleset = ilib.data["plurals_" + this.locale.getLanguage()];
+									var spec = this.locale.getLanguage();
+									var ruleset = ilib.data["oplurals_" + spec] || JSON.parse(ilib.data["plurals_" + spec]);
 									if (ruleset) {
 										var rule = ruleset[limits[i]];
 										if (ilib.String._fncs.getValue(rule, arg)) {

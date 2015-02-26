@@ -241,14 +241,16 @@ ilib.TimeZone.prototype._loadtzdata = function () {
 };
 
 ilib.TimeZone.prototype._initZone = function() {
+	var zone = ilib.data.zoneinfo[this.id];
 	/** 
 	 * @private
 	 * @type {{o:string,f:string,e:Object.<{m:number,r:string,t:string,z:string}>,s:Object.<{m:number,r:string,t:string,z:string,v:string,c:string}>,c:string,n:string}} 
 	 */
-	this.zone = ilib.data.zoneinfo[this.id];
+	this.zone = typeof(zone) === "string" ? JSON.parse(zone) : zone;
 	if (!this.zone && typeof(this.offset) === 'undefined') {
 		this.id = "Etc/UTC";
-		this.zone = ilib.data.zoneinfo[this.id];
+		zone = ilib.data.zoneinfo[this.id];
+		this.zone = typeof(zone) === "string" ? JSON.parse(zone) : zone;
 	}
 	
 	this._calcDSTSavings();
@@ -313,7 +315,7 @@ ilib.TimeZone.getAvailableIds = function (country) {
 			}
 		}
 	} else {
-		if (!ilib.data.zoneinfo.zonetab) {
+		if (!ilib.data.zoneinfo.zonetab && !ilib.data.zoneinfo.ozonetab) {
 			ilib.loadData({
 				object: ilib.TimeZone, 
 				nonlocale: true,	// locale independent 
@@ -321,12 +323,16 @@ ilib.TimeZone.getAvailableIds = function (country) {
 				sync: true, 
 				callback: ilib.bind(this, function (tzdata) {
 					if (tzdata) {
-						ilib.data.zoneinfo.zonetab = tzdata;
+						ilib.data.zoneinfo.ozonetab = tzdata;
 					}
 				})
 			});
+		} else {
+			if (!ilib.data.zoneinfo.ozonetab) {
+				ilib.data.zoneinfo.ozonetab = JSON.parse(ilib.data.zoneinfo.zonetab);
+			}
 		}
-		ids = ilib.data.zoneinfo.zonetab[country];
+		ids = ilib.data.zoneinfo.ozonetab[country];
 	}
 	
 	return ids;

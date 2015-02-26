@@ -526,22 +526,11 @@ function testSignumFunction() {
 }
 
 function testMergeLocData() {
-	ilib.data.foobar = {
-		a: "b",
-		c: "d"
-	};
-	ilib.data.foobar_de = {
-		a: "e"
-	};
-	ilib.data.foobar_de_DE = {
-   		c: "f"
-   	};
-	ilib.data.foobar_de_Latn_DE = {
-		g: "h"
-	};
-	ilib.data.foobar_de_Latn_DE_SAP = {
-   		g: "i"
-   	};
+	ilib.data.foobar = '{"a": "b", "c": "d"}';
+	ilib.data.foobar_de = '{"a": "e"}';
+	ilib.data.foobar_de_DE = '{"c": "f"}';
+	ilib.data.foobar_de_Latn_DE = '{"g": "h"}';
+	ilib.data.foobar_de_Latn_DE_SAP = '{"g": "i"}';
 
 	var locale = new ilib.Locale("de-DE-Latn-SAP");
 	var m = ilib.mergeLocData("foobar", locale);
@@ -551,47 +540,23 @@ function testMergeLocData() {
 }
 
 function testMergeLocDataNoLocale() {
-	ilib.data.foobar = {
-		a: "b",
-		c: "d"
-	};
-	ilib.data.foobar_de = {
-		a: "e"
-	};
-	ilib.data.foobar_de_DE = {
-   		c: "f"
-   	};
-	ilib.data.foobar_de_Latn_DE = {
-		g: "h"
-	};
-	ilib.data.foobar_de_Latn_DE_SAP = {
-   		g: "i"
-   	};
+	ilib.data.foobar = '{"a": "b", "c": "d"}';
+	ilib.data.foobar_de = '{"a": "e"}';
+	ilib.data.foobar_de_DE = '{"c": "f"}';
+	ilib.data.foobar_de_Latn_DE = '{"g": "h"}';
+	ilib.data.foobar_de_Latn_DE_SAP = '{"g": "i"}';
 
 	var locale = new ilib.Locale("-");
 	var m = ilib.mergeLocData("foobar", locale);
-	assertEquals("b", m.a);
-	assertEquals("d", m.c);
-	assertUndefined(m.g);
+	assertUndefined(m);
 }
 
 function testMergeLocDataNonLeafLocale() {
-	ilib.data.foobar = {
-		a: "b",
-		c: "d"
-	};
-	ilib.data.foobar_de = {
-		a: "e"
-	};
-	ilib.data.foobar_de_DE = {
-   		c: "f"
-   	};
-	ilib.data.foobar_de_Latn_DE = {
-		g: "h"
-	};
-	ilib.data.foobar_de_Latn_DE_SAP = {
-   		g: "i"
-   	};
+	ilib.data.foobar = '{"a": "b", "c": "d"}';
+	ilib.data.foobar_de = '{"a": "e"}';
+	ilib.data.foobar_de_DE = '{"c": "f"}';
+	ilib.data.foobar_de_Latn_DE = '{"g": "h"}';
+	ilib.data.foobar_de_Latn_DE_SAP = '{"g": "i"}';
 
 	var locale = new ilib.Locale("de-DE");
 	var m = ilib.mergeLocData("foobar", locale);
@@ -601,22 +566,11 @@ function testMergeLocDataNonLeafLocale() {
 }
 
 function testMergeLocDataMissingData() {
-	ilib.data.foobar = {
-		a: "b",
-		c: "d"
-	};
-	ilib.data.foobar_de = {
-		a: "e"
-	};
-	ilib.data.foobar_de_DE = {
-   		c: "f"
-   	};
-	ilib.data.foobar_de_Latn_DE = {
-		g: "h"
-	};
-	ilib.data.foobar_de_Latn_DE_SAP = {
-   		g: "i"
-   	};
+	ilib.data.foobar = '{"a": "b", "c": "d"}';
+	ilib.data.foobar_de = '{"a": "e"}';
+	ilib.data.foobar_de_DE = '{"c": "f"}';
+	ilib.data.foobar_de_Latn_DE = '{"g": "h"}';
+	ilib.data.foobar_de_Latn_DE_SAP = '{"g": "i"}';
 
 	var locale = new ilib.Locale("de-DE-Latn-SAP");
 	var m = ilib.mergeLocData("asdf", locale);
@@ -624,71 +578,39 @@ function testMergeLocDataMissingData() {
 }
 
 function testMergeLocDataNoName() {
-	ilib.data.foobar = {
-		a: "b",
-		c: "d"
-	};
-	ilib.data.foobar_de = {
-		a: "e"
-	};
-	ilib.data.foobar_de_DE = {
-   		c: "f"
-   	};
-	ilib.data.foobar_de_Latn_DE = {
-		g: "h"
-	};
-	ilib.data.foobar_de_Latn_DE_SAP = {
-   		g: "i"
-   	};
+	ilib.data.foobar = '{"a": "b", "c": "d"}';
+	ilib.data.foobar_de = '{"a": "e"}';
+	ilib.data.foobar_de_DE = '{"c": "f"}';
+	ilib.data.foobar_de_Latn_DE = '{"g": "h"}';
+	ilib.data.foobar_de_Latn_DE_SAP = '{"g": "i"}';
 
 	var locale = new ilib.Locale("de-DE-Latn-SAP");
 	var m = ilib.mergeLocData(undefined, locale);
 	assertUndefined(m);
 }
 
-function testMergeLocDataNoLocale() {
-	ilib.data.foobar = {
-		a: "b",
-		c: "d"
-	};
-	ilib.data.foobar_en = {
-		a: "e"
-	};
-	ilib.data.foobar_en_US = {
-   		c: "f"
-   	};
-	ilib.data.foobar_en_Latn_US = {
-		g: "h"
-	};
-	ilib.data.foobar_en_Latn_US_SAP = {
-   		g: "i"
-   	};
+function testMergeLocDataDefaultLocale() {
+	ilib.data.foobar = '{"a": "b", "c": "d"}';
+	ilib.data.foobar_en = '{"a": "e"}';
+	ilib.data.foobar_en_US = '{"c": "f"}';
+	ilib.data.foobar_en_Latn_US = '{"g": "h"}';
+	ilib.data.foobar_en_Latn_US_SAP = '{"g": "i"}';
 
 	var m = ilib.mergeLocData("foobar"); // use the current locale -- en-US
-	assertTrue(typeof(m) !== 'undefined');
+	assertNotUndefined(m);
 	
 	assertEquals("e", m.a);
 	assertEquals("f", m.c);
 	assertUndefined(m.g);
 }
 
+/*
 function testMergeLocDataNoSideEffects() {
-	ilib.data.foobar = {
-		a: "b",
-		c: "d"
-	};
-	ilib.data.foobar_de = {
-		a: "e"
-	};
-	ilib.data.foobar_de_DE = {
-   		c: "f"
-   	};
-	ilib.data.foobar_de_Latn_DE = {
-		g: "h"
-	};
-	ilib.data.foobar_de_Latn_DE_SAP = {
-   		g: "i"
-   	};
+	ilib.data.foobar = '{"a": "b", "c": "d"}';
+	ilib.data.foobar_de = '{"a": "e"}';
+	ilib.data.foobar_de_DE = '{"c": "f"}';
+	ilib.data.foobar_de_Latn_DE = '{"g": "h"}';
+	ilib.data.foobar_de_Latn_DE_SAP = '{"g": "i"}';
 
 	var locale = new ilib.Locale("de-DE-Latn-SAP");
 	var m = ilib.mergeLocData("foobar", locale);
@@ -697,20 +619,13 @@ function testMergeLocDataNoSideEffects() {
 	assertEquals("d", ilib.data.foobar.c);
 	assertUndefined(ilib.data.foobar.g);
 }
+*/
 
 function testMergeLocDataNoBase() {
-	ilib.data.asdf_de = {
-		a: "e"
-	};
-	ilib.data.asdf_de_DE = {
-   		c: "f"
-   	};
-	ilib.data.asdf_de_Latn_DE = {
-		g: "h"
-	};
-	ilib.data.asdf_de_Latn_DE_SAP = {
-   		g: "i"
-   	};
+	ilib.data.asdf_de = '{"a": "e"}';
+	ilib.data.asdf_de_DE = '{"c": "f"}';
+	ilib.data.asdf_de_Latn_DE = '{"g": "h"}';
+	ilib.data.asdf_de_Latn_DE_SAP = '{"g": "i"}';
 
 	var locale = new ilib.Locale("de-DE-Latn-SAP");
 	var m = ilib.mergeLocData("asdf", locale);
@@ -720,16 +635,9 @@ function testMergeLocDataNoBase() {
 }
 
 function testMergeLocDataMissingLocaleParts() {
-	ilib.data.foobar = {
-		a: "b",
-		c: "d"
-	};
-	ilib.data.foobar_de = {
-		a: "e"
-	};
-	ilib.data.foobar_de_Latn = {
-   		g: "i"
-   	};
+	ilib.data.foobar = '{"a": "b", "c": "d"}';
+	ilib.data.foobar_de = '{"a": "e"}';
+	ilib.data.foobar_de_Latn = '{"g": "i"}';
 
 	var locale = new ilib.Locale("de-Latn");
 	var m = ilib.mergeLocData("foobar", locale);

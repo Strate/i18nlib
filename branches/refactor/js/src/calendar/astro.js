@@ -39,7 +39,7 @@ calendar/gregratadie.js
  * @param {function(*)|undefined} callback
  */
 ilib.Date.initAstro = function(sync, loadParams, callback) {
-	if (!ilib.data.astro) {
+	if (!ilib.data.oastro && !ilib.data.astro) {
 		ilib.loadData({
 			name: "astro.json", // countries in their own language 
 			locale: "-", // only need to load the root file 
@@ -91,15 +91,18 @@ ilib.Date.initAstro = function(sync, loadParams, callback) {
 				 *  	_nmExtra:Array.<number>
 				 *  }}
 				 */ 	
-			 	ilib.data.astro = astroData;
+			 	ilib.data.oastro = astroData;
 				if (callback && typeof(callback) === 'function') {
 					callback(astroData);
 				}
 			})
 		});
 	} else {
+		if (!ilib.data.oastro) {
+			ilib.data.oastro = JSON.parse(ilib.data.astro);
+		}
 		if (callback && typeof(callback) === 'function') {
-			callback(ilib.data.astro);
+			callback(ilib.data.oastro);
 		}
 	}
 };
@@ -201,10 +204,10 @@ ilib.Date._equinox = function(year, which) {
 	    for subsequent years.  */
 
 	if (year < 1000) {
-		JDE0tab = ilib.data.astro._JDE0tab1000;
+		JDE0tab = ilib.data.oastro._JDE0tab1000;
 		Y = year / 1000;
 	} else {
-		JDE0tab = ilib.data.astro._JDE0tab2000;
+		JDE0tab = ilib.data.oastro._JDE0tab2000;
 		Y = (year - 2000) / 1000;
 	}
 
@@ -226,8 +229,8 @@ ilib.Date._equinox = function(year, which) {
 	S = 0;
 	j = 0;
 	for (i = 0; i < 24; i++) {
-		S += ilib.data.astro._EquinoxpTerms[j]
-				* ilib.Date._dcos(ilib.data.astro._EquinoxpTerms[j + 1] + (ilib.data.astro._EquinoxpTerms[j + 2] * T));
+		S += ilib.data.oastro._EquinoxpTerms[j]
+				* ilib.Date._dcos(ilib.data.oastro._EquinoxpTerms[j + 1] + (ilib.data.oastro._EquinoxpTerms[j + 2] * T));
 		j += 3;
 	}
 
@@ -260,7 +263,7 @@ ilib.Date._deltat = function (year) {
 	if ((year >= 1620) && (year <= 2014)) {
 		i = Math.floor(year - 1620);
 		f = (year - 1620) - i; /* Fractional part of year */
-		dt = ilib.data.astro._deltaTtab[i] + ((ilib.data.astro._deltaTtab[i + 1] - ilib.data.astro._deltaTtab[i]) * f);
+		dt = ilib.data.oastro._deltaTtab[i] + ((ilib.data.oastro._deltaTtab[i + 1] - ilib.data.oastro._deltaTtab[i]) * f);
 	} else {
 		t = (year - 2000) / 100;
 		if (year < 948) {
@@ -300,7 +303,7 @@ ilib.Date._obliqeq = function (jd) {
 
  	if (Math.abs(u) < 1.0) {
  		for (i = 0; i < 10; i++) {
- 			eps += (ilib.data.astro._oterms[i] / 3600.0) * v;
+ 			eps += (ilib.data.oastro._oterms[i] / 3600.0) * v;
  			v *= u;
  		}
  	}
@@ -410,12 +413,12 @@ ilib.Date._nutation = function(jd) {
 	for (i = 0; i < 63; i++) {
 		ang = 0;
 		for (j = 0; j < 5; j++) {
-			if (ilib.data.astro._nutArgMult[(i * 5) + j] != 0) {
-				ang += ilib.data.astro._nutArgMult[(i * 5) + j] * ta[j];
+			if (ilib.data.oastro._nutArgMult[(i * 5) + j] != 0) {
+				ang += ilib.data.oastro._nutArgMult[(i * 5) + j] * ta[j];
 			}
 		}
-		dp += (ilib.data.astro._nutArgCoeff[(i * 4) + 0] + ilib.data.astro._nutArgCoeff[(i * 4) + 1] * to10) * Math.sin(ang);
-		de += (ilib.data.astro._nutArgCoeff[(i * 4) + 2] + ilib.data.astro._nutArgCoeff[(i * 4) + 3] * to10) * Math.cos(ang);
+		dp += (ilib.data.oastro._nutArgCoeff[(i * 4) + 0] + ilib.data.oastro._nutArgCoeff[(i * 4) + 1] * to10) * Math.sin(ang);
+		de += (ilib.data.oastro._nutArgCoeff[(i * 4) + 2] + ilib.data.oastro._nutArgCoeff[(i * 4) + 3] * to10) * Math.cos(ang);
 	}
 
 	/*
@@ -531,8 +534,8 @@ ilib.Date._aberration = function(c) {
 /**
  * @private
  *
-ilib.data.astro._nutCoeffA = [124.90, -1934.134, 0.002063];
-ilib.data.astro._nutCoeffB = [201.11, 72001.5377, 0.00057];
+ilib.data.oastro._nutCoeffA = [124.90, -1934.134, 0.002063];
+ilib.data.oastro._nutCoeffB = [201.11, 72001.5377, 0.00057];
 */
 
 /**
@@ -542,8 +545,8 @@ ilib.data.astro._nutCoeffB = [201.11, 72001.5377, 0.00057];
  * @return {number} the nutation for the given julian century in radians
  */
 ilib.Date._nutation2 = function(c) {
-	var a = ilib.Date._poly(c, ilib.data.astro._nutCoeffA);
-	var b = ilib.Date._poly(c, ilib.data.astro._nutCoeffB);
+	var a = ilib.Date._poly(c, ilib.data.oastro._nutCoeffA);
+	var b = ilib.Date._poly(c, ilib.data.oastro._nutCoeffB);
 	// return -0.0000834 * ilib.Date._dsin(a) - 0.0000064 * ilib.Date._dsin(b);
 	return -0.004778 * ilib.Date._dsin(a) - 0.0003667 * ilib.Date._dsin(b);
 };
@@ -571,7 +574,7 @@ ilib.Date._ephemerisCorrection = function(jd) {
 		});
 		// 693596 is the rd of Jan 1, 1900
 		var theta = (jul1.getRataDie() - 693596) / 36525;
-		return ilib.Date._poly(theta, (1900 <= year) ? ilib.data.astro._coeff19th : ilib.data.astro._coeff18th);
+		return ilib.Date._poly(theta, (1900 <= year) ? ilib.data.oastro._coeff19th : ilib.data.oastro._coeff18th);
 	}
 	
 	if (1620 <= year && year <= 1799) {
@@ -631,12 +634,12 @@ ilib.Date._julianCenturies = function(jd) {
 ilib.Date._solarLongitude = function(jd) {
 	var c = ilib.Date._julianCenturies(jd),
 		longitude = 0,
-		len = ilib.data.astro._solarLongCoeff.length,
+		len = ilib.data.oastro._solarLongCoeff.length,
 		row;
 	
 	for (var i = 0; i < len; i++) {
-		longitude += ilib.data.astro._solarLongCoeff[i] * 
-			ilib.Date._dsin(ilib.data.astro._solarLongAddends[i] + ilib.data.astro._solarLongMultipliers[i] * c);
+		longitude += ilib.data.oastro._solarLongCoeff[i] * 
+			ilib.Date._dsin(ilib.data.oastro._solarLongAddends[i] + ilib.data.oastro._solarLongMultipliers[i] * c);
 	}
 	longitude *= 5.729577951308232e-06;
 	longitude += 282.77718340000001 + 36000.769537439999 * c;
@@ -652,21 +655,21 @@ ilib.Date._solarLongitude = function(jd) {
  */
 ilib.Date._lunarLongitude = function (jd) {
 	var c = ilib.Date._julianCenturies(jd),
-	    meanMoon = ilib.Date._fixangle(ilib.Date._poly(c, ilib.data.astro._meanMoonCoeff)),
-	    elongation = ilib.Date._fixangle(ilib.Date._poly(c, ilib.data.astro._elongationCoeff)),
-	    solarAnomaly = ilib.Date._fixangle(ilib.Date._poly(c, ilib.data.astro._solarAnomalyCoeff)),
-	    lunarAnomaly = ilib.Date._fixangle(ilib.Date._poly(c, ilib.data.astro._lunarAnomalyCoeff)),
-	    moonNode = ilib.Date._fixangle(ilib.Date._poly(c, ilib.data.astro._moonFromNodeCoeff)),
-	    e = ilib.Date._poly(c, ilib.data.astro._eCoeff);
+	    meanMoon = ilib.Date._fixangle(ilib.Date._poly(c, ilib.data.oastro._meanMoonCoeff)),
+	    elongation = ilib.Date._fixangle(ilib.Date._poly(c, ilib.data.oastro._elongationCoeff)),
+	    solarAnomaly = ilib.Date._fixangle(ilib.Date._poly(c, ilib.data.oastro._solarAnomalyCoeff)),
+	    lunarAnomaly = ilib.Date._fixangle(ilib.Date._poly(c, ilib.data.oastro._lunarAnomalyCoeff)),
+	    moonNode = ilib.Date._fixangle(ilib.Date._poly(c, ilib.data.oastro._moonFromNodeCoeff)),
+	    e = ilib.Date._poly(c, ilib.data.oastro._eCoeff);
 	
 	var sum = 0;
-	for (var i = 0; i < ilib.data.astro._lunarElongationLongCoeff.length; i++) {
-		var x = ilib.data.astro._solarAnomalyLongCoeff[i];
+	for (var i = 0; i < ilib.data.oastro._lunarElongationLongCoeff.length; i++) {
+		var x = ilib.data.oastro._solarAnomalyLongCoeff[i];
 
-		sum += ilib.data.astro._sineCoeff[i] * Math.pow(e, Math.abs(x)) * 
-			ilib.Date._dsin(ilib.data.astro._lunarElongationLongCoeff[i] * elongation + x * solarAnomaly + 
-				ilib.data.astro._lunarAnomalyLongCoeff[i] * lunarAnomaly + 
-				ilib.data.astro._moonFromNodeLongCoeff[i] * moonNode);
+		sum += ilib.data.oastro._sineCoeff[i] * Math.pow(e, Math.abs(x)) * 
+			ilib.Date._dsin(ilib.data.oastro._lunarElongationLongCoeff[i] * elongation + x * solarAnomaly + 
+				ilib.data.oastro._lunarAnomalyLongCoeff[i] * lunarAnomaly + 
+				ilib.data.oastro._moonFromNodeLongCoeff[i] * moonNode);
 	}
 	var longitude = sum / 1000000;
 	var venus = 3958.0 / 1000000 * ilib.Date._dsin(119.75 + c * 131.84899999999999);
@@ -684,25 +687,25 @@ ilib.Date._lunarLongitude = function (jd) {
 ilib.Date._newMoonTime = function(n) {
 	var k = n - 24724;
 	var c = k / 1236.8499999999999;
-	var approx = ilib.Date._poly(c, ilib.data.astro._nmApproxCoeff);
-	var capE = ilib.Date._poly(c, ilib.data.astro._nmCapECoeff);
-	var solarAnomaly = ilib.Date._poly(c, ilib.data.astro._nmSolarAnomalyCoeff);
-	var lunarAnomaly = ilib.Date._poly(c, ilib.data.astro._nmLunarAnomalyCoeff);
-	var moonArgument = ilib.Date._poly(c, ilib.data.astro._nmMoonArgumentCoeff);
-	var capOmega = ilib.Date._poly(c, ilib.data.astro._nmCapOmegaCoeff);
+	var approx = ilib.Date._poly(c, ilib.data.oastro._nmApproxCoeff);
+	var capE = ilib.Date._poly(c, ilib.data.oastro._nmCapECoeff);
+	var solarAnomaly = ilib.Date._poly(c, ilib.data.oastro._nmSolarAnomalyCoeff);
+	var lunarAnomaly = ilib.Date._poly(c, ilib.data.oastro._nmLunarAnomalyCoeff);
+	var moonArgument = ilib.Date._poly(c, ilib.data.oastro._nmMoonArgumentCoeff);
+	var capOmega = ilib.Date._poly(c, ilib.data.oastro._nmCapOmegaCoeff);
 	var correction = -0.00017 * ilib.Date._dsin(capOmega);
-	for (var i = 0; i < ilib.data.astro._nmSineCoeff.length; i++) {
-		correction = correction + ilib.data.astro._nmSineCoeff[i] * Math.pow(capE, ilib.data.astro._nmEFactor[i]) * 
-		ilib.Date._dsin(ilib.data.astro._nmSolarCoeff[i] * solarAnomaly + 
-				ilib.data.astro._nmLunarCoeff[i] * lunarAnomaly + 
-				ilib.data.astro._nmMoonCoeff[i] * moonArgument);
+	for (var i = 0; i < ilib.data.oastro._nmSineCoeff.length; i++) {
+		correction = correction + ilib.data.oastro._nmSineCoeff[i] * Math.pow(capE, ilib.data.oastro._nmEFactor[i]) * 
+		ilib.Date._dsin(ilib.data.oastro._nmSolarCoeff[i] * solarAnomaly + 
+				ilib.data.oastro._nmLunarCoeff[i] * lunarAnomaly + 
+				ilib.data.oastro._nmMoonCoeff[i] * moonArgument);
 	}
 	var additional = 0;
-	for (var i = 0; i < ilib.data.astro._nmAddConst.length; i++) {
-		additional = additional + ilib.data.astro._nmAddFactor[i] * 
-		ilib.Date._dsin(ilib.data.astro._nmAddConst[i] + ilib.data.astro._nmAddCoeff[i] * k);
+	for (var i = 0; i < ilib.data.oastro._nmAddConst.length; i++) {
+		additional = additional + ilib.data.oastro._nmAddFactor[i] * 
+		ilib.Date._dsin(ilib.data.oastro._nmAddConst[i] + ilib.data.oastro._nmAddCoeff[i] * k);
 	}
-	var extra = 0.000325 * ilib.Date._dsin(ilib.Date._poly(c, ilib.data.astro._nmExtra));
+	var extra = 0.000325 * ilib.Date._dsin(ilib.Date._poly(c, ilib.data.oastro._nmExtra));
 	return ilib.Date._universalFromEphemeris(approx + correction + extra + additional + ilib.Date.RataDie.gregorianEpoch);
 };
 

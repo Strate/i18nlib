@@ -95,9 +95,11 @@ ilib.ScriptInfo = function(script, options) {
 			})
 		});
 	} else {
-		this.info = ilib.data.scripts[script];
+		if (!ilib.data.oscripts) {
+			ilib.data.oscripts = JSON.parse(ilib.data.scripts);
+		}
+		this.info = ilib.data.oscripts[script];
 	}
-
 };
 
 /**
@@ -110,7 +112,12 @@ ilib.ScriptInfo = function(script, options) {
 ilib.ScriptInfo.getAllScripts = function() {
 	var ret = [],
 		script = undefined,
-		scripts = ilib.data.scripts;
+		scripts;
+	
+	if (!ilib.data.oscripts) {
+		ilib.data.oscripts = JSON.parse(ilib.data.scripts);
+	}
+	scripts = ilib.data.oscripts;
 	
 	for (script in scripts) {
 		if (script && scripts[script]) {
