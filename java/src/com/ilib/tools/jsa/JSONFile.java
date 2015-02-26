@@ -82,6 +82,27 @@ public class JSONFile
         writeDependencies(out, new ArrayList<String>(), locales);
 	}
 
+	
+	/**
+	 * Escape all the quote characters and remove new line characters.
+	 * @param str
+	 * @return an escaped string
+	 */
+	protected String jsEscape(StringBuilder str)
+	{
+		StringBuilder ret = new StringBuilder();
+		int i;
+		for (i = 0; i < str.length(); i++) {
+			if (str.charAt(i) != '\n' && str.charAt(i) != '\r') {
+				if (str.charAt(i) == '\\' || str.charAt(i) == '\'') {
+					ret.append('\\');
+				}
+				ret.append(str.charAt(i));
+			}
+		}
+		return ret.toString();
+	}
+	
 	@Override
 	public void writeDependencies(Writer out, ArrayList<String> visited, ArrayList<IlibLocale> locales)
 			throws Exception 
@@ -112,15 +133,15 @@ public class JSONFile
             dependencies.get(i).writeDependencies(out, visited, locales);
         }
 
-        StringBuffer str;
+        StringBuilder str;
     
         logger.debug("Now writing out file " + getPath());
         
         try {
             str = readFile();
-            out.write("ilib.data." + baseName + " = ");
-            out.write(str.toString());
-            out.write(";\n"); // in case the file doesn't end with a newline
+            out.write("ilib.data." + baseName + " = '");
+            out.write(jsEscape(str));
+            out.write("';\n"); // in case the file doesn't end with a newline
             setWritten(true);
         } catch ( FileNotFoundException e ) {
             System.err.println("Error: could not read file " + file.getPath());

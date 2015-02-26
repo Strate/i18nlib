@@ -17,77 +17,20 @@
  * limitations under the License.
  */
 
-ilib.data.strings = {
-    "first string": "first",
-    "second string": "second",
-    "third string": "third"
-};
-
-ilib.data.strings_de = {
-    "first string": "erste String",
-    "second string": "zweite String",
-    "third string": "dritte String"
-};
-
-ilib.data.strings_fr = {
-    "first string": "première chaîne",
-    "second string": "deuxième chaîne",
-    "third string": "troisième chaîne"
-};
-
+ilib.data.strings = '{"first string": "first","second string": "second","third string": "third"}';
+ilib.data.strings_de = '{"first string": "erste String","second string": "zweite String","third string": "dritte String"}';
+ilib.data.strings_fr = '{"first string": "première chaîne","second string": "deuxième chaîne","third string": "troisième chaîne"}';
 // yes, we know these are not accurate translations -- they are just for testing!
-ilib.data.strings_fr_CA = {
-    "first string": "première collier", 
-    "second string": "deuxième collier"
-};
+ilib.data.strings_fr_CA = '{"first string": "première collier","second string": "deuxième collier"}';
+ilib.data.strings_fr_CA_govt = '{"first string": "première corde","third string": "troisième corde"}';
 
-ilib.data.strings_fr_CA_govt = {
-    "first string": "première corde", 
-    "third string": "troisième corde"
-};
-
-ilib.data.tester_es = {
-    "Hello from {country}": "Saludos desde {country}",
-    "Hello from {city}": "Saludos desde {city}",
-    "Greetings from {city} in {country}": "Saludos desde {city} en {country}",
-    "key1": "Saludos desde {user}."
-};
-
-ilib.data.tester_es_MX = {
-    "Hello from {country}": "Hola de {country}",
-    "Greetings from {city} in {country}": "Hola de {city} en {country}"
-};
-
-ilib.data.tester_es_MX_slang = {
-    "Hello from {country}": "Que tal de {country}",
-    "Hello from {city}": "Que tal de {city}",
-    "key1": "Buenas desde {user}."
-};
-
-ilib.data.tester_de = {
-    "Hello from {country}": "Hallo aus {country}",
-    "Hello from {city}": "Hallo aus {city}",
-    "Greetings from {city} in {country}": "Grüße aus {city} in {country}",
-    "key1": "Grüße vom {user}"
-};
-
-ilib.data.tester_zh = {
-    "empty": "",
-    "space": " ",
-    "comma": ","
-};
-
-ilib.data.tester2 = {
-	" This is a test. ": "test1",
-	"This is a test. ": "test2",
-	" This is a test.": "test3"
-};
-
-ilib.data.tester2_de = {
-	" This is a test. ": "detest1",
-	"This is a test. ": "detest2",
-	" This is a test.": "detest3"
-};
+ilib.data.tester_es = '{"Hello from {country}": "Saludos desde {country}","Hello from {city}": "Saludos desde {city}","Greetings from {city} in {country}": "Saludos desde {city} en {country}","key1": "Saludos desde {user}."}';
+ilib.data.tester_es_MX = '{"Hello from {country}": "Hola de {country}","Greetings from {city} in {country}": "Hola de {city} en {country}"}';
+ilib.data.tester_es_MX_slang = '{"Hello from {country}": "Que tal de {country}","Hello from {city}": "Que tal de {city}","key1": "Buenas desde {user}."}';
+ilib.data.tester_de = '{"Hello from {country}": "Hallo aus {country}","Hello from {city}": "Hallo aus {city}","Greetings from {city} in {country}": "Grüße aus {city} in {country}","key1": "Grüße vom {user}"}';
+ilib.data.tester_zh = '{"empty": "","space": " ","comma": ","}';
+ilib.data.tester2 = '{" This is a test. ": "test1","This is a test. ": "test2"," This is a test.": "test3"}';
+ilib.data.tester2_de = '{" This is a test. ": "detest1","This is a test. ": "detest2"," This is a test.": "detest3"}';
 
 ilib.data.mock_foobar = ilib.data.strings;
 ilib.data.mock_foobar_de = ilib.data.strings_de;
@@ -991,7 +934,8 @@ function mockLoader(paths, sync, params, callback) {
 	}
 	
 	for (var i = 0; i < paths.length; i++) {
-		data.push(ilib.data[getResName(paths[i])]);
+		var obj = ilib.data[getResName(paths[i])];
+		data.push(obj && JSON.parse(obj));
 	}
 	
 	if (typeof(callback) !== 'undefined') {

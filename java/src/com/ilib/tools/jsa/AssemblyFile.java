@@ -114,17 +114,17 @@ public abstract class AssemblyFile
     }
     
     /**
-     * Read a file into memory in the form of a StringBuffer and then return it.
-     * @return a StringBuffer containing the contents of the file.
+     * Read a file into memory in the form of a StringBuilder and then return it.
+     * @return a StringBuilder containing the contents of the file.
      * @throws IOException if the file could not be read
      * @throws FileNotFoundException if the file could not be opened
      */
-    protected StringBuffer readFile()
+    protected StringBuilder readFile()
     	throws IOException, FileNotFoundException
     {
     	char[] charBuf = new char[1024];
     	int len;
-    	StringBuffer str = new StringBuffer();
+    	StringBuilder str = new StringBuilder();
         InputStreamReader reader = null;
         
         try {

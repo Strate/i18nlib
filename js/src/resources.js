@@ -265,7 +265,7 @@ ilib.ResBundle = function (options) {
 				spec = lookupLocale.getSpec().replace(/-/g, '_');
 				ilib.ResBundle[this.baseName].cache[spec] = map;
 			}
-			this.map = map;
+			this.map = (typeof(map) === 'string' ? JSON.parse(map) : map);
 			if (this.locale.isPseudo()) {
 				if (!ilib.ResBundle.pseudomap) {
 					ilib.ResBundle.pseudomap = {};

@@ -1,7 +1,7 @@
 /*
  * JSFile.java - 
  * 
- * Copyright © 2012-2013, JEDLSoft
+ * Copyright © 2012-2015, JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -358,7 +358,7 @@ public class JSFile
         throws Exception
     {
         int start = 0, nameStart, groupEnd, i;
-        StringBuffer str;
+        StringBuilder str;
         String fileName;
     
         logger.debug("Processing file " + file.getPath());
@@ -518,7 +518,7 @@ public class JSFile
             dependencies.get(i).writeDependencies(out, visited, locales);
         }
 
-        StringBuffer str;
+        StringBuilder str;
     
         logger.debug("Now writing out file " + getPath());
         
@@ -543,7 +543,7 @@ public class JSFile
                         
                         if ( macroName.length() > 0 ) {
                             if ( macroName.equalsIgnoreCase("localelist") ) {
-                                StringBuffer sb = new StringBuffer();
+                                StringBuilder sb = new StringBuilder();
                                 for ( int j = 0; j < locales.size(); j++ ) {
                                     if ( j > 0 ) {
                                         sb.append(',');
@@ -555,14 +555,14 @@ public class JSFile
                                 str = str.replace(matcher.start(), matcher.end(), sb.toString());
                                 matcher.reset();
                             } else if ( macroName.equalsIgnoreCase("ilibVersion") ) {
-                                StringBuffer sb = new StringBuffer();
+                                StringBuilder sb = new StringBuilder();
                                 sb.append('"');
                                 sb.append(JSAssemble.version);
                                 sb.append('"');
                                 str = str.replace(matcher.start(), matcher.end(), sb.toString());
                                 matcher.reset();
                             } else if ( macroName.equalsIgnoreCase("ilibLoadType") ) {
-                                StringBuffer sb = new StringBuffer();
+                                StringBuilder sb = new StringBuilder();
                                 sb.append('"');
                                 sb.append((locales.size() == 0) ? "dynamic" : "assembled");
                                 sb.append('"');
