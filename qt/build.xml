@@ -43,7 +43,7 @@ limitations under the License.
 	
 	<property name="build.lib"						value="${build.base}/lib"/>
 	<property name="build.output"					value="${build.base}/output"/>
-	<property name="build.output.qt"				value="${build.base}/build-filereader"/>
+	<property name="build.output.qt"				value="${build.base}/output/qt"/>
 	
 	<property name="build.filereader"				value="${build.base}/FileReader"/>
 	<property name="build.unittest"					value="${build.base}/UnitTest"/>
@@ -64,37 +64,43 @@ limitations under the License.
 	<target name="all" depends="export,doc" description="Build everything. This is the target that the build should run."/>
 
 	<target name="clean" description="Remove all generated files to start from scratch">
-		<delete dir="${build.output.qt}"/>
-		<delete dir="${build.output}"/>
-		<delete dir="${build.export}/qt"/>
 		<sequential>
-			<exec osfamily="unix" executable="make" dir="${build.filereader}" failifexecutionfails="true" failonerror="true">
+			<exec osfamily="unix" executable="make" dir="${build.filereader}" failifexecutionfails="true" failonerror="false">
 				<arg line="clean"/>
 			</exec>
-			<exec osfamily="mac" executable="make" dir="${build.filereader}" failifexecutionfails="true" failonerror="true">
+			<exec osfamily="mac" executable="make" dir="${build.filereader}" failifexecutionfails="true" failonerror="false">
 				<arg line="clean"/>
 			</exec>
-			<exec osfamily="windows" executable="make.exe" dir="${build.filereader}" failifexecutionfails="true"  failonerror="true">
+			<exec osfamily="windows" executable="make.exe" dir="${build.filereader}" failifexecutionfails="true"  failonerror="false">
 				<arg line="clean"/>
 			</exec>
 		</sequential>
+		<delete dir="${build.output}"/>
+		<delete dir="${build.export}/qt"/>
+		<delete>
+			<fileset dir="${build.filereader}" includes="Makefile*" />
+		</delete>
 	</target>
 
 	<target name="prepare" description="Prepare all directories that are needed before the project can be built">
 		<mkdir dir="${build.output.qt}"/>
+		<sequential>
+			<exec osfamily="unix" executable="${QTBIN}/qmake" dir="${build.filereader}" failifexecutionfails="true" failonerror="true">
+				<arg value="filereader.pro"/>
+			</exec>
+			<exec osfamily="mac" executable="${QTBIN}/qmake" dir="${build.filereader}" failifexecutionfails="true" failonerror="true">
+				<arg value="filereader.pro"/>
+			</exec>
+			<exec osfamily="windows" executable="${QTBIN}/qmake.exe" dir="${build.filereader}" failifexecutionfails="true"  failonerror="true">
+				<arg value="filereader.pro"/>
+			</exec>
+		</sequential>
 	</target>
 
 	<!-- =================================================================== -->
 	<!-- Create the core jar file                                            -->
 	<!-- =================================================================== -->
 	<target name="filereader" depends="prepare" description="Build the file reader plugin">
-		<exec osfamily="unix" executable="qmake" dir="${build.filereader}" failifexecutionfails="true" failonerror="true">
-		</exec>
-		<exec osfamily="mac" executable="qmake" dir="${build.filereader}" failifexecutionfails="true" failonerror="true">
-		</exec>
-		<exec osfamily="windows" executable="qmake.exe" dir="${build.filereader}" failifexecutionfails="true"  failonerror="true">
-		</exec>
-
 		<exec osfamily="unix" executable="make" dir="${build.filereader}" failifexecutionfails="true" failonerror="true">
 		</exec>
 		<exec osfamily="mac" executable="make" dir="${build.filereader}" failifexecutionfails="true" failonerror="true">
@@ -106,15 +112,11 @@ limitations under the License.
 	<target name="export" depends="filereader" description="Create all objects and export them to the top level dir for packaging">
 		<mkdir dir="${build.export}/qt/${os.name}-${os.arch}/FS"/>
 		<copy todir="${build.export}/qt/${os.name}-${os.arch}/FS">
-			<fileset dir="${build.base}/build-filereader">
-				<include name="libFileReader.so"/>
-				<include name="qmldir"/>
-			</fileset>
-		</copy>
-		<mkdir dir="${build.export}/src/qt/FileReader"/>
-		<copy todir="${build.export}/src/qt/FileReader">
-			<fileset dir="${build.filereader}">
+			<fileset dir="${build.output.qt}">
 				<include name="*"/>
+			</fileset>
+			<fileset dir="${build.filereader}">
+				<include name="qmldir"/>
 			</fileset>
 		</copy>
 	</target>

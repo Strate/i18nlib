@@ -6,6 +6,7 @@
 #include <QFileInfoList>
 #include <QTextStream>
 #include <QDateTime>
+#include <QByteArray>
 
 FileReader::FileReader(QQuickItem *parent):
     QQuickItem(parent)
@@ -62,6 +63,7 @@ QString FileReader::read(QString path) const {
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         return "";
     QTextStream in(&file);
+    in.setCodec("UTF-8");
     return in.readAll();
 }
 
