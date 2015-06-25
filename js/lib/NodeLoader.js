@@ -59,12 +59,12 @@ module.exports = function (ilib) {
 		// ... else fall back to see if we're in a check-out dir of ilib
 		// this._exists(path.join(this.base, "data", "locale"), "localeinfo.json");
 		
-		if (fs.existsSync("/usr/share/zoneinfo")) {
-			//console.log("_createZoneFile: Loading zone info from the system\n");
-			this.useSystemZoneInfo = true;
-		} else {
-			//console.log("_createZoneFile: using ilib zone info\n");
-		}
+//		if (fs.existsSync("/usr/share/zoneinfo")) {
+//			//console.log("_createZoneFile: Loading zone info from the system\n");
+//			this.useSystemZoneInfo = true;
+//		} else {
+//			//console.log("_createZoneFile: using ilib zone info\n");
+//		}
 		// console.log("NodeLoader: include path is now " + JSON.stringify(this.includePath));
 	};
 		

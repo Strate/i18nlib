@@ -53,12 +53,12 @@ var QMLLoader = function(fr) {
 	// try the standard install directories
 	this._exists("/usr/share/javascript/ilib/locale", "localeinfo.json");
 	
-	if (this.fr.exists("/usr/share/zoneinfo")) {
-		//console.log("_createZoneFile: Loading zone info from the system\n");
-		this.useSystemZoneInfo = true;
-	} else {
-		//console.log("_createZoneFile: using ilib zone info\n");
-	}
+//	if (this.fr.exists("/usr/share/zoneinfo")) {
+//		//console.log("_createZoneFile: Loading zone info from the system\n");
+//		this.useSystemZoneInfo = true;
+//	} else {
+//		//console.log("_createZoneFile: using ilib zone info\n");
+//	}
 
 	// ... else fall back to see if we're in a check-out dir of ilib
 	// this._exists(path.join(this.root, "data", "locale"), "localeinfo.json");
