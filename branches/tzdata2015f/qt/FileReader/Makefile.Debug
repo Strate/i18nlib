@@ -863,7 +863,7 @@ uninstall_target: FORCE
 
 install_qmldir: all FORCE
 	@test -d $(INSTALL_ROOT)/home/goun/Qt5.2.1/5.2.1/gcc_64/qml/com/jedlsoft/filesystem || mkdir -p $(INSTALL_ROOT)/home/goun/Qt5.2.1/5.2.1/gcc_64/qml/com/jedlsoft/filesystem
-	-$(INSTALL_FILE) /home/goun/Source/i18nlib-code-tzdata2015f/qt/FileReader/qmldir $(INSTALL_ROOT)/home/goun/Qt5.2.1/5.2.1/gcc_64/qml/com/jedlsoft/filesystem/
+	-$(INSTALL_FILE) /home/goun/Source/i18nlib-code-trunk/qt/FileReader/qmldir $(INSTALL_ROOT)/home/goun/Qt5.2.1/5.2.1/gcc_64/qml/com/jedlsoft/filesystem/
 
 uninstall_qmldir: FORCE
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/home/goun/Qt5.2.1/5.2.1/gcc_64/qml/com/jedlsoft/filesystem/qmldir
