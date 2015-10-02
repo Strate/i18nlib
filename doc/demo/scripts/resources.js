@@ -236,7 +236,6 @@ ilib.data.ilibTutorial = {
 	"ga-IE": "Gaelic - Ireland",
 	"gl-ES": "Galician - Spain",
 	"gu-IN": "Gujarati - India",
-	"ha-Latn-NG" : "Hausa - Nigeria",
 	"he-IL": "Hebrew - Israel",
 	"hi-FJ": "Hindi - Fiji",
 	"hi-IN": "Hindi - India",
