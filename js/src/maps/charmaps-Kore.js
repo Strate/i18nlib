@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-// !depends maps/iso2022.js
+// Eventually, this should depend on maps/iso2022.js
 
 /*
 !data 
@@ -30,5 +30,10 @@ charset/CP949
 charset/EUC-KR
 charset/Johab
 charset/KSC5636
+*/
+
+/*
+Still in development:
+
 charset/ISO-2022-KR
 */

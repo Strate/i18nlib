@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-// !depends maps/iso2022.js
+// Eventually, this should depend on maps/iso2022.js
 
 /*
 !data 

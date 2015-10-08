@@ -72,4 +72,7 @@ nfkc/all.js
 localematch.js
 normstring.js
 maps/casemapper.js
+charset.js
+maps/charmap.js
+maps/utf8.js
 */
