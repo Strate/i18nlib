@@ -34,7 +34,7 @@ function suite() {
 	    "testcm_UTF-8.js",
 	    "testcm_UTF-16.js",
 	    "testcm_JP.js",
-	    //"testcm_KR.js",
+	    "testcm_KR.js",
 	    //"testcm_SA.js",
 	    //"testcm_TH.js",
 	    //"testcm_RU.js",
