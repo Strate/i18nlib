@@ -1,0 +1,8 @@
+{
+    "generated": true,
+    "numfmt": {
+        "script": "Deva",
+        "digits": "०१२३४५६७८९",
+        "useNative": true
+    }
+}

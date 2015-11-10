@@ -1,0 +1,12 @@
+{
+    "generated": true,
+    "numfmt": {
+        "decimalChar": ",",
+        "groupChar": ".",
+        "exponential": "e",
+        "currencyFormats": {
+            "common": "{s}{n}",
+            "commonNegative": "({s}{n})"
+        }
+    }
+}

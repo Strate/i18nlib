@@ -1,0 +1,13 @@
+{
+    "generated": true,
+    "numfmt": {
+        "script": "Tibt",
+        "secgroupSize": 2,
+        "currencyFormats": {
+            "common": "{s}{n}"
+        },
+        "pctFmt": "{n} %",
+        "digits": "༠༡༢༣༤༥༦༧༨༩",
+        "useNative": true
+    }
+}
