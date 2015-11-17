@@ -78,10 +78,6 @@ if (!fs.existsSync(localeDirName)) {
 var filename, root, json, suppData, languageData, scripts = {};
 
 try {
-	/*filename = cldrDirName + "/main/en.json";
-	json = fs.readFileSync(filename, "utf-8");
-	root = JSON.parse(json);*/
-
 	filename = cldrDirName + "supplemental/languageData.json";
 	json = fs.readFileSync(filename, "utf-8");
 	suppData = JSON.parse(json);
@@ -99,7 +95,6 @@ for (var locale in languageData) {
 			if (typeof (scripts[language]) === 'undefined') {
 				scripts[language] = [];
 			}
-			//var newLangs = languageData[locale]["@scripts"].split(/ /g);
 			var newLangs = languageData[locale]._scripts;
 			if (locale.length <= 3) {
 				// util.print("language " + language + " prepending " + JSON.stringify(newLangs)); 
@@ -308,7 +303,6 @@ for (var i = 0; i < localeDirs.length; i++) {
 		// special case because "root" is not a valid locale specifier 
 		getLocaleData(dirname, undefined);
 	} else {
-		//locale = file.split(/\./)[0].replace(/_/g, "-");
 		var locale = new Locale(dirname);
 		if(typeof(locale.getVariant()) === 'undefined') {
 			getLocaleData(dirname, locale);
