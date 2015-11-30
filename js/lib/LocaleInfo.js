@@ -100,7 +100,13 @@ var LocaleInfo = function(locale, options) {
 		units:string,
 		weekendEnd:number,
 		weekendStart:number,
-		paperSizes:{regular:string}
+		paperSizes:{regular:string},
+		delimiter: {
+  			quotationStart:string,
+  			quotationEnd:string,
+  			alternateQuotationStart:string,
+  			alternateQuotationEnd:string
+ 		}
 	  }}
 	*/
 	this.info = LocaleInfo.defaultInfo;
@@ -551,6 +557,20 @@ LocaleInfo.prototype = {
 	 */
 	getPaperSize: function () {
 		return this.info.paperSizes.regular;
+	},
+	/**
+	 * Return the default Delimiter QuotationStart information in this locale.
+	 * @returns {string} default QuotationStart in this locale
+	 */
+	getDelimiterQuotationStart: function () {
+		return this.info.delimiter.quotationStart;
+	},
+	/**
+	 * Return the default Delimiter QuotationEnd information in this locale.
+	 * @returns {string} default QuotationEnd in this locale
+	 */
+	getDelimiterQuotationEnd: function () {
+		return this.info.delimiter.quotationEnd;
 	}
 };
 

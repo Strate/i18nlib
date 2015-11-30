@@ -7210,9 +7210,81 @@ function testLocaleInfoPaperSize_it_IT() {
 	assertEquals("A4", info.getPaperSize());
 }
 
-function testLocaleInfoPaperSize_zh_CH() {
-	var info = new LocaleInfo("zh-CH");
+function testLocaleInfoPaperSize_zh_CN() {
+	var info = new LocaleInfo("zh-CN");
 	assertNotNull(info);
 	
 	assertEquals("A4", info.getPaperSize());
+}
+
+function testLocaleInfoQuotation_en_US() {
+	var info = new LocaleInfo("en-US");
+	assertNotNull(info);
+	
+	assertEquals("“", info.getDelimiterQuotationStart());
+	assertEquals("”", info.getDelimiterQuotationEnd());
+}
+
+function testLocaleInfoQuotation_ko_KR() {
+	var info = new LocaleInfo("ko-KR");
+	assertNotNull(info);
+	
+	assertEquals("“", info.getDelimiterQuotationStart());
+	assertEquals("”", info.getDelimiterQuotationEnd());
+}
+
+function testLocaleInfoQuotation_es_ES() {
+	var info = new LocaleInfo("es-ES");
+	assertNotNull(info);
+	
+	assertEquals("«", info.getDelimiterQuotationStart());
+	assertEquals("»", info.getDelimiterQuotationEnd());
+}
+
+function testLocaleInfoQuotation_zh_CN() {
+	var info = new LocaleInfo("zh-CN");
+	assertNotNull(info);
+	
+	assertEquals("“", info.getDelimiterQuotationStart());
+	assertEquals("”", info.getDelimiterQuotationEnd());
+}
+
+function testLocaleInfoQuotation_fa_IR() {
+	var info = new LocaleInfo("fa-IR");
+	assertNotNull(info);
+	
+	assertEquals("«", info.getDelimiterQuotationStart());
+	assertEquals("»", info.getDelimiterQuotationEnd());
+}
+
+function testLocaleInfoQuotation_de_DE() {
+	var info = new LocaleInfo("de-DE");
+	assertNotNull(info);
+	
+	assertEquals("„", info.getDelimiterQuotationStart());
+	assertEquals("“", info.getDelimiterQuotationEnd());
+}
+
+function testLocaleInfoQuotation_pt_BR() {
+	var info = new LocaleInfo("pt-BR");
+	assertNotNull(info);
+	
+	assertEquals("“", info.getDelimiterQuotationStart());
+	assertEquals("”", info.getDelimiterQuotationEnd());
+}
+
+function testLocaleInfoQuotation_hy_AM() {
+	var info = new LocaleInfo("hy-AM");
+	assertNotNull(info);
+	
+	assertEquals("«", info.getDelimiterQuotationStart());
+	assertEquals("»", info.getDelimiterQuotationEnd());
+}
+
+function testLocaleInfoQuotation_ur_IN() {
+	var info = new LocaleInfo("ur-IN");
+	assertNotNull(info);
+	
+	assertEquals("\"", info.getDelimiterQuotationStart());
+	assertEquals("\"", info.getDelimiterQuotationEnd());
 }
