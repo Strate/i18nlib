@@ -7138,3 +7138,81 @@ function testLocaleInfoGetMeridiemsStyle_zh_Hans_CN() {
 	// the date formatter instance.
 	assertEquals("gregorian", info.getMeridiemsStyle());
 }
+
+function testLocaleInfoPaperSizeDefault() {
+	var info = new LocaleInfo();
+	assertNotNull(info);
+	
+	// If locale is not specified, default locale would be return as "en-US".
+	assertEquals("8x11", info.getPaperSize());
+}
+
+function testLocaleInfoPaperSize_en_US() {
+	var info = new LocaleInfo("en-US");
+	assertNotNull(info);
+	
+	assertEquals("8x11", info.getPaperSize());
+}
+
+function testLocaleInfoPaperSize_ko_KR() {
+	var info = new LocaleInfo("ko-KR");
+	assertNotNull(info);
+	
+	assertEquals("A4", info.getPaperSize());
+}
+
+function testLocaleInfoPaperSize_es_MX() {
+	var info = new LocaleInfo("es-MX");
+	assertNotNull(info);
+	
+	assertEquals("8x11", info.getPaperSize());
+}
+
+function testLocaleInfoPaperSize_es_SV() {
+	var info = new LocaleInfo("es-SV");
+	assertNotNull(info);
+	
+	assertEquals("8x11", info.getPaperSize());
+}
+
+function testLocaleInfoPaperSize_es_PR() {
+	var info = new LocaleInfo("es-PR");
+	assertNotNull(info);
+	
+	assertEquals("8x11", info.getPaperSize());
+}
+
+function testLocaleInfoPaperSize_es_VE() {
+	var info = new LocaleInfo("es-VE");
+	assertNotNull(info);
+	
+	assertEquals("8x11", info.getPaperSize());
+}
+
+function testLocaleInfoPaperSize_fr_FR() {
+	var info = new LocaleInfo("fr-FR");
+	assertNotNull(info);
+	
+	assertEquals("A4", info.getPaperSize());
+}
+
+function testLocaleInfoPaperSize_de_DE() {
+	var info = new LocaleInfo("de-DE");
+	assertNotNull(info);
+	
+	assertEquals("A4", info.getPaperSize());
+}
+
+function testLocaleInfoPaperSize_it_IT() {
+	var info = new LocaleInfo("it-IT");
+	assertNotNull(info);
+	
+	assertEquals("A4", info.getPaperSize());
+}
+
+function testLocaleInfoPaperSize_zh_CH() {
+	var info = new LocaleInfo("zh-CH");
+	assertNotNull(info);
+	
+	assertEquals("A4", info.getPaperSize());
+}
