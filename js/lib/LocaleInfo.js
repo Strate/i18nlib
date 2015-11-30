@@ -99,7 +99,8 @@ var LocaleInfo = function(locale, options) {
 		timezone:string,
 		units:string,
 		weekendEnd:number,
-		weekendStart:number
+		weekendStart:number,
+		paperSizes:{regular:string}
 	  }}
 	*/
 	this.info = LocaleInfo.defaultInfo;
@@ -543,7 +544,14 @@ LocaleInfo.prototype = {
 	 */
 	getMeridiemsStyle: function () {
 		return this.info.meridiems || "gregorian";
-	}	
+	},	
+	/**
+	 * Return the default PaperSize information in this locale.
+	 * @returns {string} default PaperSize in this locale
+	 */
+	getPaperSize: function () {
+		return this.info.paperSizes.regular;
+	}
 };
 
 module.exports = LocaleInfo;
