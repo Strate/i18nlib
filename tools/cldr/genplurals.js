@@ -88,8 +88,22 @@ try {
 }
 
 var OPERATORS = ['!=', '=', 'is not', 'is', 'not in', 'in', 'not within', 'within'];
+var OPERATOR_MAP = {
+	'!=': 'neq',
+	'=': 'eq',
+	'%': 'mod'
+};
 var MODS = ['mod', '%'];
 var VALUES = 'niftvw';
+
+function operator_keyword(operator) {
+	var keyword = OPERATOR_MAP[operator];
+	if (undefined === keyword) {
+		return operator;
+	} else {
+		return keyword;
+	}
+}
 
 function extract_count (keyword) {
 	return keyword.slice(keyword.lastIndexOf('-')+1);
@@ -136,7 +150,7 @@ function create_relation(relation_string) {
 	temp = relation_string.split(operator);
 	operand = create_expr(temp[0]);
 	ranges= create_range_list(temp[1]);
-	relation[operator] = [operand, ranges];
+	relation[operator_keyword(operator)] = [operand, ranges];
 
 	return relation;
 }
@@ -162,7 +176,7 @@ function create_expr(operand_string) {
 	temp = operand_string.split(mod);
 	operand = temp[0].trim();
 	module_value = parseInt(temp[1].trim());
-	expr[mod] = [operand.trim(), module_value];
+	expr[operator_keyword(mod)] = [operand.trim(), module_value];
 	
 	return expr;
 }
