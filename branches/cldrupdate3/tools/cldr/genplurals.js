@@ -304,10 +304,10 @@ function writePluralsData(locale, data) {
 
 	var path = calcLocalePath(language, script, region, "");
 
-	if (anyProperties(data)) {
+	if (data) {
 		util.print("Writing " + path + "\n");
 		makeDirs(path);
-		fs.writeFileSync(path + "  plurals.json", JSON.stringify(data, true, 4), "utf-8");
+		fs.writeFileSync(path + "plurals.json", JSON.stringify(data, true, 4), "utf-8");
 	}
 	else {
 		util.print("Skipping empty  " + path + "\n");
