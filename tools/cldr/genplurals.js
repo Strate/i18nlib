@@ -71,14 +71,18 @@ if (!fs.existsSync(cldrDirName)) {
 }
 
 if (!fs.existsSync(localeDirName)) {
-	util.error("Could not access locale data directory " + localeDirName);
-	usage();
+	makeDirs(localeDirName);
+	
+	if (!fs.existsSync(localeDirName)) {
+    	util.error("Could not access locale data directory " + localeDirName);
+    	usage();
+	}
 }
 
 var filename, root, json, suppData, pluralsObject, scripts = {};
 	
 try {
-	filename = cldrDirName + "supplemental/plurals.json";
+	filename = path.join(cldrDirName, "supplemental/plurals.json");
 	json = fs.readFileSync(filename, "utf-8");
 	suppData = JSON.parse(json);
 	pluralsObject = suppData.supplemental["plurals-type-cardinal"];
@@ -269,19 +273,19 @@ function create_rule(cldr_rule_object) {
 }
 
 function calcLocalePath(language, script, region, filename) {
-	var path = localeDirName + "/";
+	var fullpath = localeDirName;
 	if (language) {
-		path += language + "/";
+		fullpath = path.join(fullpath, language);
 	}
 	if (script) {
-		path += script + "/";
+		fullpath = path.join(fullpath, script);
 	}
 	if (region) {
-		path += region + "/";
+		fullpath = path.join(fullpath, region);
 	}
-	path += filename;
-	//util.print("path: ", path);
-	return path;
+	fullpath = path.join(fullpath, filename);
+	//util.print("path: ", fullpath);
+	return fullpath;
 }
 
 function anyProperties(data) {
@@ -302,15 +306,14 @@ function writePluralsData(locale, data) {
 		script = locale.getScript(),
 		region = locale.getRegion();
 
-	var path = calcLocalePath(language, script, region, "");
+	var fullpath = calcLocalePath(language, script, region, "");
 
 	if (data) {
-		util.print("Writing " + path + "\n");
-		makeDirs(path);
-		fs.writeFileSync(path + "plurals.json", JSON.stringify(data, true, 4), "utf-8");
-	}
-	else {
-		util.print("Skipping empty  " + path + "\n");
+		util.print("Writing " + fullpath + "\n");
+		makeDirs(fullpath);
+		fs.writeFileSync(path.join(fullpath, "plurals.json"), JSON.stringify(data, true, 4), "utf-8");
+	} else {
+		util.print("Skipping empty  " + fullpath + "\n");
 	}
 }
 
