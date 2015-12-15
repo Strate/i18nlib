@@ -100,13 +100,7 @@ var LocaleInfo = function(locale, options) {
 		units:string,
 		weekendEnd:number,
 		weekendStart:number,
-		paperSizes:{regular:string},
-		delimiter: {
-  			quotationStart:string,
-  			quotationEnd:string,
-  			alternateQuotationStart:string,
-  			alternateQuotationEnd:string
- 		}
+		paperSizes:{regular:string}
 	  }}
 	*/
 	this.info = LocaleInfo.defaultInfo;

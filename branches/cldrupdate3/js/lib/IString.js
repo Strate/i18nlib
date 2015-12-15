@@ -200,13 +200,13 @@ IString._fncs = {
 	/**
 	 * @private
 	 * @param {Object} obj
-	 * @param {number} n
+	 * @param {number|Object} n
 	 * @return {?}
 	 */
 	getValue: function (obj, n) {
 		if (typeof(obj) === 'object') {
 			var subrule = IString._fncs.firstProp(obj);
-			if (subrule === '0') {
+			if (subrule === '0' || subrule === '1') {
 				subrule = "inrange";
 				return IString._fncs[subrule](obj, n);
 			}
@@ -223,8 +223,8 @@ IString._fncs = {
 	
 	/**
 	 * @private
-	 * @param {number} n
-	 * @param {Array.<number|Array.<number>>} range
+	 * @param {number|Object} n
+	 * @param {Array.<number|Array.<number>>|Object} range
 	 * @return {boolean}
 	 */
 	matchRangeContinuous: function(n, range) {
@@ -247,15 +247,19 @@ IString._fncs = {
 	},
 	/**
 	 * @private
-	 * @param {number} number
+	 * @param {*} number
 	 * @return {boolean}
 	 */
 	isDecimal: function(number) {
-		return (number % 1 != 0)
+		if (typeof(number) !== number) {
+			return false;
+		} else {
+			return (number % 1 != 0)
+		}
 	},
 	/**
 	 * @private
-	 * @param {number} number
+	 * @param {*} number
 	 * @return {Object}
 	 */
 	calculateNumberDigits: function(number) {
@@ -279,7 +283,7 @@ IString._fncs = {
 
 	/**
 	 * @private
-	 * @param {number} number
+	 * @param {*} number
 	 * @return {number}
 	 */
 	isDecimalPlaces: function(number) {
@@ -300,8 +304,8 @@ IString._fncs = {
 	},
 	/**
 	 * @private
-	 * @param {number} n
-	 * @param {Array.<number|Array.<number>>} range
+	 * @param {number|Object} n
+	 * @param {Array.<number|Array.<number>>|Object} range
 	 * @return {boolean}
 	 */
 	matchRange: function(n, range) {
@@ -337,13 +341,13 @@ IString._fncs = {
 	/**
 	 * @private
 	 * @param {Object} rule
-	 * @param {number} n
+	 * @param {number|Object} n
 	 * @return {boolean}
 	 */
 	inrange: function(rule, n) {
 		if (typeof(rule[0]) === 'number') {
 			if(typeof(n) === 'object') {
-				return IString._fncs.matchRange(n.n,rule);		
+				return IString._fncs.matchRange(n.n,rule);
 			}
 			return IString._fncs.matchRange(n,rule);	
 		} else {
@@ -393,25 +397,41 @@ IString._fncs = {
 	/**
 	 * @private
 	 * @param {Object} rule
-	 * @param {number} n
+	 * @param {number|Object} n
 	 * @return {boolean}
 	 */
 	or: function(rule, n) {
-		return IString._fncs.getValue(rule[0], n) || IString._fncs.getValue(rule[1], n);
+		var ruleLength = rule.length;
+		var result = [], i;
+		for (i=0; i < ruleLength; i++) {
+			result[i] = IString._fncs.getValue(rule[i], n);
+			if (result[i]) {
+				return true;
+			} 
+		}
+		return false;
 	},
 	/**
 	 * @private
 	 * @param {Object} rule
-	 * @param {number} n
+	 * @param {number|Object} n
 	 * @return {boolean}
 	 */
 	and: function(rule, n) {
-		return IString._fncs.getValue(rule[0], n) && IString._fncs.getValue(rule[1], n);
+		var ruleLength = rule.length;
+		var result = [], i;
+		for (i=0; i < ruleLength; i++) {
+			result[i] = IString._fncs.getValue(rule[i], n);
+			if (!result[i]) {
+				return false;
+			} 
+		}
+		return true;
 	},
 	/**
 	 * @private
 	 * @param {Object} rule
-	 * @param {number} n
+	 * @param {number|Object} n
 	 * @return {boolean}
 	 */
 	eq: function(rule, n) {
@@ -419,26 +439,30 @@ IString._fncs = {
 			valueRight;
 
 		if (typeof(rule[0]) === 'string') {
-			valueRight = n[rule[0]];
+			if (typeof(n) === 'object'){
+				valueRight = n[rule[0]];
+				if (typeof(rule[1])=== 'number'){
+					valueRight = IString._fncs.getValue(rule[1], n);	
+				}
+			}
 		} else {
-			if (IString._fncs.firstProp(rule[1]) === "0") { // mod
+			if (IString._fncs.firstProp(rule[1]) === "0" 
+				|| IString._fncs.firstProp(rule[1]) === "1" ) { // mod
 				valueRight = IString._fncs.getValue(rule[1], valueLeft);
 			} else {
 				valueRight = IString._fncs.getValue(rule[1], n);
 			}
 		} 
-		//var valueRight = IString._fncs.getValue(rule[1], n);
 		if(typeof(valueRight) === 'boolean') {
 			return ((valueRight) && valueRight ? true : false);
 		} else {
 			return (valueLeft == valueRight ? true :false);	
 		}
-		//return (IString._fncs.getValue(rule[0], n) === IString._fncs.getValue(rule[1], n));
 	},
 	/**
 	 * @private
 	 * @param {Object} rule
-	 * @param {number} n
+	 * @param {number|Object} n
 	 * @return {boolean}
 	 */
 	neq: function(rule, n) {
@@ -447,10 +471,24 @@ IString._fncs = {
 
 		if (typeof(rule[0]) === 'string') {
 			valueRight = n[rule[0]];
+			if (typeof(rule[1])=== 'number'){
+				valueRight = IString._fncs.getValue(rule[1], n);
+			}
 		} else {
-			valueRight = IString._fncs.getValue(rule[1], n);
+			if (IString._fncs.firstProp(rule[1]) === "0") { // mod
+				valueRight = IString._fncs.getValue(rule[1], valueLeft);
+			} else {
+				valueRight = IString._fncs.getValue(rule[1], n);	
+			}	
+			
 		}
-		return (valueLeft !== valueRight ? true :false);
+
+		if(typeof(valueRight) === 'boolean') {//mod
+			return (valueRight? false : true);
+		} else {
+			return (valueLeft !== valueRight ? true :false);
+		}
+
 	}
 };
 
@@ -660,7 +698,7 @@ IString.prototype = {
 		var defaultCase = "";
 		var argIndexType;
 		var	numberDigits = {};
-
+		var operandSymbol = {};
 	
 		if (this.str.length === 0) {
 			// nothing to do
@@ -695,7 +733,7 @@ IString.prototype = {
 						argIndexType = IString._fncs.isDecimal(argIndex);
 						numberDigits = IString._fncs.calculateNumberDigits(argIndex);
 
-						var operandSymbol = {};
+						
 
 						//operandSymbolN = argIndex;
 						if (argIndexType) { // Decimal
@@ -715,7 +753,7 @@ IString.prototype = {
 						}
 						
 						//should be removed
-						arg = parseInt(argIndex, 10);
+						//arg = parseInt(argIndex, 10);
 											
 						if (limits[i].substring(0,2) === "<=") {						
 							limit = parseFloat(limits[i].substring(2));
@@ -765,11 +803,11 @@ IString.prototype = {
 										// range
 										var start = limits[i].substring(0, dash);
 										var end = limits[i].substring(dash+1);							
-										if (arg >= parseInt(start, 10) && arg <= parseInt(end, 10)) {								
+										if (operandSymbol.n >= parseInt(start, 10) && operandSymbol.n <= parseInt(end, 10)) {								
 											result = new IString(strings[i]);
 											i = limits.length;
 										}
-									} else if (arg === parseInt(limits[i], 10)) {							
+									} else if (operandSymbol.n === parseInt(limits[i], 10)) {							
 										// exact amount
 										result = new IString(strings[i]);
 										i = limits.length;
