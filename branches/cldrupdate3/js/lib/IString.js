@@ -206,8 +206,15 @@ IString._fncs = {
 	getValue: function (obj, n) {
 		if (typeof(obj) === 'object') {
 			var subrule = IString._fncs.firstProp(obj);
+			if (subrule === '0') {
+				subrule = "inrange";
+				return IString._fncs[subrule](obj, n);
+			}
 			return IString._fncs[subrule](obj[subrule], n);
 		} else if (typeof(obj) === 'string') {
+			if (typeof(n) === 'object'){
+				return n[obj];
+			}
 			return n;
 		} else {
 			return obj;
@@ -221,6 +228,7 @@ IString._fncs = {
 	 * @return {boolean}
 	 */
 	matchRangeContinuous: function(n, range) {
+		
 		for (var num in range) {
 			if (typeof(num) !== 'undefined' && typeof(range[num]) !== 'undefined') {
 				var obj = range[num];
@@ -237,7 +245,59 @@ IString._fncs = {
 		}
 		return false;
 	},
+	/**
+	 * @private
+	 * @param {number} number
+	 * @return {boolean}
+	 */
+	isDecimal: function(number) {
+		return (number % 1 != 0)
+	},
+	/**
+	 * @private
+	 * @param {number} number
+	 * @return {Object}
+	 */
+	calculateNumberDigits: function(number) {
+		var numberToString = number.toString();
+		var parts = [],
+			numberDigits =  {},
+			integerPart, decimalPartLength, decimalPart;
 
+		if (numberToString.indexOf('.') !== -1) { //decimal
+			parts = numberToString.split('.', 2);
+			numberDigits.integerPart = parseInt(parts[0], 10);
+			numberDigits.decimalPartLength = parts[1].length;
+			numberDigits.decimalPart = parseInt(parts[1], 10);
+		} else {
+			numberDigits.integerPart = number;
+			numberDigits.decimalPartLength = 0;
+			numberDigits.decimalPart = 0;
+		}
+		return numberDigits
+	},
+
+	/**
+	 * @private
+	 * @param {number} number
+	 * @return {number}
+	 */
+	isDecimalPlaces: function(number) {
+		var numberToString = number.toString();
+		var parts = [], integerPart, decimalPart;
+
+		if (numberToString.search('.') !== -1) {
+			numberToString.split('.', 2);
+			integerPart = parts[0],
+			decimalPart = parts[1];
+
+			if (decimalPart !== undefined) {
+				return decimalPart.length;
+			}
+			return 0;
+		}
+		return 0;
+	},
 	/**
 	 * @private
 	 * @param {number} n
@@ -281,9 +341,15 @@ IString._fncs = {
 	 * @return {boolean}
 	 */
 	inrange: function(rule, n) {
-		return IString._fncs.matchRange(IString._fncs.getValue(rule[0], n), rule[1]);
+		if (typeof(rule[0]) === 'number') {
+			if(typeof(n) === 'object') {
+				return IString._fncs.matchRange(n.n,rule);		
+			}
+			return IString._fncs.matchRange(n,rule);	
+		} else {
+			return IString._fncs.matchRange(IString._fncs.getValue(rule[0], n), rule[1]);	
+		}
 	},
-	
 	/**
 	 * @private
 	 * @param {Object} rule
@@ -333,7 +399,6 @@ IString._fncs = {
 	or: function(rule, n) {
 		return IString._fncs.getValue(rule[0], n) || IString._fncs.getValue(rule[1], n);
 	},
-	
 	/**
 	 * @private
 	 * @param {Object} rule
@@ -342,6 +407,50 @@ IString._fncs = {
 	 */
 	and: function(rule, n) {
 		return IString._fncs.getValue(rule[0], n) && IString._fncs.getValue(rule[1], n);
+	},
+	/**
+	 * @private
+	 * @param {Object} rule
+	 * @param {number} n
+	 * @return {boolean}
+	 */
+	eq: function(rule, n) {
+		var valueLeft = IString._fncs.getValue(rule[0], n),
+			valueRight;
+
+		if (typeof(rule[0]) === 'string') {
+			valueRight = n[rule[0]];
+		} else {
+			if (IString._fncs.firstProp(rule[1]) === "0") { // mod
+				valueRight = IString._fncs.getValue(rule[1], valueLeft);
+			} else {
+				valueRight = IString._fncs.getValue(rule[1], n);
+			}
+		} 
+		//var valueRight = IString._fncs.getValue(rule[1], n);
+		if(typeof(valueRight) === 'boolean') {
+			return ((valueRight) && valueRight ? true : false);
+		} else {
+			return (valueLeft == valueRight ? true :false);	
+		}
+		//return (IString._fncs.getValue(rule[0], n) === IString._fncs.getValue(rule[1], n));
+	},
+	/**
+	 * @private
+	 * @param {Object} rule
+	 * @param {number} n
+	 * @return {boolean}
+	 */
+	neq: function(rule, n) {
+		var valueLeft = IString._fncs.getValue(rule[0], n),
+			valueRight;
+
+		if (typeof(rule[0]) === 'string') {
+			valueRight = n[rule[0]];
+		} else {
+			valueRight = IString._fncs.getValue(rule[1], n);
+		}
+		return (valueLeft !== valueRight ? true :false);
 	}
 };
 
@@ -549,6 +658,9 @@ IString.prototype = {
 		var arg;
 		var result = undefined;
 		var defaultCase = "";
+		var argIndexType;
+		var	numberDigits = {};
+
 	
 		if (this.str.length === 0) {
 			// nothing to do
@@ -579,29 +691,53 @@ IString.prototype = {
 			} else {
 				switch (type) {
 					case 'number':
+						
+						argIndexType = IString._fncs.isDecimal(argIndex);
+						numberDigits = IString._fncs.calculateNumberDigits(argIndex);
+
+						var operandSymbol = {};
+
+						//operandSymbolN = argIndex;
+						if (argIndexType) { // Decimal
+							operandSymbol.n = parseFloat(argIndex);
+							operandSymbol.i = numberDigits.integerPart;
+							operandSymbol.v = numberDigits.decimalPartLength;
+							operandSymbol.w = numberDigits.decimalPartLength;
+							operandSymbol.f = numberDigits.decimalPart;
+							operandSymbol.t = numberDigits.decimalPart;
+						} else { //Indeger
+							operandSymbol.n = parseInt(argIndex, 10);
+							operandSymbol.i = numberDigits.integerPart;
+							operandSymbol.v = 0;
+							operandSymbol.w = 0;
+							operandSymbol.f = 0;
+							operandSymbol.t = 0;
+						}
+						
+						//should be removed
 						arg = parseInt(argIndex, 10);
 											
 						if (limits[i].substring(0,2) === "<=") {						
 							limit = parseFloat(limits[i].substring(2));
-							if (arg <= limit) {
+							if (operandSymbol.n <= limit) {
 								result = new IString(strings[i]);
 								i = limits.length;
 							}
 						} else if (limits[i].substring(0,2) === ">=") {						
 							limit = parseFloat(limits[i].substring(2));
-							if (arg >= limit) {
+							if (operandSymbol.n >= limit) {
 								result = new IString(strings[i]);
 								i = limits.length;
 							}
 						} else if (limits[i].charAt(0) === "<") {						
 							limit = parseFloat(limits[i].substring(1));
-							if (arg < limit) {
+							if (operandSymbol.n < limit) {
 								result = new IString(strings[i]);
 								i = limits.length;
 							}
 						} else if (limits[i].charAt(0) === ">") {						
 							limit = parseFloat(limits[i].substring(1));
-							if (arg > limit) {
+							if (operandSymbol.n > limit) {
 								result = new IString(strings[i]);
 								i = limits.length;
 							}
@@ -617,7 +753,7 @@ IString.prototype = {
 									var ruleset = ilib.data["plurals_" + this.locale.getLanguage()];
 									if (ruleset) {
 										var rule = ruleset[limits[i]];
-										if (IString._fncs.getValue(rule, arg)) {
+										if (IString._fncs.getValue(rule, operandSymbol)) {
 											result = new IString(strings[i]);
 											i = limits.length;
 										}
