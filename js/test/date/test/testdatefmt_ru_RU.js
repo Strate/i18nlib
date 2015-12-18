@@ -1511,8 +1511,8 @@ function testDateFmtFormatRelativeWithinTwoYearsAfter_ru_RU() {
 		millisecond: 0
 	});
     assertEquals("через 16 месяцев", fmt.formatRelative(reference, date));
-				 //через 16 месяца
 }
+
 function testDateFmtFormatRelativeWithinTwoYearsBefore_ru_RU() {
     var fmt = new DateFmt({locale: "ru-RU", length: "full"});
     assertNotNull(fmt);
