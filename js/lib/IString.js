@@ -235,6 +235,8 @@ IString._fncs = {
 				if (typeof(obj) === 'number') {
 					if (n === range[num]) {
 						return true;
+					} else if (n >= range[0] && n <= range[1]) {
+						return true;
 					}
 				} else if (Object.prototype.toString.call(obj) === '[object Array]') {
 					if (n >= obj[0] && n <= obj[1]) {
@@ -442,6 +444,10 @@ IString._fncs = {
 			if (typeof(n) === 'object'){
 				valueRight = n[rule[0]];
 				if (typeof(rule[1])=== 'number'){
+					valueRight = IString._fncs.getValue(rule[1], n);	
+				} else if (typeof(rule[1])=== 'object' &&  
+					(IString._fncs.firstProp(rule[1]) === "0" || 
+					IString._fncs.firstProp(rule[1]) === "1") ){
 					valueRight = IString._fncs.getValue(rule[1], n);	
 				}
 			}

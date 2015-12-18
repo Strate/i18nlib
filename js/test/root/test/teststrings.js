@@ -1007,7 +1007,7 @@ function testRuleGetValueInRangeFalseIntegersBetween() {
 		]
 	};
 	
-	assertFalse(IString._fncs.getValue(rule, 1));
+	assertTrue(IString._fncs.getValue(rule, 1));
 }
 
 function testRuleGetValueInRangeIntegersTrue() {
@@ -1229,7 +1229,7 @@ function testRuleGetValueNotInRangeFalseIntegersBetween() {
 		]
 	};
 	
-	assertTrue(IString._fncs.getValue(rule, 1));
+	assertFalse(IString._fncs.getValue(rule, 1));
 }
 
 function testRuleGetValueNotInRangeIntegersTrue() {
@@ -1994,6 +1994,16 @@ function testStringFormatChoiceCharClasses12() {
     
     assertEquals("Default items", str.formatChoice(5));
 }
+
+function testStringFormatChoiceCharClasses13() {
+    var str = new IString("0#There are no items.|one#There items are one|few#The items are few|many#The items are many|#Default items");
+    str.setLocale("ar-SA");
+    
+    assertNotNull(str);
+    
+    assertEquals("The items are many", str.formatChoice(30));
+}
+
 
 function testStringFormatChoiceCharClassesComplex1() {
     var str = new IString("0#There are no items.|one#There items are one|few#The items are few|many#The items are many|#Default items");
