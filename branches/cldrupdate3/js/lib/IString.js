@@ -253,7 +253,7 @@ IString._fncs = {
 	 * @return {boolean}
 	 */
 	isDecimal: function(number) {
-		if (typeof(number) !== number) {
+		if (typeof(number) !== 'number') {
 			return false;
 		} else {
 			return (number % 1 != 0)
@@ -311,9 +311,9 @@ IString._fncs = {
 	 * @return {boolean}
 	 */
 	matchRange: function(n, range) {
-		if (Math.floor(n) !== n) {
+		/*if (Math.floor(n) !== n) {
 			return false;
-		}
+		}*/	//Should not return false in order to hadle decimal number.	
 		return IString._fncs.matchRangeContinuous(n, range);
 	},
 	
