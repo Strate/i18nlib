@@ -247,18 +247,7 @@ IString._fncs = {
 		}
 		return false;
 	},
-	/**
-	 * @private
-	 * @param {*} number
-	 * @return {boolean}
-	 */
-	isDecimal: function(number) {
-		if (typeof(number) !== 'number') {
-			return false;
-		} else {
-			return (number % 1 != 0)
-		}
-	},
+	
 	/**
 	 * @private
 	 * @param {*} number
@@ -266,44 +255,40 @@ IString._fncs = {
 	 */
 	calculateNumberDigits: function(number) {
 		var numberToString = number.toString();
-		var parts = [],
-			numberDigits =  {},
-			integerPart, decimalPartLength, decimalPart;
+		var parts = [];
+		var	numberDigits =  {};
+		var	operandSymbol =  {};
+		var	integerPart, decimalPartLength, decimalPart;
 
 		if (numberToString.indexOf('.') !== -1) { //decimal
 			parts = numberToString.split('.', 2);
 			numberDigits.integerPart = parseInt(parts[0], 10);
 			numberDigits.decimalPartLength = parts[1].length;
 			numberDigits.decimalPart = parseInt(parts[1], 10);
+
+			operandSymbol.n = parseFloat(number);
+			operandSymbol.i = numberDigits.integerPart;
+			operandSymbol.v = numberDigits.decimalPartLength;
+			operandSymbol.w = numberDigits.decimalPartLength;
+			operandSymbol.f = numberDigits.decimalPart;
+			operandSymbol.t = numberDigits.decimalPart;
+
 		} else {
 			numberDigits.integerPart = number;
 			numberDigits.decimalPartLength = 0;
 			numberDigits.decimalPart = 0;
+
+			operandSymbol.n = parseInt(number, 10);
+			operandSymbol.i = numberDigits.integerPart;
+			operandSymbol.v = 0;
+			operandSymbol.w = 0;
+			operandSymbol.f = 0;
+			operandSymbol.t = 0;
+
 		}
-		return numberDigits
+		return operandSymbol
 	},
 
-	/**
-	 * @private
-	 * @param {*} number
-	 * @return {number}
-	 */
-	isDecimalPlaces: function(number) {
-		var numberToString = number.toString();
-		var parts = [], integerPart, decimalPart;
-
-		if (numberToString.search('.') !== -1) {
-			numberToString.split('.', 2);
-			integerPart = parts[0],
-			decimalPart = parts[1];
-
-			if (decimalPart !== undefined) {
-				return decimalPart.length;
-			}
-			return 0;
-		}
-		return 0;
-	},
 	/**
 	 * @private
 	 * @param {number|Object} n
@@ -311,9 +296,6 @@ IString._fncs = {
 	 * @return {boolean}
 	 */
 	matchRange: function(n, range) {
-		/*if (Math.floor(n) !== n) {
-			return false;
-		}*/	//Should not return false in order to hadle decimal number.	
 		return IString._fncs.matchRangeContinuous(n, range);
 	},
 	
@@ -404,10 +386,10 @@ IString._fncs = {
 	 */
 	or: function(rule, n) {
 		var ruleLength = rule.length;
-		var result = [], i;
+		var result, i;
 		for (i=0; i < ruleLength; i++) {
-			result[i] = IString._fncs.getValue(rule[i], n);
-			if (result[i]) {
+			result = IString._fncs.getValue(rule[i], n);
+			if (result) {
 				return true;
 			} 
 		}
@@ -421,10 +403,10 @@ IString._fncs = {
 	 */
 	and: function(rule, n) {
 		var ruleLength = rule.length;
-		var result = [], i;
+		var result, i;
 		for (i=0; i < ruleLength; i++) {
-			result[i] = IString._fncs.getValue(rule[i], n);
-			if (!result[i]) {
+			result= IString._fncs.getValue(rule[i], n);
+			if (!result) {
 				return false;
 			} 
 		}
@@ -460,7 +442,7 @@ IString._fncs = {
 			}
 		} 
 		if(typeof(valueRight) === 'boolean') {
-			return ((valueRight) && valueRight ? true : false);
+			return (valueRight ? true : false);
 		} else {
 			return (valueLeft == valueRight ? true :false);	
 		}
@@ -702,9 +684,8 @@ IString.prototype = {
 		var arg;
 		var result = undefined;
 		var defaultCase = "";
-		var argIndexType;
 		var	numberDigits = {};
-		var operandSymbol = {};
+		var operandValue = {};
 	
 		if (this.str.length === 0) {
 			// nothing to do
@@ -735,53 +716,29 @@ IString.prototype = {
 			} else {
 				switch (type) {
 					case 'number':
-						
-						argIndexType = IString._fncs.isDecimal(argIndex);
-						numberDigits = IString._fncs.calculateNumberDigits(argIndex);
-
-						
-
-						//operandSymbolN = argIndex;
-						if (argIndexType) { // Decimal
-							operandSymbol.n = parseFloat(argIndex);
-							operandSymbol.i = numberDigits.integerPart;
-							operandSymbol.v = numberDigits.decimalPartLength;
-							operandSymbol.w = numberDigits.decimalPartLength;
-							operandSymbol.f = numberDigits.decimalPart;
-							operandSymbol.t = numberDigits.decimalPart;
-						} else { //Indeger
-							operandSymbol.n = parseInt(argIndex, 10);
-							operandSymbol.i = numberDigits.integerPart;
-							operandSymbol.v = 0;
-							operandSymbol.w = 0;
-							operandSymbol.f = 0;
-							operandSymbol.t = 0;
-						}
-						
-						//should be removed
-						//arg = parseInt(argIndex, 10);
+						operandValue = IString._fncs.calculateNumberDigits(argIndex);
 											
 						if (limits[i].substring(0,2) === "<=") {						
 							limit = parseFloat(limits[i].substring(2));
-							if (operandSymbol.n <= limit) {
+							if (operandValue.n <= limit) {
 								result = new IString(strings[i]);
 								i = limits.length;
 							}
 						} else if (limits[i].substring(0,2) === ">=") {						
 							limit = parseFloat(limits[i].substring(2));
-							if (operandSymbol.n >= limit) {
+							if (operandValue.n >= limit) {
 								result = new IString(strings[i]);
 								i = limits.length;
 							}
 						} else if (limits[i].charAt(0) === "<") {						
 							limit = parseFloat(limits[i].substring(1));
-							if (operandSymbol.n < limit) {
+							if (operandValue.n < limit) {
 								result = new IString(strings[i]);
 								i = limits.length;
 							}
 						} else if (limits[i].charAt(0) === ">") {						
 							limit = parseFloat(limits[i].substring(1));
-							if (operandSymbol.n > limit) {
+							if (operandValue.n > limit) {
 								result = new IString(strings[i]);
 								i = limits.length;
 							}
@@ -797,7 +754,7 @@ IString.prototype = {
 									var ruleset = ilib.data["plurals_" + this.locale.getLanguage()];
 									if (ruleset) {
 										var rule = ruleset[limits[i]];
-										if (IString._fncs.getValue(rule, operandSymbol)) {
+										if (IString._fncs.getValue(rule, operandValue)) {
 											result = new IString(strings[i]);
 											i = limits.length;
 										}
@@ -809,11 +766,11 @@ IString.prototype = {
 										// range
 										var start = limits[i].substring(0, dash);
 										var end = limits[i].substring(dash+1);							
-										if (operandSymbol.n >= parseInt(start, 10) && operandSymbol.n <= parseInt(end, 10)) {								
+										if (operandValue.n >= parseInt(start, 10) && operandValue.n <= parseInt(end, 10)) {								
 											result = new IString(strings[i]);
 											i = limits.length;
 										}
-									} else if (operandSymbol.n === parseInt(limits[i], 10)) {							
+									} else if (operandValue.n === parseInt(limits[i], 10)) {							
 										// exact amount
 										result = new IString(strings[i]);
 										i = limits.length;
