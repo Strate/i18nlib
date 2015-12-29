@@ -196,6 +196,25 @@ IString._fncs = {
 		}
 		return undefined; // should never get here
 	},
+
+	/**
+	 * @private
+	 * @param {Object} obj
+	 * @return {string|undefined}
+	 */
+	firstPropRule: function (obj) {
+		if (Object.prototype.toString.call(obj) === '[object Array]') {
+			return "inrange";
+		} else if (Object.prototype.toString.call(obj) === '[object Object]') {
+			for (var p in obj) {
+				if (p && obj[p]) {
+					return p;
+				}
+			}
+
+		}
+		return undefined; // should never get here
+	},
 	
 	/**
 	 * @private
@@ -205,9 +224,8 @@ IString._fncs = {
 	 */
 	getValue: function (obj, n) {
 		if (typeof(obj) === 'object') {
-			var subrule = IString._fncs.firstProp(obj);
-			if (subrule === '0' || subrule === '1') {
-				subrule = "inrange";
+			var subrule = IString._fncs.firstPropRule(obj);
+			if (subrule === "inrange") {
 				return IString._fncs[subrule](obj, n);
 			}
 			return IString._fncs[subrule](obj[subrule], n);
@@ -256,9 +274,9 @@ IString._fncs = {
 	calculateNumberDigits: function(number) {
 		var numberToString = number.toString();
 		var parts = [];
-		var	numberDigits =  {};
-		var	operandSymbol =  {};
-		var	integerPart, decimalPartLength, decimalPart;
+		var numberDigits =  {};
+		var operandSymbol =  {};
+		var integerPart, decimalPartLength, decimalPart;
 
 		if (numberToString.indexOf('.') !== -1) { //decimal
 			parts = numberToString.split('.', 2);
@@ -309,7 +327,6 @@ IString._fncs = {
 		var left = IString._fncs.getValue(rule[0], n);
 		var right = IString._fncs.getValue(rule[1], n);
 		return left == right;
-		// return IString._fncs.getValue(rule[0]) == IString._fncs.getValue(rule[1]);
 	},
 	
 	/**
@@ -334,6 +351,9 @@ IString._fncs = {
 				return IString._fncs.matchRange(n.n,rule);
 			}
 			return IString._fncs.matchRange(n,rule);	
+		} else if (typeof(rule[0]) === 'undefined') {
+			var subrule = IString._fncs.firstPropRule(rule);
+			return IString._fncs[subrule](rule[subrule], n);
 		} else {
 			return IString._fncs.matchRange(IString._fncs.getValue(rule[0], n), rule[1]);	
 		}
@@ -419,23 +439,20 @@ IString._fncs = {
 	 * @return {boolean}
 	 */
 	eq: function(rule, n) {
-		var valueLeft = IString._fncs.getValue(rule[0], n),
-			valueRight;
+		var valueLeft = IString._fncs.getValue(rule[0], n);
+		var valueRight;
 
 		if (typeof(rule[0]) === 'string') {
 			if (typeof(n) === 'object'){
 				valueRight = n[rule[0]];
 				if (typeof(rule[1])=== 'number'){
 					valueRight = IString._fncs.getValue(rule[1], n);	
-				} else if (typeof(rule[1])=== 'object' &&  
-					(IString._fncs.firstProp(rule[1]) === "0" || 
-					IString._fncs.firstProp(rule[1]) === "1") ){
+				} else if (typeof(rule[1])=== 'object' && (IString._fncs.firstPropRule(rule[1]) === "inrange" )){
 					valueRight = IString._fncs.getValue(rule[1], n);	
 				}
 			}
 		} else {
-			if (IString._fncs.firstProp(rule[1]) === "0" 
-				|| IString._fncs.firstProp(rule[1]) === "1" ) { // mod
+			if (IString._fncs.firstPropRule(rule[1]) === "inrange") { // mod
 				valueRight = IString._fncs.getValue(rule[1], valueLeft);
 			} else {
 				valueRight = IString._fncs.getValue(rule[1], n);
@@ -454,8 +471,8 @@ IString._fncs = {
 	 * @return {boolean}
 	 */
 	neq: function(rule, n) {
-		var valueLeft = IString._fncs.getValue(rule[0], n),
-			valueRight;
+		var valueLeft = IString._fncs.getValue(rule[0], n);
+		var valueRight;
 
 		if (typeof(rule[0]) === 'string') {
 			valueRight = n[rule[0]];
@@ -463,12 +480,11 @@ IString._fncs = {
 				valueRight = IString._fncs.getValue(rule[1], n);
 			}
 		} else {
-			if (IString._fncs.firstProp(rule[1]) === "0") { // mod
+			if (IString._fncs.firstPropRule(rule[1]) === "inrange") { // mod
 				valueRight = IString._fncs.getValue(rule[1], valueLeft);
 			} else {
 				valueRight = IString._fncs.getValue(rule[1], n);	
 			}	
-			
 		}
 
 		if(typeof(valueRight) === 'boolean') {//mod
