@@ -1,0 +1,9 @@
+{
+    "generated": true,
+    "numfmt": {
+        "script": "Beng",
+        "secgroupSize": 2,
+        "digits": "০১২৩৪৫৬৭৮৯",
+        "useNative": true
+    }
+}
