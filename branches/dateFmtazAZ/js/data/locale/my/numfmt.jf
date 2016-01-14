@@ -1,0 +1,8 @@
+{
+    "generated": true,
+    "numfmt": {
+        "script": "Mymr",
+        "digits": "၀၁၂၃၄၅၆၇၈၉",
+        "useNative": true
+    }
+}
