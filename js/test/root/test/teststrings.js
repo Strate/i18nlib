@@ -2004,14 +2004,31 @@ function testStringFormatChoiceCharClasses13() {
     assertEquals("The items are many", str.formatChoice(30));
 }
 
+function testStringFormatChoiceCharClasses14() {
+    var str = new IString("0#There are no items.|one#There items are one|few#The items are few|many#The items are many|#Default items");
+    str.setLocale("az-Latn-AZ");
+
+    assertNotNull(str);
+
+    assertEquals("Default items", str.formatChoice(30));
+}
+
+function testStringFormatChoiceCharClasses15() {
+    var str = new IString("0#There are no items.|one#There items are one|few#The items are few|many#The items are many|#Default items");
+    str.setLocale("az-Latn-AZ");
+
+    assertNotNull(str);
+
+    assertEquals("There items are one", str.formatChoice(1));
+}
 
 function testStringFormatChoiceCharClassesComplex1() {
     var str = new IString("0#There are no items.|one#There items are one|few#The items are few|many#The items are many|#Default items");
     str.setLocale("pl-PL");
     
     assertNotNull(str);
-    
-    assertEquals("There items are one", str.formatChoice(1));
+
+    assertEquals("Default items", str.formatChoice(1));
 }
 
 function testStringFormatChoiceCharClassesComplex2() {
@@ -2093,6 +2110,15 @@ function testStringFormatChoiceCharClassesComplex10() {
     assertNotNull(str);
     
     assertEquals("The items are many", str.formatChoice(10));
+}
+
+function testStringFormatChoiceCharClassesComplex11() {
+    var str = new IString("0#There are no items.|one#There items are one|few#The items are few|many#The items are many|#Default items");
+    str.setLocale("az-Latn-AZ");
+
+    assertNotNull(str);
+
+    assertEquals("Default items", str.formatChoice(10));
 }
 
 function testStringFormatChoiceDecimal1() {
@@ -2219,4 +2245,14 @@ function testStringFormatChoiceDecimal14() {
     assertNotNull(str);
     
     assertEquals("The items are many", str.formatChoice(1.5));
+}
+
+
+function testStringFormatChoiceDecimal15() {
+    var str = new IString("0#There are no items.|one#There items are one|few#The items are few|many#The items are many|#Default items");
+    str.setLocale("az-Latn-AZ");
+
+    assertNotNull(str);
+
+    assertEquals("Default items", str.formatChoice(1.5));
 }
