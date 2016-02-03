@@ -1,0 +1,137 @@
+{
+    "gregorian": {
+        "order": {
+            "f": "{date} 'në' {time}",
+            "l": "{date} 'në' {time}",
+            "m": "{date}, {time}",
+            "s": "{date}, {time}"
+        },
+        "date": {
+            "dmwy": {
+                "s": "E, d.M.yy",
+                "m": "EE, d MMM yyyy",
+                "l": "EEE, d MMMM yyyy",
+                "f": "EEEE, d MMMM yyyy"
+            },
+            "dmy": {
+                "s": "d.M.yy",
+                "m": "d MMM yyyy",
+                "l": "d MMMM yyyy"
+            },
+            "dmw": {
+                "s": "E, d.M",
+                "m": "EE, d MMM",
+                "l": "EEE, d MMMM",
+                "f": "EEEE, d MMMM"
+            },
+            "dm": {
+                "s": "d.M",
+                "m": "d MMM",
+                "l": "d MMMM"
+            },
+            "my": {
+                "s": "M.yy",
+                "m": "LLL yyyy",
+                "l": "LLLL yyyy",
+                "f": "LLLL yyyy"
+            },
+            "dw": {
+                "s": "E, d",
+                "m": "EE, d",
+                "l": "EEE, d",
+                "f": "EEEE, d"
+            },
+            "d": {
+                "s": "d",
+                "f": "d",
+                "l": "d",
+                "m": "d"
+            },
+            "m": {
+                "m": "MMM",
+                "l": "MMMM"
+            },
+            "n": {
+                "m": "N"
+            },
+            "l": {
+                "f": "LLLL",
+                "l": "LLLL",
+                "m": "LLL",
+                "s": "L"
+            },
+            "e": {
+                "f": "cccc",
+                "l": "ccc",
+                "m": "cc",
+                "s": "c"
+            }
+        },
+        "time": {
+            "12": {
+                "ahmsz": "h:mm:ss a z",
+                "ahms": "h:mm:ss a",
+                "ahmz": "h:mm a z",
+                "ahm": "h:mm a",
+                "ah": "h a"
+            },
+            "24": {
+                "ahmsz": "HH:mm:ss z",
+                "ahms": "HH:mm:ss",
+                "hmsz": "HH:mm:ss z",
+                "hms": "HH:mm:ss",
+                "ahmz": "HH:mm z",
+                "ahm": "HH:mm",
+                "hmz": "HH:mm z",
+                "ah": "HH",
+                "hm": "HH:mm",
+                "h": "HH"
+            }
+        },
+        "range": {
+            "c00": {
+                "s": "{st} – {et} {sy}-{sm}-{sd}",
+                "m": "{st} – {et} {sy}-{sm}-{sd}",
+                "l": "{st} – {et} {sy} {sm} {sd}",
+                "f": "{st} – {et} {sd} {sm} {sy}"
+            },
+            "c01": {
+                "s": "{st} {sy}–{sm}–{sd} – {et} {ed}",
+                "m": "{st} {sy}–{sm}–{sd} – {et} {ed}",
+                "l": "{st} {sd} – {et} {ed} {em} {ey}",
+                "f": "{st} {sd} – {et} {ed} {em} {ey}"
+            },
+            "c02": {
+                "s": "{st} {sy}–{sm}–{sd} – {et} {em}–{ed}",
+                "m": "{st} {sy}–{sm}–{sd} – {et} {em}–{ed}",
+                "l": "{st} {sd} {sm} – {et} {ed} {em} {ey}",
+                "f": "{st} {sd} {sm} – {et} {ed} {em} {ey}"
+            },
+            "c10": {
+                "s": "{sy}–{sm}–{sd} – {ed}",
+                "m": "{sy}–{sm}–{sd} – {ed}",
+                "l": "{sd} – {ed} {em} {ey}",
+                "f": "{sd} – {ed} {em} {ey}"
+            },
+            "c11": {
+                "s": "{sy}–{sm}–{sd} – {em}–{ed}",
+                "m": "{sy}–{sm}–{sd} – {em}–{ed}",
+                "l": "{sd} {sm} – {ed} {em} {ey}",
+                "f": "{sd} {sm} – {ed} {em} {ey}"
+            },
+            "c12": {
+                "s": "{sy}–{sm}–{sd} – {ey}–{em}–{ed}",
+                "m": "{sy}–{sm}–{sd} – {ey}–{em}–{ed}",
+                "l": "{sd} {sm} {sy} – {ed} {em} {ey}",
+                "f": "{sd} {sm} {sy} – {ed} {em} {ey}"
+            },
+            "c20": {
+                "s": "{sy}–{sm} – {ey}–{em}",
+                "m": "{sy}–{sm} – {ey}–{em}",
+                "l": "{sm} {sy} – {em} {ey}",
+                "f": "{sy}–{sm} – {ey}–{em}"
+            },
+            "c30": "{sy} – {ey}"
+        }
+    }
+}
