@@ -690,7 +690,7 @@ function testLocaleInfoGetCurrencyFormat_fi_FI() {
 	assertEquals("{n} {s}", info.getCurrencyFormats().common);
 }
 
-//test cases for cs_CZ 
+//test cases for cs_CZ
 
 function testLocaleInfoGetDecimalSeparatorfor_cs_CZ() {
 	var info = new LocaleInfo("cs-CZ");
@@ -2730,7 +2730,7 @@ function testLocaleInfoRoundingMode_ha_NG_Latn() {
 	assertEquals("halfdown", info.getRoundingMode());
 }
 
-//test cases for he-IL	
+//test cases for he-IL
 
 function testLocaleInfoGetDecimalSeparatorfor_he() {
 	var info = new LocaleInfo("he-IL");
@@ -6467,6 +6467,55 @@ function testLocaleInfoRoundingMode_zh_MY() {
 	assertEquals("halfdown", info.getRoundingMode());
 }
 
+//test cases for az-Latn-AZ
+
+function testLocaleInfoGetDecimalSeparatorfor_az_Latn_AZ() {
+	var info = new LocaleInfo("az-Latn-AZ");
+	assertNotNull(info);
+	assertEquals(",", info.getDecimalSeparator());
+}
+
+function testLocaleInfoGetGroupingSeparatorfor_az_Latn_AZ() {
+	var info = new LocaleInfo("az-Latn-AZ");
+	assertNotNull(info);
+
+	assertEquals(".", info.getGroupingSeparator());
+}
+
+function testLocaleInfoGetPercentageFormat_az_Latn_AZ() {
+	var info = new LocaleInfo("az-Latn-AZ");
+	assertNotNull(info);
+
+	assertEquals("{n}%", info.getPercentageFormat());
+}
+
+function testLocaleInfoGetCurrencyFormat_az_Latn_AZ() {
+	var info = new LocaleInfo("az-Latn-AZ");
+	assertNotNull(info);
+
+	assertEquals("{s}{n}", info.getCurrencyFormats().common);
+}
+
+function testLocaleInfoGetPrimaryGroupingDigits_az_Latn_AZ() {
+	var info = new LocaleInfo("az-Latn-AZ");
+	assertNotNull(info);
+
+	assertEquals(3, info.getPrimaryGroupingDigits());
+}
+
+function testLocaleInfoGetSecondaryGroupingDigits_az_Latn_AZ() {
+	var info = new LocaleInfo("az-Latn-AZ");
+	assertNotNull(info);
+
+	assertEquals(0, info.getSecondaryGroupingDigits());
+}
+
+function testLocaleInfoRoundingMode_az_Latn_AZ() {
+	var info = new LocaleInfo("az-Latn-AZ");
+	assertNotNull(info);
+
+	assertEquals("halfdown", info.getRoundingMode());
+}
 
 /************************************************end 04-JUN-2013**********************************************************/
 
@@ -6695,11 +6744,11 @@ function testLocaleInfoLoadMissingDataAsynchNoData() {
 
 function testLocaleInfoMissingDataSynchNoDataNoLoader() {
 	var temp = ilib._load;
-	
+
 	ilib._load = undefined;  // no loader
 	var callbackCalled = false;
 	LocaleInfo.cache = {}; // empty the cache
-	
+
 	var info = new LocaleInfo("xxx-QQ", {
 		sync: true,
 		onLoad: function (li) {
@@ -6713,7 +6762,7 @@ function testLocaleInfoMissingDataSynchNoDataNoLoader() {
 	});
 	assertNotNull(info);
 	assertTrue(callbackCalled);
-	
+
 	// clean up
 	ilib._load = undefined;  // no loader
 	LocaleInfo.cache = {}; // empty the cache
@@ -6731,7 +6780,7 @@ function testLocaleInfoLoadMissingDataSyncNoData() {
 	var li = new LocaleInfo("qq-QQ", {
 		sync: true
 	});
-	
+
 	assertNotUndefined(li);
 	// should return the shared data only
 	assertEquals("{s}{n}", li.getCurrencyFormats().common);
@@ -6931,12 +6980,12 @@ function testLocaleInfoGetWeekendUS() {
 
 	assertEquals(6, info.getWeekEndStart());
 	assertEquals(0, info.getWeekEndEnd());
-}	
+}
 
 function testLocaleInfoGetWeekendDE() {
 	var info = new LocaleInfo("de-DE");
 	assertNotNull(info);
-	
+
 	assertEquals(6, info.getWeekEndStart());
 	assertEquals(0, info.getWeekEndEnd());
 }
@@ -6956,12 +7005,12 @@ function testLocaleInfoGetWeekendAE() {
 
 	assertEquals(5, info.getWeekEndStart());
 	assertEquals(6, info.getWeekEndEnd());
-}	
+}
 
 function testLocaleInfoGetWeekendBH() {
 	var info = new LocaleInfo("ar-BH");
 	assertNotNull(info);
-	
+
 	assertEquals(5, info.getWeekEndStart());
 	assertEquals(6, info.getWeekEndEnd());
 }
@@ -6980,12 +7029,12 @@ function testLocaleInfoGetWeekendEG() {
 
 	assertEquals(5, info.getWeekEndStart());
 	assertEquals(6, info.getWeekEndEnd());
-}	
+}
 
 function testLocaleInfoGetWeekendIL() {
 	var info = new LocaleInfo("he-IL");
 	assertNotNull(info);
-	
+
 	assertEquals(5, info.getWeekEndStart());
 	assertEquals(6, info.getWeekEndEnd());
 }
@@ -7004,12 +7053,12 @@ function testLocaleInfoGetWeekendJO() {
 
 	assertEquals(5, info.getWeekEndStart());
 	assertEquals(6, info.getWeekEndEnd());
-}	
+}
 
 function testLocaleInfoGetWeekendKW() {
 	var info = new LocaleInfo("ar-KW");
 	assertNotNull(info);
-	
+
 	assertEquals(5, info.getWeekEndStart());
 	assertEquals(6, info.getWeekEndEnd());
 }
@@ -7028,12 +7077,12 @@ function testLocaleInfoGetWeekendMA() {
 
 	assertEquals(5, info.getWeekEndStart());
 	assertEquals(6, info.getWeekEndEnd());
-}	
+}
 
 function testLocaleInfoGetWeekendOM() {
 	var info = new LocaleInfo("ar-OM");
 	assertNotNull(info);
-	
+
 	assertEquals(5, info.getWeekEndStart());
 	assertEquals(6, info.getWeekEndEnd());
 }
@@ -7049,7 +7098,7 @@ function testLocaleInfoGetWeekendQA() {
 function testLocaleInfoGetWeekendSA() {
 	var info = new LocaleInfo("ar-SA");
 	assertNotNull(info);
-	
+
 	assertEquals(5, info.getWeekEndStart());
 	assertEquals(6, info.getWeekEndEnd());
 }
@@ -7068,12 +7117,12 @@ function testLocaleInfoGetWeekendSY() {
 
 	assertEquals(5, info.getWeekEndStart());
 	assertEquals(6, info.getWeekEndEnd());
-}	
+}
 
 function testLocaleInfoGetWeekendTN() {
 	var info = new LocaleInfo("ar-TN");
 	assertNotNull(info);
-	
+
 	assertEquals(5, info.getWeekEndStart());
 	assertEquals(6, info.getWeekEndEnd());
 }
@@ -7092,47 +7141,53 @@ function testLocaleInfoGetWeekendAF() {
 
 	assertEquals(4, info.getWeekEndStart());
 	assertEquals(5, info.getWeekEndEnd());
-}	
+}
 
 function testLocaleInfoGetWeekendIR() {
 	var info = new LocaleInfo("fa-IR");
 	assertNotNull(info);
-	
+
 	assertEquals(5, info.getWeekEndStart());
 	assertEquals(5, info.getWeekEndEnd());
 }
 function testLocaleInfoGetWeekendIN() {
 	var info = new LocaleInfo("hi-IN");
 	assertNotNull(info);
-	
+
 	assertEquals(0, info.getWeekEndStart());
 	assertEquals(0, info.getWeekEndEnd());
 }
+function testLocaleInfoGetWeekendIN() {
+	var info = new LocaleInfo("az-Latn-AZ");
+	assertNotNull(info);
 
+	assertEquals(6, info.getWeekEndStart());
+	assertEquals(0, info.getWeekEndEnd());
+}
 
 function testLocaleInfoGetMeridiemsStyleDefault() {
 	var info = new LocaleInfo();
 	assertNotNull(info);
-	
+
 	assertEquals("gregorian", info.getMeridiemsStyle());
 }
 function testLocaleInfoGetMeridiemsStyleUS() {
 	var info = new LocaleInfo("en-US");
 	assertNotNull(info);
-	
+
 	assertEquals("gregorian", info.getMeridiemsStyle());
 }
 function testLocaleInfoGetMeridiemsStyle_am_ET() {
 	var info = new LocaleInfo("am-ET");
 	assertNotNull(info);
-	
+
 	assertEquals("ethiopic", info.getMeridiemsStyle());
 }
 function testLocaleInfoGetMeridiemsStyle_zh_Hans_CN() {
 	var info = new LocaleInfo("zh-Hans-CN");
 	assertNotNull(info);
-	
-	// Even for the Chinese locales, the default is 
+
+	// Even for the Chinese locales, the default is
 	// Gregorian style. To format with Chinese style,
 	// you have to explicitly request it when constructing
 	// the date formatter instance.
@@ -7142,7 +7197,7 @@ function testLocaleInfoGetMeridiemsStyle_zh_Hans_CN() {
 function testLocaleInfoPaperSizeDefault() {
 	var info = new LocaleInfo();
 	assertNotNull(info);
-	
+
 	// If locale is not specified, default locale would be return as "en-US".
 	assertEquals("8x11", info.getPaperSize());
 }
@@ -7150,77 +7205,77 @@ function testLocaleInfoPaperSizeDefault() {
 function testLocaleInfoPaperSize_en_US() {
 	var info = new LocaleInfo("en-US");
 	assertNotNull(info);
-	
+
 	assertEquals("8x11", info.getPaperSize());
 }
 
 function testLocaleInfoPaperSize_ko_KR() {
 	var info = new LocaleInfo("ko-KR");
 	assertNotNull(info);
-	
+
 	assertEquals("A4", info.getPaperSize());
 }
 
 function testLocaleInfoPaperSize_es_MX() {
 	var info = new LocaleInfo("es-MX");
 	assertNotNull(info);
-	
+
 	assertEquals("8x11", info.getPaperSize());
 }
 
 function testLocaleInfoPaperSize_es_SV() {
 	var info = new LocaleInfo("es-SV");
 	assertNotNull(info);
-	
+
 	assertEquals("8x11", info.getPaperSize());
 }
 
 function testLocaleInfoPaperSize_es_PR() {
 	var info = new LocaleInfo("es-PR");
 	assertNotNull(info);
-	
+
 	assertEquals("8x11", info.getPaperSize());
 }
 
 function testLocaleInfoPaperSize_es_VE() {
 	var info = new LocaleInfo("es-VE");
 	assertNotNull(info);
-	
+
 	assertEquals("8x11", info.getPaperSize());
 }
 
 function testLocaleInfoPaperSize_fr_FR() {
 	var info = new LocaleInfo("fr-FR");
 	assertNotNull(info);
-	
+
 	assertEquals("A4", info.getPaperSize());
 }
 
 function testLocaleInfoPaperSize_de_DE() {
 	var info = new LocaleInfo("de-DE");
 	assertNotNull(info);
-	
+
 	assertEquals("A4", info.getPaperSize());
 }
 
 function testLocaleInfoPaperSize_it_IT() {
 	var info = new LocaleInfo("it-IT");
 	assertNotNull(info);
-	
+
 	assertEquals("A4", info.getPaperSize());
 }
 
 function testLocaleInfoPaperSize_zh_CN() {
 	var info = new LocaleInfo("zh-CN");
 	assertNotNull(info);
-	
+
 	assertEquals("A4", info.getPaperSize());
 }
 
 function testLocaleInfoQuotation_en_US() {
 	var info = new LocaleInfo("en-US");
 	assertNotNull(info);
-	
+
 	assertEquals("“", info.getDelimiterQuotationStart());
 	assertEquals("”", info.getDelimiterQuotationEnd());
 }
@@ -7228,7 +7283,7 @@ function testLocaleInfoQuotation_en_US() {
 function testLocaleInfoQuotation_ko_KR() {
 	var info = new LocaleInfo("ko-KR");
 	assertNotNull(info);
-	
+
 	assertEquals("“", info.getDelimiterQuotationStart());
 	assertEquals("”", info.getDelimiterQuotationEnd());
 }
@@ -7236,7 +7291,7 @@ function testLocaleInfoQuotation_ko_KR() {
 function testLocaleInfoQuotation_es_ES() {
 	var info = new LocaleInfo("es-ES");
 	assertNotNull(info);
-	
+
 	assertEquals("«", info.getDelimiterQuotationStart());
 	assertEquals("»", info.getDelimiterQuotationEnd());
 }
@@ -7244,7 +7299,7 @@ function testLocaleInfoQuotation_es_ES() {
 function testLocaleInfoQuotation_zh_CN() {
 	var info = new LocaleInfo("zh-CN");
 	assertNotNull(info);
-	
+
 	assertEquals("“", info.getDelimiterQuotationStart());
 	assertEquals("”", info.getDelimiterQuotationEnd());
 }
@@ -7252,7 +7307,7 @@ function testLocaleInfoQuotation_zh_CN() {
 function testLocaleInfoQuotation_fa_IR() {
 	var info = new LocaleInfo("fa-IR");
 	assertNotNull(info);
-	
+
 	assertEquals("«", info.getDelimiterQuotationStart());
 	assertEquals("»", info.getDelimiterQuotationEnd());
 }
@@ -7260,7 +7315,7 @@ function testLocaleInfoQuotation_fa_IR() {
 function testLocaleInfoQuotation_de_DE() {
 	var info = new LocaleInfo("de-DE");
 	assertNotNull(info);
-	
+
 	assertEquals("„", info.getDelimiterQuotationStart());
 	assertEquals("“", info.getDelimiterQuotationEnd());
 }
@@ -7268,7 +7323,7 @@ function testLocaleInfoQuotation_de_DE() {
 function testLocaleInfoQuotation_pt_BR() {
 	var info = new LocaleInfo("pt-BR");
 	assertNotNull(info);
-	
+
 	assertEquals("“", info.getDelimiterQuotationStart());
 	assertEquals("”", info.getDelimiterQuotationEnd());
 }
@@ -7276,7 +7331,7 @@ function testLocaleInfoQuotation_pt_BR() {
 function testLocaleInfoQuotation_hy_AM() {
 	var info = new LocaleInfo("hy-AM");
 	assertNotNull(info);
-	
+
 	assertEquals("«", info.getDelimiterQuotationStart());
 	assertEquals("»", info.getDelimiterQuotationEnd());
 }
@@ -7284,7 +7339,7 @@ function testLocaleInfoQuotation_hy_AM() {
 function testLocaleInfoQuotation_ur_IN() {
 	var info = new LocaleInfo("ur-IN");
 	assertNotNull(info);
-	
+
 	assertEquals("\"", info.getDelimiterQuotationStart());
 	assertEquals("\"", info.getDelimiterQuotationEnd());
 }
