@@ -1,0 +1,136 @@
+{
+    "gregorian": {
+        "order": {
+            "f": "{date} בשעה {time}",
+            "l": "{date} בשעה {time}",
+            "m": "{date}, {time}",
+            "s": "{date}, {time}"
+        },
+        "date": {
+            "dmwy": {
+                "s": "E, d.M.yyyy",
+                "m": "EE, d בMMM yyyy",
+                "l": "EEE, d בMMMM yyyy",
+                "f": "EEEE, d בMMMM yyyy"
+            },
+            "dmy": {
+                "s": "‏d.M.yyyy",
+                "m": "‏d בMMM yyyy",
+                "l": "‏d בMMMM yyyy",
+                "f": "‏d בMMMM yyyy"
+            },
+            "dmw": {
+                "s": "E, ‏d.M",
+                "m": "EE, ‏d בMMM",
+                "l": "EEE, ‏d בMMMM",
+                "f": "EEEE, ‏d בMMMM"
+            },
+            "dm": {
+                "s": "‏d.M",
+                "m": "‏d בMMM",
+                "l": "‏d בMMMM",
+                "f": "‏d בMMMM"
+            },
+            "my": {
+                "s": "‏M.yyyy",
+                "m": "MMM yyyy",
+                "l": "MMMM yyyy"
+            },
+            "dw": {
+                "s": "E, d",
+                "m": "EE, d",
+                "l": "EEE, d",
+                "f": "EEEE, d"
+            },
+            "d": {
+                "f": "d",
+                "l": "d",
+                "m": "d",
+                "s": "d"
+            },
+            "m": {
+                "m": "MMM",
+                "l": "MMMM"
+            },
+            "y": {
+                "s": "yyyy"
+            }
+        },
+        "time": {
+            "12": {
+                "ahmsz": "‏h:mm:ss a z",
+                "ahms": "‏h:mm:ss a",
+                "hmsz": "‏h:mm:ss z",
+                "hms": "‏h:mm:ss",
+                "ahmz": "‏h:mm a z",
+                "ahm": "‏h:mm a",
+                "hmz": "‏h:mm z",
+                "ah": "‏h a",
+                "hm": "‏h:mm"
+            },
+            "24": {
+                "ahmsz": "‏HH:mm:ss z",
+                "ahms": "‏HH:mm:ss",
+                "hmsz": "‏HH:mm:ss z",
+                "hms": "‏HH:mm:ss",
+                "ahmz": "‏HH:mm z",
+                "ahm": "‏HH:mm",
+                "hmz": "‏HH:mm z",
+                "ah": "‏HH",
+                "hm": "‏HH:mm",
+                "h": "HH"
+            }
+        },
+        "range": {
+            "c00": {
+                "s": "‏{sd}.{sm}.{sy}, {st} – {et}",
+                "m": "‏{sd} ב{sm} {sy}, {st} – {et}",
+                "l": "‏{sd} ב{sm} {sy} בשעה {st} – {et}",
+                "f": "‏{sd} ב{sm} {sy} בשעה {st} – {et}"
+            },
+            "c01": {
+                "s": "‏{sd}.{sm}.{sy}, {st} – {ed}.{em}.{ey}, {et}",
+                "m": "‏{sd} ב{sm}, {st} – {ed} ב{em} {ey}, {et}",
+                "l": "‏{sd} ב{sm} בשעה {st} – {ed} ב{em} {ey} בשעה {et}",
+                "f": "‏{sd} ב{sm} בשעה {st} – {ed} ב{em} {ey} בשעה {et}"
+            },
+            "c02": {
+                "s": "‏{sd}.{sm}.{sy}, {st} – {ed}.{em}.{ey}, {et}",
+                "m": "‏{sd} ב{sm}, {st} – {ed} ב{em} {ey}, {et}",
+                "l": "‏{sd} ב{sm} בשעה {st} – {ed} ב{em} {ey} בשעה {et}",
+                "f": "‏{sd} ב{sm} בשעה {st} – {ed} ב{em} {ey} בשעה {et}"
+            },
+            "c03": {
+                "s": "‏{sd}.{sm}.{sy}, {st} – {ed}.{em}.{ey}, {et}",
+                "m": "‏{sd} ב{sm} {sy}, {st} – {ed} ב{em} {ey}, {et}",
+                "l": "‏{sd} ב{sm} {sy} בשעה {st} – {ed} ב{em} {ey} בשעה {et}",
+                "f": "‏{sd} ב{sm} {sy} בשעה {st} – {ed} ב{em} {ey} בשעה {et}"
+            },
+            "c10": {
+                "s": "‏{sd}.{sm}.{sy} – {ed}.{em}.{ey}",
+                "m": "‏{sd} – {ed} ב{em} {ey}",
+                "l": "‏{sd} – {ed} ב{em} {ey}",
+                "f": "‏{sd} – {ed} ב{em} {ey}"
+            },
+            "c11": {
+                "s": "‏{sd}.{sm}.{sy} – {ed}.{em}.{ey}",
+                "m": "‏{sd} ב{sm} – {ed} ב{em} {ey}",
+                "l": "‏{sd} ב{sm} – {ed} ב{em} {ey}",
+                "f": "‏{sd} ב{sm} – {ed} ב{em} {ey}"
+            },
+            "c12": {
+                "s": "‏{sd}.{sm}.{sy} – {ed}.{em}.{ey}",
+                "m": "‏{sd} ב{sm} {sy} – {ed} ב{em} {ey}",
+                "l": "‏{sd} ב{sm} {sy} – {ed} ב{em} {ey}",
+                "f": "‏{sd} ב{sm} {sy} – {ed} ב{em} {ey}"
+            },
+            "c20": {
+                "s": "‏{sm}.{sy} – {em}.{ey}",
+                "m": "‏ב{sm} {sy} – ב{em} {ey}",
+                "l": "ב{sm} {sy} – ב{em} {ey}",
+                "f": "ב{sm} {sy} – ב{em} {ey}"
+            },
+            "c30": "‏{sy} – {ey}"
+        }
+    }
+}

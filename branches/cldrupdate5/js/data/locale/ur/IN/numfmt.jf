@@ -1,0 +1,10 @@
+{
+    "generated": true,
+    "numfmt": {
+        "script": "arabext",
+        "exponential": "ق",
+        "secgroupSize": 2,
+        "digits": "۰۱۲۳۴۵۶۷۸۹",
+        "useNative": true
+    }
+}
