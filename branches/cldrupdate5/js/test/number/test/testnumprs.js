@@ -1,6 +1,6 @@
 /*
  * testnumprs.js - test the number parsing routines
- * 
+ *
  * Copyright © 2012-2015, JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -42,7 +42,7 @@ function testNumberConstructorWithIlibNumber() {
 function testNumberGetLocaleDefault() {
     var num = new INumber("3.4");
     assertNotNull(num);
-    
+
     assertEquals("en-US", num.getLocale().getSpec());
 }
 
@@ -51,84 +51,84 @@ function testNumberGetLocaleOther() {
     	locale: "de-DE"
     });
     assertNotNull(num);
-    
+
     assertEquals("de-DE", num.getLocale().getSpec());
 }
 
 function testNumberFloat() {
     var num = new INumber("3.4");
     assertNotNull(num);
-    
+
     assertEquals(3.4, num.valueOf());
 }
 
 function testNumberFloatWithPrimitiveNumber() {
     var num = new INumber(3.4);
     assertNotNull(num);
-    
+
     assertEquals(3.4, num.valueOf());
 }
 
 function testNumberFloatWithNumberObject() {
     var num = new INumber(new Number(3.4));
     assertNotNull(num);
-    
+
     assertEquals(3.4, num.valueOf());
 }
 
 function testNumberFloatWithIlibNumberObject() {
     var num = new INumber(new INumber(3.4));
     assertNotNull(num);
-    
+
     assertEquals(3.4, num.valueOf());
 }
 
 function testNumberFloatThousands() {
     var num = new INumber("1,233.4");
     assertNotNull(num);
-    
+
     assertEquals(1233.4, num.valueOf());
 }
 
 function testNumberFloatNegative() {
     var num = new INumber("-1233.4");
     assertNotNull(num);
-    
+
     assertEquals(-1233.4, num.valueOf());
 }
 
 function testNumberFloatIgnoreInternalDashes() {
     var num = new INumber("123-33.4");
     assertNotNull(num);
-    
+
     assertEquals(12333.4, num.valueOf());
 }
 
 function testNumberFloatIgnoreInternalDashesNegative() {
     var num = new INumber("-123-33.4");
     assertNotNull(num);
-    
+
     assertEquals(-12333.4, num.valueOf());
 }
 
 function testNumberFloatThousandsNoFormatting() {
     var num = new INumber("1233.4");
     assertNotNull(num);
-    
+
     assertEquals(1233.4, num.valueOf());
 }
 
 function testNumberFloatThousandsBogusFormatting() {
     var num = new INumber("1,2,3,3,.4");
     assertNotNull(num);
-    
+
     assertEquals(1233.4, num.valueOf());
 }
 
 function testNumberFloatInvalid() {
     var num = new INumber("1.A4");
     assertNotNull(num);
-    
+
     // just parse what you can and ignore the rest
     assertEquals(1.4, num.valueOf());
 }
@@ -136,28 +136,28 @@ function testNumberFloatInvalid() {
 function testNumberFloatStartsWithDecimal() {
     var num = new INumber(".4342");
     assertNotNull(num);
-    
+
     assertEquals(0.4342, num.valueOf());
 }
 
 function testNumberFloatStartsWithZero() {
     var num = new INumber("0.4342");
     assertNotNull(num);
-    
+
     assertEquals(0.4342, num.valueOf());
 }
 
 function testNumberFloatStartsWithDecimalNegative() {
     var num = new INumber("-.4342");
     assertNotNull(num);
-    
+
     assertEquals(-0.4342, num.valueOf());
 }
 
 function testNumberFloatStartsWithZeroNegative() {
     var num = new INumber("-0.4342");
     assertNotNull(num);
-    
+
     assertEquals(-0.4342, num.valueOf());
 }
 
@@ -165,77 +165,77 @@ function testNumberFloatStartsWithZeroNegative() {
 function testNumberInt() {
     var num = new INumber("123");
     assertNotNull(num);
-    
+
     assertEquals(123, num.valueOf());
 }
 
 function testNumberIntThousands() {
     var num = new INumber("123,456");
     assertNotNull(num);
-    
+
     assertEquals(123456, num.valueOf());
 }
 
 function testNumberInvalid() {
     var num = new INumber("123.234.234");
     assertNotNull(num);
-    
+
     assertEquals(123.234, num.valueOf());
 }
 
 function testNumberEmpty() {
     var num = new INumber("");
     assertNotNull(num);
-    
+
     assertEquals(0, num.valueOf());
 }
 
 function testNumberPercentage() {
     var num = new INumber("58.3%", {type: "percentage"});
     assertNotNull(num);
-    
+
     assertEquals(0.583, num.valueOf());
 }
 
 function testNumberPercentageNegative() {
     var num = new INumber("-58.3%", {type: "percentage"});
     assertNotNull(num);
-    
+
     assertEquals(-0.583, num.valueOf());
 }
 
 function testNumberPercentageNoTypeSpecified() {
     var num = new INumber("58.3%");
     assertNotNull(num);
-    
+
     assertEquals(58.3, num.valueOf());
 }
 
 function testNumberCurrencyValue() {
     var num = new INumber("$5.80", {type: "currency"});
     assertNotNull(num);
-    
+
     assertEquals(5.80, num.valueOf());
 }
 
 function testNumberCurrencyValueNegative1() {
     var num = new INumber("$-5.80", {type: "currency"});
     assertNotNull(num);
-    
+
     assertEquals(-5.80, num.valueOf());
 }
 
 function testNumberCurrencyValueNegative2() {
     var num = new INumber("-$5.80", {type: "currency"});
     assertNotNull(num);
-    
+
     assertEquals(-5.80, num.valueOf());
 }
 
 function testNumberCurrencyType() {
     var num = new INumber("$5.80", {type: "currency"});
     assertNotNull(num);
-    
+
     var cur = num.getCurrency();
     assertNotUndefined(cur);
     assertEquals("USD", cur.getCode());
@@ -244,7 +244,7 @@ function testNumberCurrencyType() {
 function testNumberCurrencyTypeUsingISOCode() {
     var num = new INumber("USD 5.80", {type: "currency"});
     assertNotNull(num);
-    
+
     var cur = num.getCurrency();
     assertNotUndefined(cur);
     assertEquals("USD", cur.getCode());
@@ -253,7 +253,7 @@ function testNumberCurrencyTypeUsingISOCode() {
 function testNumberCurrencyNotForLocale() {
     var num = new INumber("£5.80", {type: "currency"});
     assertNotNull(num);
-    
+
     var cur = num.getCurrency();
     assertNotUndefined(cur);
     assertEquals("GBP", cur.getCode());
@@ -262,7 +262,7 @@ function testNumberCurrencyNotForLocale() {
 function testNumberCurrencyForLocale() {
     var num = new INumber("£5.80", {locale: "ar-EG", type: "currency"});
     assertNotNull(num);
-    
+
     var cur = num.getCurrency();
     assertNotUndefined(cur);
     assertEquals("EGP", cur.getCode());
@@ -273,7 +273,7 @@ function testNumberFloatDE() {
     	locale: "de-DE"
     });
     assertNotNull(num);
-    
+
     assertEquals(3.4, num.valueOf());
 }
 
@@ -282,7 +282,7 @@ function testNumberFloatDENegative() {
     	locale: "de-DE"
     });
     assertNotNull(num);
-    
+
     assertEquals(-3.4, num.valueOf());
 }
 
@@ -291,7 +291,7 @@ function testNumberFloatDEThousands() {
     	locale: "de-DE"
     });
     assertNotNull(num);
-    
+
     assertEquals(1233.4, num.valueOf());
 }
 
@@ -300,7 +300,7 @@ function testNumberFloatDEThousandsNegative() {
     	locale: "de-DE"
     });
     assertNotNull(num);
-    
+
     assertEquals(-1233.4, num.valueOf());
 }
 
@@ -309,7 +309,7 @@ function testNumberFloatDEWithDashForZeros() {
     	locale: "de-DE"
     });
     assertNotNull(num);
-    
+
     assertEquals(3.0, num.valueOf());
 }
 
@@ -318,7 +318,7 @@ function testNumberFloatDEStartsWithDecimal() {
     	locale: "de-DE"
     });
     assertNotNull(num);
-    
+
     assertEquals(0.4342, num.valueOf());
 }
 
@@ -327,7 +327,7 @@ function testNumberFloatDEStartsWithZero() {
     	locale: "de-DE"
     });
     assertNotNull(num);
-    
+
     assertEquals(0.4342, num.valueOf());
 }
 
@@ -336,7 +336,7 @@ function testNumberFloatDEStartsWithDecimalNegative() {
     	locale: "de-DE"
     });
     assertNotNull(num);
-    
+
     assertEquals(-0.4342, num.valueOf());
 }
 
@@ -345,7 +345,7 @@ function testNumberFloatDEStartsWithZeroNegative() {
     	locale: "de-DE"
     });
     assertNotNull(num);
-    
+
     assertEquals(-0.4342, num.valueOf());
 }
 
@@ -354,7 +354,7 @@ function testNumberFloatDEStartsWithPeriodIgnore() {
     	locale: "de-DE"
     });
     assertNotNull(num);
-    
+
     assertEquals(4342.0, num.valueOf());
 }
 
@@ -363,7 +363,7 @@ function testNumberFloatDEWithMDashForZeros() {
     	locale: "de-DE"
     });
     assertNotNull(num);
-    
+
     assertEquals(3.0, num.valueOf());
 }
 
@@ -372,7 +372,7 @@ function testNumberIntDE() {
     	locale: "de-DE"
     });
     assertNotNull(num);
-    
+
     assertEquals(123, num.valueOf());
 }
 
@@ -381,7 +381,7 @@ function testNumberIntDEThousands() {
     	locale: "de-DE"
     });
     assertNotNull(num);
-    
+
     assertEquals(123456, num.valueOf());
 }
 
@@ -390,7 +390,7 @@ function testNumberInvalidDE() {
     	locale: "de-DE"
     });
     assertNotNull(num);
-    
+
     assertEquals(123.234, num.valueOf());
 }
 
@@ -399,7 +399,7 @@ function testNumberEmptyDE() {
     	locale: "de-DE"
     });
     assertNotNull(num);
-    
+
     assertEquals(0, num.valueOf());
 }
 
@@ -409,7 +409,7 @@ function testNumberPercentageDE() {
     	type: "percentage"
     });
     assertNotNull(num);
-    
+
     assertEquals(0.584, num.valueOf());
 }
 
@@ -418,7 +418,7 @@ function testNumberPercentageDENoTypeSpecified() {
     	locale: "de-DE"
     });
     assertNotNull(num);
-    
+
     assertEquals(58.4, num.valueOf());
 }
 
@@ -428,7 +428,7 @@ function testNumberCurrencyDEValue() {
     	type: "currency"
     });
     assertNotNull(num);
-    
+
     assertEquals(5.84, num.valueOf());
 }
 
@@ -438,7 +438,7 @@ function testNumberCurrencyDEType() {
     	type: "currency"
     });
     assertNotNull(num);
-    
+
     var cur = num.getCurrency();
     assertNotUndefined(cur);
     assertEquals("EUR", cur.getCode());
@@ -449,7 +449,7 @@ function testNumberCurrencyDENoTypeSpecified() {
     	locale: "de-DE"
     });
     assertNotNull(num);
-    
+
     assertUndefined(num.getCurrency());
 }
 
@@ -459,7 +459,7 @@ function testNumberCurrencyDETypeUsingISOCode() {
     	type: "currency"
     });
     assertNotNull(num);
-    
+
     var cur = num.getCurrency();
     assertNotUndefined(cur);
     assertEquals("EUR", cur.getCode());
@@ -467,19 +467,19 @@ function testNumberCurrencyDETypeUsingISOCode() {
 
 function testNumberZH() {
     var num = new INumber("12,3234", {
-    	locale: "zh-CN"	
+    	locale: "zh-CN"
     });
     assertNotNull(num);
-    
+
     assertEquals(123234.0, num.valueOf());
 }
 
 function testNumberZHDecimal() {
     var num = new INumber("12,3234.324", {
-    	locale: "zh-CN"	
+    	locale: "zh-CN"
     });
     assertNotNull(num);
-    
+
     assertEquals(123234.324, num.valueOf());
 }
 
@@ -491,7 +491,7 @@ function testNumberParseAsync() {
     	sync: false,
     	onLoad: function (num) {
     		assertNotNull(num);
-    	    
+
     	    assertEquals(-0.4342, num.valueOf());
     	    callbackCalled = true;
     	}
@@ -507,7 +507,7 @@ function testNumberParseAsyncCurrency() {
     	sync: false,
     	onLoad: function (num) {
     		assertNotNull(num);
-    	    
+
     	    var cur = num.getCurrency();
     	    assertNotUndefined(cur);
     	    assertEquals("EUR", cur.getCode());
@@ -523,7 +523,7 @@ function testNumberFloatAF() {
     	locale: "af-ZA"
     });
     assertNotNull(num);
-    
+
     assertEquals(3.4, num.valueOf());
 }
 
@@ -532,7 +532,7 @@ function testNumberFloatAFNegative() {
     	locale: "af-ZA"
     });
     assertNotNull(num);
-    
+
     assertEquals(-3.4, num.valueOf());
 }
 
@@ -541,7 +541,7 @@ function testNumberFloatAFThousands() {
     	locale: "af-ZA"
     });
     assertNotNull(num);
-    
+
     assertEquals(1233.4, num.valueOf());
 }
 
@@ -550,7 +550,7 @@ function testNumberFloatAFThousandsNegative() {
     	locale: "af-ZA"
     });
     assertNotNull(num);
-    
+
     assertEquals(-1233.4, num.valueOf());
 }
 
@@ -559,7 +559,7 @@ function testNumberFloatAFWithDashForZeros() {
     	locale: "af-ZA"
     });
     assertNotNull(num);
-    
+
     assertEquals(3.0, num.valueOf());
 }
 
@@ -568,7 +568,7 @@ function testNumberFloatAFStartsWithDecimal() {
     	locale: "af-ZA"
     });
     assertNotNull(num);
-    
+
     assertEquals(0.4342, num.valueOf());
 }
 
@@ -577,7 +577,7 @@ function testNumberFloatAFStartsWithZero() {
     	locale: "af-ZA"
     });
     assertNotNull(num);
-    
+
     assertEquals(0.4342, num.valueOf());
 }
 
@@ -586,7 +586,7 @@ function testNumberFloatAFStartsWithDecimalNegative() {
     	locale: "af-ZA"
     });
     assertNotNull(num);
-    
+
     assertEquals(-0.4342, num.valueOf());
 }
 
@@ -595,7 +595,7 @@ function testNumberFloatAFStartsWithZeroNegative() {
     	locale: "af-ZA"
     });
     assertNotNull(num);
-    
+
     assertEquals(-0.4342, num.valueOf());
 }
 
@@ -604,7 +604,7 @@ function testNumberFloatAFStartsWithPeriodIgnore() {
     	locale: "af-ZA"
     });
     assertNotNull(num);
-    
+
     assertEquals(4342.0, num.valueOf());
 }
 
@@ -613,7 +613,7 @@ function testNumberFloatAFWithMDashForZeros() {
     	locale: "af-ZA"
     });
     assertNotNull(num);
-    
+
     assertEquals(3.0, num.valueOf());
 }
 
@@ -622,7 +622,7 @@ function testNumberIntAF() {
     	locale: "af-ZA"
     });
     assertNotNull(num);
-    
+
     assertEquals(123, num.valueOf());
 }
 
@@ -631,7 +631,7 @@ function testNumberIntAFThousands() {
     	locale: "af-ZA"
     });
     assertNotNull(num);
-    
+
     assertEquals(123456, num.valueOf());
 }
 
@@ -640,7 +640,7 @@ function testNumberInvalidAF() {
     	locale: "af-ZA"
     });
     assertNotNull(num);
-    
+
     assertEquals(123.234, num.valueOf());
 }
 
@@ -649,7 +649,7 @@ function testNumberEmptyAF() {
     	locale: "af-ZA"
     });
     assertNotNull(num);
-    
+
     assertEquals(0, num.valueOf());
 }
 
@@ -659,7 +659,7 @@ function testNumberPercentageAF() {
     	type: "percentage"
     });
     assertNotNull(num);
-    
+
     assertEquals(0.584, num.valueOf());
 }
 
@@ -668,7 +668,7 @@ function testNumberPercentageAFNoTypeSpecified() {
     	locale: "af-ZA"
     });
     assertNotNull(num);
-    
+
     assertEquals(58.4, num.valueOf());
 }
 
@@ -678,7 +678,7 @@ function testNumberCurrencyAFValue() {
     	type: "currency"
     });
     assertNotNull(num);
-    
+
     assertEquals(5.84, num.valueOf());
 }
 
@@ -688,7 +688,7 @@ function testNumberCurrencyAFType() {
     	type: "currency"
     });
     assertNotNull(num);
-    
+
     var cur = num.getCurrency();
     assertNotUndefined(cur);
     assertEquals("ZAR", cur.getCode());
@@ -699,7 +699,7 @@ function testNumberCurrencyAFNoTypeSpecified() {
     	locale: "af-ZA"
     });
     assertNotNull(num);
-    
+
     assertUndefined(num.getCurrency());
 }
 
@@ -709,7 +709,7 @@ function testNumberCurrencyAFTypeUsingISOCode() {
     	type: "currency"
     });
     assertNotNull(num);
-    
+
     var cur = num.getCurrency();
     assertNotUndefined(cur);
     assertEquals("ZAR", cur.getCode());
@@ -721,7 +721,7 @@ function testNumberFloatNA() {
     	locale: "af-NA"
     });
     assertNotNull(num);
-    
+
     assertEquals(3.4, num.valueOf());
 }
 
@@ -730,7 +730,7 @@ function testNumberFloatNANegative() {
     	locale: "af-NA"
     });
     assertNotNull(num);
-    
+
     assertEquals(-3.4, num.valueOf());
 }
 
@@ -739,7 +739,7 @@ function testNumberFloatNAThousands() {
     	locale: "af-NA"
     });
     assertNotNull(num);
-    
+
     assertEquals(1233.4, num.valueOf());
 }
 
@@ -748,7 +748,7 @@ function testNumberFloatNAThousandsNegative() {
     	locale: "af-NA"
     });
     assertNotNull(num);
-    
+
     assertEquals(-1233.4, num.valueOf());
 }
 
@@ -757,7 +757,7 @@ function testNumberFloatNAWithDashForZeros() {
     	locale: "af-NA"
     });
     assertNotNull(num);
-    
+
     assertEquals(3.0, num.valueOf());
 }
 
@@ -766,7 +766,7 @@ function testNumberFloatNAStartsWithDecimal() {
     	locale: "af-NA"
     });
     assertNotNull(num);
-    
+
     assertEquals(0.4342, num.valueOf());
 }
 
@@ -775,7 +775,7 @@ function testNumberFloatNAStartsWithZero() {
     	locale: "af-NA"
     });
     assertNotNull(num);
-    
+
     assertEquals(0.4342, num.valueOf());
 }
 
@@ -784,7 +784,7 @@ function testNumberFloatNAStartsWithDecimalNegative() {
     	locale: "af-NA"
     });
     assertNotNull(num);
-    
+
     assertEquals(-0.4342, num.valueOf());
 }
 
@@ -793,7 +793,7 @@ function testNumberFloatNAStartsWithZeroNegative() {
     	locale: "af-NA"
     });
     assertNotNull(num);
-    
+
     assertEquals(-0.4342, num.valueOf());
 }
 
@@ -802,7 +802,7 @@ function testNumberFloatNAStartsWithPeriodIgnore() {
     	locale: "af-NA"
     });
     assertNotNull(num);
-    
+
     assertEquals(4342.0, num.valueOf());
 }
 
@@ -811,7 +811,7 @@ function testNumberFloatNAWithMDashForZeros() {
     	locale: "af-NA"
     });
     assertNotNull(num);
-    
+
     assertEquals(3.0, num.valueOf());
 }
 
@@ -820,7 +820,7 @@ function testNumberIntNA() {
     	locale: "af-NA"
     });
     assertNotNull(num);
-    
+
     assertEquals(123, num.valueOf());
 }
 
@@ -829,7 +829,7 @@ function testNumberIntNAThousands() {
     	locale: "af-NA"
     });
     assertNotNull(num);
-    
+
     assertEquals(123456, num.valueOf());
 }
 
@@ -838,7 +838,7 @@ function testNumberInvalidNA() {
     	locale: "af-NA"
     });
     assertNotNull(num);
-    
+
     assertEquals(123.234, num.valueOf());
 }
 
@@ -847,7 +847,7 @@ function testNumberEmptyNA() {
     	locale: "af-NA"
     });
     assertNotNull(num);
-    
+
     assertEquals(0, num.valueOf());
 }
 
@@ -857,7 +857,7 @@ function testNumberPercentageNA() {
     	type: "percentage"
     });
     assertNotNull(num);
-    
+
     assertEquals(0.584, num.valueOf());
 }
 
@@ -866,7 +866,7 @@ function testNumberPercentageNANoTypeSpecified() {
     	locale: "af-NA"
     });
     assertNotNull(num);
-    
+
     assertEquals(58.4, num.valueOf());
 }
 
@@ -876,7 +876,7 @@ function testNumberCurrencyNAValue() {
     	type: "currency"
     });
     assertNotNull(num);
-    
+
     assertEquals(5.84, num.valueOf());
 }
 
@@ -886,7 +886,7 @@ function testNumberCurrencyNAType() {
     	type: "currency"
     });
     assertNotNull(num);
-    
+
     var cur = num.getCurrency();
     assertNotUndefined(cur);
     assertEquals("NAD", cur.getCode());
@@ -897,7 +897,7 @@ function testNumberCurrencyNANoTypeSpecified() {
     	locale: "af-NA"
     });
     assertNotNull(num);
-    
+
     assertUndefined(num.getCurrency());
 }
 
@@ -907,7 +907,7 @@ function testNumberCurrencyNATypeUsingISOCode() {
     	type: "currency"
     });
     assertNotNull(num);
-    
+
     var cur = num.getCurrency();
     assertNotUndefined(cur);
     assertEquals("NAD", cur.getCode());
@@ -919,7 +919,7 @@ function testNumberFloat_ha_Latn_NG() {
     	locale: "ha-Latn-NG"
     });
     assertNotNull(num);
-    
+
     assertEquals(3.4, num.valueOf());
 }
 
@@ -928,7 +928,7 @@ function testNumberFloat_ha_Latn_NG_Negative() {
     	locale: "ha-Latn-NG"
     });
     assertNotNull(num);
-    
+
     assertEquals(-3.4, num.valueOf());
 }
 
@@ -937,7 +937,7 @@ function testNumberFloat_ha_Latn_NG_Thousands() {
     	locale: "ha-Latn-NG"
     });
     assertNotNull(num);
-    
+
     assertEquals(1233.4, num.valueOf());
 }
 
@@ -946,7 +946,7 @@ function testNumberFloat_ha_Latn_NG_ThousandsNegative() {
     	locale: "ha-Latn-NG"
     });
     assertNotNull(num);
-    
+
     assertEquals(-1233.4, num.valueOf());
 }
 
@@ -955,7 +955,7 @@ function testNumberFloat_ha_Latn_NG_WithDashForZeros() {
     	locale: "ha-Latn-NG"
     });
     assertNotNull(num);
-    
+
     assertEquals(3.0, num.valueOf());
 }
 
@@ -964,7 +964,7 @@ function testNumberFloat_ha_Latn_NG_StartsWithDecimal() {
     	locale: "ha-Latn-NG"
     });
     assertNotNull(num);
-    
+
     assertEquals(0.4342, num.valueOf());
 }
 
@@ -973,7 +973,7 @@ function testNumberFloat_ha_Latn_NG_StartsWithZero() {
     	locale: "ha-Latn-NG"
     });
     assertNotNull(num);
-    
+
     assertEquals(0.4342, num.valueOf());
 }
 
@@ -982,7 +982,7 @@ function testNumberFloat_ha_Latn_NG_StartsWithDecimalNegative() {
     	locale: "ha-Latn-NG"
     });
     assertNotNull(num);
-    
+
     assertEquals(-0.4342, num.valueOf());
 }
 
@@ -991,7 +991,7 @@ function testNumberFloat_ha_Latn_NG_StartsWithZeroNegative() {
     	locale: "ha-Latn-NG"
     });
     assertNotNull(num);
-    
+
     assertEquals(-0.4342, num.valueOf());
 }
 
@@ -1000,7 +1000,7 @@ function testNumberFloat_ha_Latn_NG_StartsWithPeriodIgnore() {
     	locale: "ha-Latn-NG"
     });
     assertNotNull(num);
-    
+
     assertEquals(4342.0, num.valueOf());
 }
 
@@ -1009,7 +1009,7 @@ function testNumberFloat_ha_Latn_NG_WithMDashForZeros() {
     	locale: "ha-Latn-NG"
     });
     assertNotNull(num);
-    
+
     assertEquals(3.0, num.valueOf());
 }
 
@@ -1018,7 +1018,7 @@ function testNumberInt_ha_Latn_NG_() {
     	locale: "ha-Latn-NG"
     });
     assertNotNull(num);
-    
+
     assertEquals(123, num.valueOf());
 }
 
@@ -1027,7 +1027,7 @@ function testNumberInt_ha_Latn_NG_Thousands() {
     	locale: "ha-Latn-NG"
     });
     assertNotNull(num);
-    
+
     assertEquals(123456, num.valueOf());
 }
 
@@ -1036,7 +1036,7 @@ function testNumberInvalid_ha_Latn_NG_() {
     	locale: "ha-Latn-NG"
     });
     assertNotNull(num);
-    
+
     assertEquals(123.234, num.valueOf());
 }
 
@@ -1045,7 +1045,7 @@ function testNumberEmpty_ha_Latn_NG_() {
     	locale: "ha-Latn-NG"
     });
     assertNotNull(num);
-    
+
     assertEquals(0, num.valueOf());
 }
 
@@ -1055,7 +1055,7 @@ function testNumberPercentage_ha_Latn_NG_() {
     	type: "percentage"
     });
     assertNotNull(num);
-    
+
     assertEquals(0.584, num.valueOf());
 }
 
@@ -1064,7 +1064,7 @@ function testNumberPercentage_ha_Latn_NG_NoTypeSpecified() {
     	locale: "ha-Latn-NG"
     });
     assertNotNull(num);
-    
+
     assertEquals(58.4, num.valueOf());
 }
 
@@ -1074,7 +1074,7 @@ function testNumberCurrency_ha_Latn_NG_Value() {
     	type: "currency"
     });
     assertNotNull(num);
-    
+
     assertEquals(5.84, num.valueOf());
 }
 
@@ -1084,7 +1084,7 @@ function testNumberCurrency_ha_Latn_NG_Type() {
     	type: "currency"
     });
     assertNotNull(num);
-    
+
     var cur = num.getCurrency();
     assertNotUndefined(cur);
     assertEquals("NGN", cur.getCode());
@@ -1095,7 +1095,7 @@ function testNumberCurrency_ha_Latn_NG_NoTypeSpecified() {
     	locale: "ha-Latn-NG"
     });
     assertNotNull(num);
-    
+
     assertUndefined(num.getCurrency());
 }
 
@@ -1105,7 +1105,7 @@ function testNumberCurrency_ha_Latn_NG_TypeUsingISOCode() {
     	type: "currency"
     });
     assertNotNull(num);
-    
+
     var cur = num.getCurrency();
     assertNotUndefined(cur);
     assertEquals("NGN", cur.getCode());
@@ -1117,7 +1117,7 @@ function testNumberFloat_or_IN() {
     	locale: "or-IN"
     });
     assertNotNull(num);
-    
+
     assertEquals(3.4, num.valueOf());
 }
 
@@ -1126,7 +1126,7 @@ function testNumberFloat_or_INNegative() {
     	locale: "or-IN"
     });
     assertNotNull(num);
-    
+
     assertEquals(-3.4, num.valueOf());
 }
 
@@ -1135,7 +1135,7 @@ function testNumberFloat_or_IN_Thousands() {
     	locale: "or-IN"
     });
     assertNotNull(num);
-    
+
     assertEquals(1233.4, num.valueOf());
 }
 
@@ -1144,7 +1144,7 @@ function testNumberFloat_or_IN_ThousandsNegative() {
     	locale: "or-IN"
     });
     assertNotNull(num);
-    
+
     assertEquals(-1233.4, num.valueOf());
 }
 
@@ -1153,7 +1153,7 @@ function testNumberFloat_or_IN_WithDashForZeros() {
     	locale: "or-IN"
     });
     assertNotNull(num);
-    
+
     assertEquals(3.0, num.valueOf());
 }
 
@@ -1162,7 +1162,7 @@ function testNumberFloat_or_IN_StartsWithDecimal() {
     	locale: "or-IN"
     });
     assertNotNull(num);
-    
+
     assertEquals(0.4342, num.valueOf());
 }
 
@@ -1171,7 +1171,7 @@ function testNumberFloat_or_IN_StartsWithZero() {
     	locale: "or-IN"
     });
     assertNotNull(num);
-    
+
     assertEquals(0.4342, num.valueOf());
 }
 
@@ -1180,7 +1180,7 @@ function testNumberFloat_or_IN_StartsWithDecimalNegative() {
     	locale: "or-IN"
     });
     assertNotNull(num);
-    
+
     assertEquals(-0.4342, num.valueOf());
 }
 
@@ -1189,7 +1189,7 @@ function testNumberFloat_or_IN_StartsWithZeroNegative() {
     	locale: "or-IN"
     });
     assertNotNull(num);
-    
+
     assertEquals(-0.4342, num.valueOf());
 }
 
@@ -1198,7 +1198,7 @@ function testNumberFloat_or_IN_StartsWithPeriodIgnore() {
     	locale: "or-IN"
     });
     assertNotNull(num);
-    
+
     assertEquals(4342.0, num.valueOf());
 }
 
@@ -1207,7 +1207,7 @@ function testNumberFloat_or_IN_WithMDashForZeros() {
     	locale: "or-IN"
     });
     assertNotNull(num);
-    
+
     assertEquals(3.0, num.valueOf());
 }
 
@@ -1216,7 +1216,7 @@ function testNumberInt_or_IN_() {
     	locale: "or-IN"
     });
     assertNotNull(num);
-    
+
     assertEquals(123, num.valueOf());
 }
 
@@ -1225,7 +1225,7 @@ function testNumberInt_or_IN_Thousands() {
     	locale: "or-IN"
     });
     assertNotNull(num);
-    
+
     assertEquals(123456, num.valueOf());
 }
 
@@ -1234,7 +1234,7 @@ function testNumberInvalid_or_IN_() {
     	locale: "or-IN"
     });
     assertNotNull(num);
-    
+
     assertEquals(123.234, num.valueOf());
 }
 
@@ -1243,7 +1243,7 @@ function testNumberEmpty_or_IN_() {
     	locale: "or-IN"
     });
     assertNotNull(num);
-    
+
     assertEquals(0, num.valueOf());
 }
 
@@ -1253,7 +1253,7 @@ function testNumberPercentage_or_IN_() {
     	type: "percentage"
     });
     assertNotNull(num);
-    
+
     assertEquals(0.584, num.valueOf());
 }
 
@@ -1262,7 +1262,7 @@ function testNumberPercentage_or_IN_NoTypeSpecified() {
     	locale: "or-IN"
     });
     assertNotNull(num);
-    
+
     assertEquals(58.4, num.valueOf());
 }
 
@@ -1272,7 +1272,7 @@ function testNumberCurrency_or_IN_Value() {
     	type: "currency"
     });
     assertNotNull(num);
-    
+
     assertEquals(5.84, num.valueOf());
 }
 
@@ -1282,7 +1282,7 @@ function testNumberCurrency_or_IN_Type() {
     	type: "currency"
     });
     assertNotNull(num);
-    
+
     var cur = num.getCurrency();
     assertNotUndefined(cur);
     assertEquals("INR", cur.getCode());
@@ -1293,7 +1293,7 @@ function testNumberCurrency_or_IN_NoTypeSpecified() {
     	locale: "or-IN"
     });
     assertNotNull(num);
-    
+
     assertUndefined(num.getCurrency());
 }
 
@@ -1303,7 +1303,7 @@ function testNumberCurrency_or_IN_TypeUsingISOCode() {
     	type: "currency"
     });
     assertNotNull(num);
-    
+
     var cur = num.getCurrency();
     assertNotUndefined(cur);
     assertEquals("INR", cur.getCode());
@@ -1314,7 +1314,7 @@ function testNumberFloatET() {
     	locale: "am-ET"
     });
     assertNotNull(num);
-    
+
     assertEquals(3.4, num.valueOf());
 }
 
@@ -1323,7 +1323,7 @@ function testNumberFloatETNegative() {
     	locale: "am-ET"
     });
     assertNotNull(num);
-    
+
     assertEquals(-3.4, num.valueOf());
 }
 
@@ -1332,7 +1332,7 @@ function testNumberFloatETThousands() {
     	locale: "am-ET"
     });
     assertNotNull(num);
-    
+
     assertEquals(1.233, num.valueOf());
 }
 
@@ -1341,7 +1341,7 @@ function testNumberFloatETThousandsNegative() {
     	locale: "am-ET"
     });
     assertNotNull(num);
-    
+
     assertEquals(-1.2334, num.valueOf());
 }
 
@@ -1350,7 +1350,7 @@ function testNumberFloatETWithDashForZeros() {
     	locale: "am-ET"
     });
     assertNotNull(num);
-    
+
     assertEquals(3.0, num.valueOf());
 }
 
@@ -1359,7 +1359,7 @@ function testNumberFloatETStartsWithDecimal() {
     	locale: "am-ET"
     });
     assertNotNull(num);
-    
+
     assertEquals(0.4342, num.valueOf());
 }
 
@@ -1368,7 +1368,7 @@ function testNumberFloatETStartsWithZero() {
     	locale: "am-ET"
     });
     assertNotNull(num);
-    
+
     assertEquals(0.4342, num.valueOf());
 }
 
@@ -1377,7 +1377,7 @@ function testNumberFloatETStartsWithDecimalNegative() {
     	locale: "am-ET"
     });
     assertNotNull(num);
-    
+
     assertEquals(-0.4342, num.valueOf());
 }
 
@@ -1386,7 +1386,7 @@ function testNumberFloatETStartsWithZeroNegative() {
     	locale: "am-ET"
     });
     assertNotNull(num);
-    
+
     assertEquals(-0.4342, num.valueOf());
 }
 
@@ -1395,7 +1395,7 @@ function testNumberFloatETStartsWithPeriodIgnore() {
     	locale: "am-ET"
     });
     assertNotNull(num);
-    
+
     assertEquals(4342.0, num.valueOf());
 }
 
@@ -1404,7 +1404,7 @@ function testNumberFloatETWithMDashForZeros() {
     	locale: "am-ET"
     });
     assertNotNull(num);
-    
+
     assertEquals(3.0, num.valueOf());
 }
 
@@ -1413,7 +1413,7 @@ function testNumberIntET() {
     	locale: "am-ET"
     });
     assertNotNull(num);
-    
+
     assertEquals(123, num.valueOf());
 }
 
@@ -1422,7 +1422,7 @@ function testNumberIntETThousands() {
     	locale: "am-ET"
     });
     assertNotNull(num);
-    
+
     assertEquals(123456, num.valueOf());
 }
 
@@ -1431,7 +1431,7 @@ function testNumberInvalidET() {
     	locale: "am-ET"
     });
     assertNotNull(num);
-    
+
     assertEquals(123.234, num.valueOf());
 }
 
@@ -1440,7 +1440,7 @@ function testNumberEmptyET() {
     	locale: "am-ET"
     });
     assertNotNull(num);
-    
+
     assertEquals(0, num.valueOf());
 }
 
@@ -1450,7 +1450,7 @@ function testNumberPercentageET() {
     	type: "percentage"
     });
     assertNotNull(num);
-    
+
     assertEquals(0.584, num.valueOf());
 }
 
@@ -1459,7 +1459,7 @@ function testNumberPercentageETNoTypeSpecified() {
     	locale: "am-ET"
     });
     assertNotNull(num);
-    
+
     assertEquals(58.4, num.valueOf());
 }
 
@@ -1469,7 +1469,7 @@ function testNumberCurrencyETValue() {
     	type: "currency"
     });
     assertNotNull(num);
-    
+
     assertEquals(5.84, num.valueOf());
 }
 
@@ -1479,7 +1479,7 @@ function testNumberCurrencyETType() {
     	type: "currency"
     });
     assertNotNull(num);
-    
+
     var cur = num.getCurrency();
     assertNotUndefined(cur);
     assertEquals("ETB", cur.getCode());
@@ -1490,7 +1490,7 @@ function testNumberCurrencyETNoTypeSpecified() {
     	locale: "am-ET"
     });
     assertNotNull(num);
-    
+
     assertUndefined(num.getCurrency());
 }
 
@@ -1500,7 +1500,7 @@ function testNumberCurrencyETTypeUsingISOCode() {
     	type: "currency"
     });
     assertNotNull(num);
-    
+
     var cur = num.getCurrency();
     assertNotUndefined(cur);
     assertEquals("ETB", cur.getCode());
