@@ -1,7 +1,7 @@
 /*
  * teststrings.js - test the String object
  *
- * Copyright © 2012-2015, JEDLSoft
+ * Copyright © 2012-2016, JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ var Locale = require("./../lib/Locale.js");
 var IString = require("./../lib/IString.js");
 
 function setUp() {
-	ilib.locale = undefined;
+    ilib.locale = undefined;
 }
 
 function testStringConstructor() {
@@ -705,7 +705,7 @@ function testForEachCodePointSimple() {
     var i = 0;
 
     str.forEachCodePoint(function(ch) {
-    	assertEquals(expected[i++], ch);
+        assertEquals(expected[i++], ch);
     });
 }
 
@@ -716,7 +716,7 @@ function testForEachCodePointComplex() {
     var i = 0;
 
     str.forEachCodePoint(function(ch) {
-    	assertEquals(expected[i++], ch);
+        assertEquals(expected[i++], ch);
     });
 }
 
@@ -724,8 +724,8 @@ function testForEachCodePointEmpty() {
     var str = new IString("");
 
     str.forEachCodePoint(function(ch) {
-    	// should never call this callback
-    	fail();
+        // should never call this callback
+        fail();
     });
 }
 
@@ -776,7 +776,7 @@ function testForEachSimple() {
     var i = 0;
 
     str.forEach(function(ch) {
-    	assertEquals(expected[i++], ch);
+        assertEquals(expected[i++], ch);
     });
 }
 
@@ -787,7 +787,7 @@ function testForEachComplex() {
     var i = 0;
 
     str.forEach(function(ch) {
-    	assertEquals(expected[i++], ch);
+        assertEquals(expected[i++], ch);
     });
 }
 
@@ -795,8 +795,8 @@ function testForEachEmpty() {
     var str = new IString("");
 
     str.forEach(function(ch) {
-    	// should never call this callback
-    	fail();
+        // should never call this callback
+        fail();
     });
 }
 
@@ -870,847 +870,847 @@ function testCodePointAtNegWithSurrogates() {
 }
 
 function testRuleGetValueN() {
-	var rule = {
-		n: []
-	};
+    var rule = {
+        n: []
+    };
 
-	assertRoughlyEquals(8.2, IString._fncs.getValue(rule, 8.2), 0.01);
+    assertRoughlyEquals(8.2, IString._fncs.getValue(rule, 8.2), 0.01);
 }
 
 function testRuleGetValueIsTrue() {
-	var rule = {
-		is: [
-			"n",
-			2
-		]
-	};
+    var rule = {
+        is: [
+            "n",
+            2
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 2));
+    assertTrue(IString._fncs.getValue(rule, 2));
 }
 
 function testRuleGetValueIsFalse() {
-	var rule = {
-		is: [
-			"n",
-			2
-		]
-	};
+    var rule = {
+        is: [
+            "n",
+            2
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 3));
+    assertFalse(IString._fncs.getValue(rule, 3));
 }
 
 function testRuleGetValueIsNotTrue() {
-	var rule = {
-		isnot: [
-			"n",
-			2
-		]
-	};
+    var rule = {
+        isnot: [
+            "n",
+            2
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 3));
+    assertTrue(IString._fncs.getValue(rule, 3));
 }
 
 function testRuleGetValueIsNotFalse() {
-	var rule = {
-		isnot: [
-			"n",
-			2
-		]
-	};
+    var rule = {
+        isnot: [
+            "n",
+            2
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 2));
+    assertFalse(IString._fncs.getValue(rule, 2));
 }
 
 function testRuleGetValueInRangeTrueStart() {
-	var rule = {
-		inrange: [
-		    "n",
-		    [[0,2]]
-		]
-	};
+    var rule = {
+        inrange: [
+            "n",
+            [[0,2]]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 0));
+    assertTrue(IString._fncs.getValue(rule, 0));
 }
 
 function testRuleGetValueInRangeTrueEnd() {
-	var rule = {
-		inrange: [
-		    "n",
-		    [[0,2]]
-		]
-	};
+    var rule = {
+        inrange: [
+            "n",
+            [[0,2]]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 2));
+    assertTrue(IString._fncs.getValue(rule, 2));
 }
 
 function testRuleGetValueInRangeTrueBetween() {
-	var rule = {
-		inrange: [
-		    "n",
-		    [[0,2]]
-		]
-	};
+    var rule = {
+        inrange: [
+            "n",
+            [[0,2]]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 1));
+    assertTrue(IString._fncs.getValue(rule, 1));
 }
 
 function testRuleGetValueInRangeFalse() {
-	var rule = {
-		inrange: [
-		    "n",
-		    [[0,2]]
-		]
-	};
+    var rule = {
+        inrange: [
+            "n",
+            [[0,2]]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 3));
+    assertFalse(IString._fncs.getValue(rule, 3));
 }
 
 function testRuleGetValueInRangeFalseNotInteger() {
-	var rule = {
-		inrange: [
-			"n",
-			[[0,2]]
-		]
-	};
+    var rule = {
+        inrange: [
+            "n",
+            [[0,2]]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 0.5));
+    assertTrue(IString._fncs.getValue(rule, 0.5));
 }
 
 
 function testRuleGetValueInRangeFalseIntegersAfter() {
-	var rule = {
-		inrange: [
-		    "n",
-		    [0,2]
-		]
-	};
+    var rule = {
+        inrange: [
+            "n",
+            [0,2]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 4));
+    assertFalse(IString._fncs.getValue(rule, 4));
 }
 
 function testRuleGetValueInRangeFalseIntegersBefore() {
-	var rule = {
-		inrange: [
-		    "n",
-		    [1,3]
-		]
-	};
+    var rule = {
+        inrange: [
+            "n",
+            [1,3]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 0));
+    assertFalse(IString._fncs.getValue(rule, 0));
 }
 
 function testRuleGetValueInRangeFalseIntegersBetween() {
-	var rule = {
-		inrange: [
-		    "n",
-		    [0,2]
-		]
-	};
+    var rule = {
+        inrange: [
+            "n",
+            [0,2]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 1));
+    assertTrue(IString._fncs.getValue(rule, 1));
 }
 
 function testRuleGetValueInRangeIntegersTrue() {
-	var rule = {
-		inrange: [
-		    "n",
-		    [0,2]
-		]
-	};
+    var rule = {
+        inrange: [
+            "n",
+            [0,2]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 2));
+    assertTrue(IString._fncs.getValue(rule, 2));
 }
 
 function testRuleGetValueInRangeIntegersTrueNotInteger() {
-	var rule = {
-		inrange: [
-		    "n",
-		    [0,2]
-		]
-	};
+    var rule = {
+        inrange: [
+            "n",
+            [0,2]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 0.5));
+    assertTrue(IString._fncs.getValue(rule, 0.5));
 }
 
 function testRuleGetValueInRangeIntegersTrueMany() {
-	var rule = {
-		inrange: [
-		    "n",
-		    [0,2,4,6,8]
-		]
-	};
+    var rule = {
+        inrange: [
+            "n",
+            [0,2,4,6,8]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 6));
+    assertTrue(IString._fncs.getValue(rule, 6));
 }
 
 
 function testRuleGetValueInRangeComplexTrue1() {
-	var rule = {
-		inrange: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        inrange: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 0));
+    assertTrue(IString._fncs.getValue(rule, 0));
 }
 
 function testRuleGetValueInRangeComplexTrue2() {
-	var rule = {
-		inrange: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        inrange: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 2));
+    assertTrue(IString._fncs.getValue(rule, 2));
 }
 
 function testRuleGetValueInRangeComplexTrue3() {
-	var rule = {
-		inrange: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        inrange: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 3));
+    assertTrue(IString._fncs.getValue(rule, 3));
 }
 
 function testRuleGetValueInRangeComplexTrue4() {
-	var rule = {
-		inrange: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        inrange: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 4));
+    assertTrue(IString._fncs.getValue(rule, 4));
 }
 
 function testRuleGetValueInRangeComplexTrue5() {
-	var rule = {
-		inrange: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        inrange: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 8));
+    assertTrue(IString._fncs.getValue(rule, 8));
 }
 
 function testRuleGetValueInRangeComplexTrue6() {
-	var rule = {
-		inrange: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        inrange: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 9));
+    assertTrue(IString._fncs.getValue(rule, 9));
 }
 
 function testRuleGetValueInRangeComplexFalse1() {
-	var rule = {
-		inrange: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        inrange: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 1));
+    assertFalse(IString._fncs.getValue(rule, 1));
 }
 
 function testRuleGetValueInRangeComplexFalse2() {
-	var rule = {
-		inrange: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        inrange: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 5));
+    assertFalse(IString._fncs.getValue(rule, 5));
 }
 
 function testRuleGetValueInRangeComplexFalse3() {
-	var rule = {
-		inrange: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        inrange: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 10));
+    assertFalse(IString._fncs.getValue(rule, 10));
 }
 
 function testRuleGetValueNotInRangeTrueStart() {
-	var rule = {
-		notin: [
-		    "n",
-		    [[0,2]]
-		]
-	};
+    var rule = {
+        notin: [
+            "n",
+            [[0,2]]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 0));
+    assertFalse(IString._fncs.getValue(rule, 0));
 }
 
 function testRuleGetValueNotInRangeTrueEnd() {
-	var rule = {
-		notin: [
-		    "n",
-		    [[0,2]]
-		]
-	};
+    var rule = {
+        notin: [
+            "n",
+            [[0,2]]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 2));
+    assertFalse(IString._fncs.getValue(rule, 2));
 }
 
 function testRuleGetValueNotInRangeTrueBetween() {
-	var rule = {
-		notin: [
-		    "n",
-		    [[0,2]]
-		]
-	};
+    var rule = {
+        notin: [
+            "n",
+            [[0,2]]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 1));
+    assertFalse(IString._fncs.getValue(rule, 1));
 }
 
 function testRuleGetValueNotInRangeFalse() {
-	var rule = {
-		notin: [
-		    "n",
-		    [[0,2]]
-		]
-	};
+    var rule = {
+        notin: [
+            "n",
+            [[0,2]]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 3));
+    assertTrue(IString._fncs.getValue(rule, 3));
 }
 
 function testRuleGetValueNotInRangeFalseNotInteger() {
-	var rule = {
-		notin: [
-			"n",
-			[[0,2]]
-		]
-	};
+    var rule = {
+        notin: [
+            "n",
+            [[0,2]]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 0.5));
+    assertFalse(IString._fncs.getValue(rule, 0.5));
 }
 
 
 function testRuleGetValueNotInRangeFalseIntegersAfter() {
-	var rule = {
-		notin: [
-		    "n",
-		    [0,2]
-		]
-	};
+    var rule = {
+        notin: [
+            "n",
+            [0,2]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 4));
+    assertTrue(IString._fncs.getValue(rule, 4));
 }
 
 function testRuleGetValueNotInRangeFalseIntegersBefore() {
-	var rule = {
-		notin: [
-		    "n",
-		    [1,3]
-		]
-	};
+    var rule = {
+        notin: [
+            "n",
+            [1,3]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 0));
+    assertTrue(IString._fncs.getValue(rule, 0));
 }
 
 function testRuleGetValueNotInRangeFalseIntegersBetween() {
-	var rule = {
-		notin: [
-		    "n",
-		    [0,2]
-		]
-	};
+    var rule = {
+        notin: [
+            "n",
+            [0,2]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 1));
+    assertFalse(IString._fncs.getValue(rule, 1));
 }
 
 function testRuleGetValueNotInRangeIntegersTrue() {
-	var rule = {
-		notin: [
-		    "n",
-		    [0,2]
-		]
-	};
+    var rule = {
+        notin: [
+            "n",
+            [0,2]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 2));
+    assertFalse(IString._fncs.getValue(rule, 2));
 }
 
 function testRuleGetValueNotInRangeIntegersFalseNotInteger() {
-	var rule = {
-		notin: [
-		    "n",
-		    [0,2]
-		]
-	};
+    var rule = {
+        notin: [
+            "n",
+            [0,2]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 0.5));
+    assertFalse(IString._fncs.getValue(rule, 0.5));
 }
 
 function testRuleGetValueNotInRangeIntegersTrueMany() {
-	var rule = {
-		notin: [
-		    "n",
-		    [0,2,4,6,8]
-		]
-	};
+    var rule = {
+        notin: [
+            "n",
+            [0,2,4,6,8]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 6));
+    assertFalse(IString._fncs.getValue(rule, 6));
 }
 
 
 function testRuleGetValueNotInRangeComplexTrue1() {
-	var rule = {
-		notin: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        notin: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 0));
+    assertFalse(IString._fncs.getValue(rule, 0));
 }
 
 function testRuleGetValueNotInRangeComplexTrue2() {
-	var rule = {
-		notin: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        notin: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 2));
+    assertFalse(IString._fncs.getValue(rule, 2));
 }
 
 function testRuleGetValueNotInRangeComplexTrue3() {
-	var rule = {
-		notin: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        notin: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 3));
+    assertFalse(IString._fncs.getValue(rule, 3));
 }
 
 function testRuleGetValueNotInRangeComplexTrue4() {
-	var rule = {
-		notin: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        notin: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 4));
+    assertFalse(IString._fncs.getValue(rule, 4));
 }
 
 function testRuleGetValueNotInRangeComplexTrue5() {
-	var rule = {
-		notin: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        notin: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 8));
+    assertFalse(IString._fncs.getValue(rule, 8));
 }
 
 function testRuleGetValueNotInRangeComplexTrue6() {
-	var rule = {
-		notin: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        notin: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 9));
+    assertFalse(IString._fncs.getValue(rule, 9));
 }
 
 function testRuleGetValueNotInRangeComplexFalse1() {
-	var rule = {
-		notin: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        notin: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 1));
+    assertTrue(IString._fncs.getValue(rule, 1));
 }
 
 function testRuleGetValueNotInRangeComplexFalse2() {
-	var rule = {
-		notin: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        notin: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 5));
+    assertTrue(IString._fncs.getValue(rule, 5));
 }
 
 function testRuleGetValueNotInRangeComplexFalse3() {
-	var rule = {
-		notin: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        notin: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 10));
+    assertTrue(IString._fncs.getValue(rule, 10));
 }
 
 function testRuleGetValueWithinTrueStart() {
-	var rule = {
-		within: [
-		    "n",
-		    [[0,2]]
-		]
-	};
+    var rule = {
+        within: [
+            "n",
+            [[0,2]]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 0));
+    assertTrue(IString._fncs.getValue(rule, 0));
 }
 
 function testRuleGetValueWithinTrueEnd() {
-	var rule = {
-		within: [
-		    "n",
-		    [[0,2]]
-		]
-	};
+    var rule = {
+        within: [
+            "n",
+            [[0,2]]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 2));
+    assertTrue(IString._fncs.getValue(rule, 2));
 }
 
 function testRuleGetValueWithinTrueBetween() {
-	var rule = {
-		within: [
-		    "n",
-		    [[0,2]]
-		]
-	};
+    var rule = {
+        within: [
+            "n",
+            [[0,2]]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 1));
+    assertTrue(IString._fncs.getValue(rule, 1));
 }
 
 function testRuleGetValueWithinFalse() {
-	var rule = {
-		within: [
-		    "n",
-		    [[0,2]]
-		]
-	};
+    var rule = {
+        within: [
+            "n",
+            [[0,2]]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 3));
+    assertFalse(IString._fncs.getValue(rule, 3));
 }
 
 function testRuleGetValueWithinTrueNotInteger() {
-	var rule = {
-		within: [
-			"n",
-			[[0,2]]
-		]
-	};
+    var rule = {
+        within: [
+            "n",
+            [[0,2]]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 0.5));
+    assertTrue(IString._fncs.getValue(rule, 0.5));
 }
 
 
 function testRuleGetValueWithinFalseAfter() {
-	var rule = {
-		within: [
-		    "n",
-		    [0,2]
-		]
-	};
+    var rule = {
+        within: [
+            "n",
+            [0,2]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 2.1));
+    assertFalse(IString._fncs.getValue(rule, 2.1));
 }
 
 function testRuleGetValueWithinFalseBefore() {
-	var rule = {
-		within: [
-		    "n",
-		    [1,3]
-		]
-	};
+    var rule = {
+        within: [
+            "n",
+            [1,3]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 0.9));
+    assertFalse(IString._fncs.getValue(rule, 0.9));
 }
 
 function testRuleGetValueWithinFalseBetween() {
-	var rule = {
-		within: [
-		    "n",
-		    [0,2]
-		]
-	};
+    var rule = {
+        within: [
+            "n",
+            [0,2]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 1.876));
+    assertTrue(IString._fncs.getValue(rule, 1.876));
 }
 
 function testRuleGetValueWithinITrue() {
-	var rule = {
-		within: [
-		    "n",
-		    [0,2]
-		]
-	};
+    var rule = {
+        within: [
+            "n",
+            [0,2]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 2));
+    assertTrue(IString._fncs.getValue(rule, 2));
 }
 
 function testRuleGetValueWithinIntegersTrueNotInteger() {
-	var rule = {
-		within: [
-		    "n",
-		    [0,2]
-		]
-	};
+    var rule = {
+        within: [
+            "n",
+            [0,2]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 0.5));
+    assertTrue(IString._fncs.getValue(rule, 0.5));
 }
 
 function testRuleGetValueWithinIntegersTrueMany() {
-	var rule = {
-		within: [
-		    "n",
-		    [0,2,4,6,8]
-		]
-	};
+    var rule = {
+        within: [
+            "n",
+            [0,2,4,6,8]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 6));
+    assertTrue(IString._fncs.getValue(rule, 6));
 }
 
 
 function testRuleGetValueWithinComplexTrue1() {
-	var rule = {
-		within: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        within: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 0));
+    assertTrue(IString._fncs.getValue(rule, 0));
 }
 
 function testRuleGetValueWithinComplexTrue2() {
-	var rule = {
-		within: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        within: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 2.8));
+    assertTrue(IString._fncs.getValue(rule, 2.8));
 }
 
 function testRuleGetValueWithinComplexTrue3() {
-	var rule = {
-		within: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        within: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 3));
+    assertTrue(IString._fncs.getValue(rule, 3));
 }
 
 function testRuleGetValueWithinComplexTrue4() {
-	var rule = {
-		within: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        within: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 4));
+    assertTrue(IString._fncs.getValue(rule, 4));
 }
 
 function testRuleGetValueWithinComplexTrue5() {
-	var rule = {
-		within: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        within: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 8));
+    assertTrue(IString._fncs.getValue(rule, 8));
 }
 
 function testRuleGetValueWithinComplexTrue6() {
-	var rule = {
-		within: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        within: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 9));
+    assertTrue(IString._fncs.getValue(rule, 9));
 }
 
 function testRuleGetValueWithinComplexFalse1() {
-	var rule = {
-		within: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        within: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 1));
+    assertFalse(IString._fncs.getValue(rule, 1));
 }
 
 function testRuleGetValueWithinComplexFalse2() {
-	var rule = {
-		within: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        within: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 5));
+    assertFalse(IString._fncs.getValue(rule, 5));
 }
 
 function testRuleGetValueWithinComplexFalse3() {
-	var rule = {
-		within: [
-		    "n",
-		    [0,[2,4],8,9]
-		]
-	};
+    var rule = {
+        within: [
+            "n",
+            [0,[2,4],8,9]
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 10));
+    assertFalse(IString._fncs.getValue(rule, 10));
 }
 
 function testRuleGetValueMod() {
-	var rule = {
-		mod: [
-		    "n",
-		    6
-		]
-	};
+    var rule = {
+        mod: [
+            "n",
+            6
+        ]
+    };
 
-	assertEquals(4, IString._fncs.getValue(rule, 10));
+    assertEquals(4, IString._fncs.getValue(rule, 10));
 }
 
 function testRuleGetValueModNonInteger() {
-	var rule = {
-		mod: [
-		    "n",
-		    6
-		]
-	};
+    var rule = {
+        mod: [
+            "n",
+            6
+        ]
+    };
 
-	assertRoughlyEquals(2.2, IString._fncs.getValue(rule, 8.2), 0.01);
+    assertRoughlyEquals(2.2, IString._fncs.getValue(rule, 8.2), 0.01);
 }
 
 function testRuleGetValueModNegative() {
-	var rule = {
-		mod: [
-		    "n",
-		    6
-		]
-	};
+    var rule = {
+        mod: [
+            "n",
+            6
+        ]
+    };
 
-	assertRoughlyEquals(1, IString._fncs.getValue(rule, -11), 0.01);
+    assertRoughlyEquals(1, IString._fncs.getValue(rule, -11), 0.01);
 }
 
 function testRuleGetValueOrFalseFalse() {
-	var rule = {
-		or: [
-		    false,
-		    false
-		]
-	};
+    var rule = {
+        or: [
+            false,
+            false
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 11));
+    assertFalse(IString._fncs.getValue(rule, 11));
 }
 
 function testRuleGetValueOrFalseTrue() {
-	var rule = {
-		or: [
-		    false,
-		    true
-		]
-	};
+    var rule = {
+        or: [
+            false,
+            true
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 11));
+    assertTrue(IString._fncs.getValue(rule, 11));
 }
 
 function testRuleGetValueOrTrueFalse() {
-	var rule = {
-		or: [
-		    true,
-		    false
-		]
-	};
+    var rule = {
+        or: [
+            true,
+            false
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 11));
+    assertTrue(IString._fncs.getValue(rule, 11));
 }
 
 function testRuleGetValueOrTrueTrue() {
-	var rule = {
-		or: [
-		    true,
-		    true
-		]
-	};
+    var rule = {
+        or: [
+            true,
+            true
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 11));
+    assertTrue(IString._fncs.getValue(rule, 11));
 }
 
 function testRuleGetValueAndFalseFalse() {
-	var rule = {
-		and: [
-		    false,
-		    false
-		]
-	};
+    var rule = {
+        and: [
+            false,
+            false
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 11));
+    assertFalse(IString._fncs.getValue(rule, 11));
 }
 
 function testRuleGetValueAndFalseTrue() {
-	var rule = {
-		and: [
-		    false,
-		    true
-		]
-	};
+    var rule = {
+        and: [
+            false,
+            true
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 11));
+    assertFalse(IString._fncs.getValue(rule, 11));
 }
 
 function testRuleGetValueAndTrueFalse() {
-	var rule = {
-		and: [
-		    true,
-		    false
-		]
-	};
+    var rule = {
+        and: [
+            true,
+            false
+        ]
+    };
 
-	assertFalse(IString._fncs.getValue(rule, 11));
+    assertFalse(IString._fncs.getValue(rule, 11));
 }
 
 function testRuleGetValueAndTrueTrue() {
-	var rule = {
-		and: [
-		    true,
-		    true
-		]
-	};
+    var rule = {
+        and: [
+            true,
+            true
+        ]
+    };
 
-	assertTrue(IString._fncs.getValue(rule, 11));
+    assertTrue(IString._fncs.getValue(rule, 11));
 }
 
 function testRuleComplex1() {
-	var rule = {
-		"and": [
+    var rule = {
+        "and": [
             {
                 "inrange": [
                     {
@@ -1723,30 +1723,30 @@ function testRuleComplex1() {
                 ]
             },
             {
-            	"notin": [
-        	        {
-        	        	"mod": [
-    	        	        "n",
-    	        	        100
-        	        	]
-        	        },
-        	        [[12,14]]
-            	]
+                "notin": [
+                    {
+                        "mod": [
+                            "n",
+                            100
+                        ]
+                    },
+                    [[12,14]]
+                ]
             }
         ]
     };
 
-	assertTrue(IString._fncs.getValue(rule, 3));
-	assertFalse(IString._fncs.getValue(rule, 13));
-	assertTrue(IString._fncs.getValue(rule, 23));
-	assertTrue(IString._fncs.getValue(rule, 103));
-	assertFalse(IString._fncs.getValue(rule, 113));
-	assertTrue(IString._fncs.getValue(rule, 123));
+    assertTrue(IString._fncs.getValue(rule, 3));
+    assertFalse(IString._fncs.getValue(rule, 13));
+    assertTrue(IString._fncs.getValue(rule, 23));
+    assertTrue(IString._fncs.getValue(rule, 103));
+    assertFalse(IString._fncs.getValue(rule, 113));
+    assertTrue(IString._fncs.getValue(rule, 123));
 }
 
 function testRuleComplex2() {
-	var rule = {
-		"and": [
+    var rule = {
+        "and": [
             {
                 "inrange": [
                     {
@@ -1759,30 +1759,30 @@ function testRuleComplex2() {
                 ]
             },
             {
-            	"notin": [
-        	        {
-        	        	"mod": [
-    	        	        "n",
-    	        	        100
-        	        	]
-        	        },
-        	        [[12,14]]
-            	]
+                "notin": [
+                    {
+                        "mod": [
+                            "n",
+                            100
+                        ]
+                    },
+                    [[12,14]]
+                ]
             }
         ]
     };
 
-	assertFalse(IString._fncs.getValue(rule, 1));
-	assertFalse(IString._fncs.getValue(rule, 11));
-	assertFalse(IString._fncs.getValue(rule, 21));
-	assertFalse(IString._fncs.getValue(rule, 101));
-	assertFalse(IString._fncs.getValue(rule, 111));
-	assertFalse(IString._fncs.getValue(rule, 121));
+    assertFalse(IString._fncs.getValue(rule, 1));
+    assertFalse(IString._fncs.getValue(rule, 11));
+    assertFalse(IString._fncs.getValue(rule, 21));
+    assertFalse(IString._fncs.getValue(rule, 101));
+    assertFalse(IString._fncs.getValue(rule, 111));
+    assertFalse(IString._fncs.getValue(rule, 121));
 }
 
 function testRuleComplex3() {
-	var rule = {
-		"and": [
+    var rule = {
+        "and": [
             {
                 "inrange": [
                     {
@@ -1795,30 +1795,30 @@ function testRuleComplex3() {
                 ]
             },
             {
-            	"notin": [
-        	        {
-        	        	"mod": [
-    	        	        "n",
-    	        	        100
-        	        	]
-        	        },
-        	        [[12,14]]
-            	]
+                "notin": [
+                    {
+                        "mod": [
+                            "n",
+                            100
+                        ]
+                    },
+                    [[12,14]]
+                ]
             }
         ]
     };
 
-	assertFalse(IString._fncs.getValue(rule, 5));
-	assertFalse(IString._fncs.getValue(rule, 15));
-	assertFalse(IString._fncs.getValue(rule, 25));
-	assertFalse(IString._fncs.getValue(rule, 105));
-	assertFalse(IString._fncs.getValue(rule, 115));
-	assertFalse(IString._fncs.getValue(rule, 125));
+    assertFalse(IString._fncs.getValue(rule, 5));
+    assertFalse(IString._fncs.getValue(rule, 15));
+    assertFalse(IString._fncs.getValue(rule, 25));
+    assertFalse(IString._fncs.getValue(rule, 105));
+    assertFalse(IString._fncs.getValue(rule, 115));
+    assertFalse(IString._fncs.getValue(rule, 125));
 }
 
 function testRuleComplex4() {
-	var rule = {
-		"and": [
+    var rule = {
+        "and": [
             {
                 "inrange": [
                     {
@@ -1831,60 +1831,60 @@ function testRuleComplex4() {
                 ]
             },
             {
-            	"notin": [
-        	        {
-        	        	"mod": [
-    	        	        "n",
-    	        	        100
-        	        	]
-        	        },
-        	        [[12,14]]
-            	]
+                "notin": [
+                    {
+                        "mod": [
+                            "n",
+                            100
+                        ]
+                    },
+                    [[12,14]]
+                ]
             }
         ]
     };
 
-	assertTrue(IString._fncs.getValue(rule, 3.5));
-	assertFalse(IString._fncs.getValue(rule, 13.5));
-	assertTrue(IString._fncs.getValue(rule, 23.5));
-	assertTrue(IString._fncs.getValue(rule, 103.5));
-	assertFalse(IString._fncs.getValue(rule, 113.5));
-	assertTrue(IString._fncs.getValue(rule, 123.5));
+    assertTrue(IString._fncs.getValue(rule, 3.5));
+    assertFalse(IString._fncs.getValue(rule, 13.5));
+    assertTrue(IString._fncs.getValue(rule, 23.5));
+    assertTrue(IString._fncs.getValue(rule, 103.5));
+    assertFalse(IString._fncs.getValue(rule, 113.5));
+    assertTrue(IString._fncs.getValue(rule, 123.5));
 }
 
 function testStringGetLocaleDefault() {
-	var str = new IString("foo");
+    var str = new IString("foo");
 
-	assertNotNull(str);
+    assertNotNull(str);
 
-	assertEquals("en-US", str.getLocale());
+    assertEquals("en-US", str.getLocale());
 }
 
 function testStringGetLocaleWithLocaleObj() {
-	var str = new IString("foo");
-	str.setLocale(new Locale("ja-JP"));
+    var str = new IString("foo");
+    str.setLocale(new Locale("ja-JP"));
 
-	assertNotNull(str);
+    assertNotNull(str);
 
-	assertEquals("ja-JP", str.getLocale());
+    assertEquals("ja-JP", str.getLocale());
 }
 
 function testStringGetLocaleWithLocaleSpec() {
-	var str = new IString("foo");
-	str.setLocale("ja-JP");
+    var str = new IString("foo");
+    str.setLocale("ja-JP");
 
-	assertNotNull(str);
+    assertNotNull(str);
 
-	assertEquals("ja-JP", str.getLocale());
+    assertEquals("ja-JP", str.getLocale());
 }
 
 function testStringSetLocaleUndefined() {
-	var str = new IString("foo");
-	str.setLocale(undefined);
+    var str = new IString("foo");
+    str.setLocale(undefined);
 
-	assertNotNull(str);
+    assertNotNull(str);
 
-	assertEquals("en-US", str.getLocale());
+    assertEquals("en-US", str.getLocale());
 }
 
 function testStringFormatChoiceCharClasses1() {
