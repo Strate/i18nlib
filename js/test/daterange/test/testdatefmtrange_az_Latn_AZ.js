@@ -1,7 +1,7 @@
 /*
- * testdatefmtrange_az_Latn_AZ.js - test the date range formatter object in Azerbaijan
+ * testdatefmtrange_az_Latn_AZ.js - test the date range formatter object in Azerbaijani
  *
- * Copyright © 2012-2016, JEDLSoft
+ * Copyright © 2016, JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,23 +24,23 @@ function testDateRngFmtAZRangeInDayShort() {
     assertNotNull(fmt);
 
     var start = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 31,
-		hour: 13,
-		minute: 45,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 31,
+        hour: 13,
+        minute: 45,
+        second: 0,
+        millisecond: 0
+    });
     var end = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 31,
-		hour: 14,
-		minute: 30,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 31,
+        hour: 14,
+        minute: 30,
+        second: 0,
+        millisecond: 0
+    });
     assertEquals("13:45 – 14:30 11-12-31", fmt.format(start, end));
 }
 function testDateRngFmtAZRangeInDayMedium() {
@@ -48,23 +48,23 @@ function testDateRngFmtAZRangeInDayMedium() {
     assertNotNull(fmt);
 
     var start = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 31,
-		hour: 13,
-		minute: 45,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 31,
+        hour: 13,
+        minute: 45,
+        second: 0,
+        millisecond: 0
+    });
     var end = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 31,
-		hour: 14,
-		minute: 30,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 31,
+        hour: 14,
+        minute: 30,
+        second: 0,
+        millisecond: 0
+    });
     assertEquals("13:45 – 14:30 31 dek, 2011", fmt.format(start, end));
 }
 function testDateRngFmtAZRangeInDayLong() {
@@ -72,23 +72,23 @@ function testDateRngFmtAZRangeInDayLong() {
     assertNotNull(fmt);
 
     var start = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 31,
-		hour: 13,
-		minute: 45,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 31,
+        hour: 13,
+        minute: 45,
+        second: 0,
+        millisecond: 0
+    });
     var end = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 31,
-		hour: 14,
-		minute: 30,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 31,
+        hour: 14,
+        minute: 30,
+        second: 0,
+        millisecond: 0
+    });
     assertEquals("13:45 – 14:30 31 dekabr, 2011", fmt.format(start, end));
 }
 function testDateRngFmtAZRangeInDayFull() {
@@ -96,23 +96,23 @@ function testDateRngFmtAZRangeInDayFull() {
     assertNotNull(fmt);
 
     var start = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 31,
-		hour: 13,
-		minute: 45,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 31,
+        hour: 13,
+        minute: 45,
+        second: 0,
+        millisecond: 0
+    });
     var end = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 31,
-		hour: 14,
-		minute: 30,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 31,
+        hour: 14,
+        minute: 30,
+        second: 0,
+        millisecond: 0
+    });
     assertEquals("13:45 – 14:30 31, dekabr, 2011", fmt.format(start, end));
 }
 
@@ -121,23 +121,23 @@ function testDateRngFmtAZRangeNextDayShort() {
     assertNotNull(fmt);
 
     var start = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 30,
-		hour: 13,
-		minute: 45,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 30,
+        hour: 13,
+        minute: 45,
+        second: 0,
+        millisecond: 0
+    });
     var end = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 31,
-		hour: 14,
-		minute: 30,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 31,
+        hour: 14,
+        minute: 30,
+        second: 0,
+        millisecond: 0
+    });
     assertEquals("13:45 11–12–30 – 14:30 31", fmt.format(start, end));
 }
 function testDateRngFmtAZRangeNextDayMedium() {
@@ -145,23 +145,23 @@ function testDateRngFmtAZRangeNextDayMedium() {
     assertNotNull(fmt);
 
     var start = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 30,
-		hour: 13,
-		minute: 45,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 30,
+        hour: 13,
+        minute: 45,
+        second: 0,
+        millisecond: 0
+    });
     var end = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 31,
-		hour: 14,
-		minute: 30,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 31,
+        hour: 14,
+        minute: 30,
+        second: 0,
+        millisecond: 0
+    });
     assertEquals("13:45 2011–dek–30 – 14:30 31", fmt.format(start, end));
 }
 function testDateRngFmtAZRangeNextDayLong() {
@@ -169,23 +169,23 @@ function testDateRngFmtAZRangeNextDayLong() {
     assertNotNull(fmt);
 
     var start = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 30,
-		hour: 13,
-		minute: 45,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 30,
+        hour: 13,
+        minute: 45,
+        second: 0,
+        millisecond: 0
+    });
     var end = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 31,
-		hour: 14,
-		minute: 30,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 31,
+        hour: 14,
+        minute: 30,
+        second: 0,
+        millisecond: 0
+    });
     assertEquals("13:45 2011–dekabr–30 – 14:30 31", fmt.format(start, end));
 }
 function testDateRngFmtAZRangeNextDayFull() {
@@ -193,23 +193,23 @@ function testDateRngFmtAZRangeNextDayFull() {
     assertNotNull(fmt);
 
     var start = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 30,
-		hour: 13,
-		minute: 45,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 30,
+        hour: 13,
+        minute: 45,
+        second: 0,
+        millisecond: 0
+    });
     var end = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 31,
-		hour: 14,
-		minute: 30,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 31,
+        hour: 14,
+        minute: 30,
+        second: 0,
+        millisecond: 0
+    });
     assertEquals("13:45 2011–dekabr–30 – 14:30 31", fmt.format(start, end));
 }
 
@@ -218,23 +218,23 @@ function testDateRngFmtAZRangeMultiDayShort() {
     assertNotNull(fmt);
 
     var start = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 20,
-		hour: 13,
-		minute: 45,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 20,
+        hour: 13,
+        minute: 45,
+        second: 0,
+        millisecond: 0
+    });
     var end = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 31,
-		hour: 14,
-		minute: 30,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 31,
+        hour: 14,
+        minute: 30,
+        second: 0,
+        millisecond: 0
+    });
     assertEquals("11–12–20 – 31", fmt.format(start, end));
 }
 function testDateRngFmtAZRangeMultiDayMedium() {
@@ -242,23 +242,23 @@ function testDateRngFmtAZRangeMultiDayMedium() {
     assertNotNull(fmt);
 
     var start = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 20,
-		hour: 13,
-		minute: 45,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 20,
+        hour: 13,
+        minute: 45,
+        second: 0,
+        millisecond: 0
+    });
     var end = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 31,
-		hour: 14,
-		minute: 30,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 31,
+        hour: 14,
+        minute: 30,
+        second: 0,
+        millisecond: 0
+    });
     assertEquals("2011–dek–20 – 31", fmt.format(start, end));
 }
 function testDateRngFmtAZRangeMultiDayLong() {
@@ -266,23 +266,23 @@ function testDateRngFmtAZRangeMultiDayLong() {
     assertNotNull(fmt);
 
     var start = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 20,
-		hour: 13,
-		minute: 45,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 20,
+        hour: 13,
+        minute: 45,
+        second: 0,
+        millisecond: 0
+    });
     var end = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 31,
-		hour: 14,
-		minute: 30,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 31,
+        hour: 14,
+        minute: 30,
+        second: 0,
+        millisecond: 0
+    });
     assertEquals("2011–dekabr–20 – 31", fmt.format(start, end));
 }
 function testDateRngFmtAZRangeMultiDayFull() {
@@ -290,23 +290,23 @@ function testDateRngFmtAZRangeMultiDayFull() {
     assertNotNull(fmt);
 
     var start = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 20,
-		hour: 13,
-		minute: 45,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 20,
+        hour: 13,
+        minute: 45,
+        second: 0,
+        millisecond: 0
+    });
     var end = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 31,
-		hour: 14,
-		minute: 30,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 31,
+        hour: 14,
+        minute: 30,
+        second: 0,
+        millisecond: 0
+    });
     assertEquals("2011–dekabr–20 – 31", fmt.format(start, end));
 }
 
@@ -315,23 +315,23 @@ function testDateRngFmtAZRangeNextMonthShort() {
     assertNotNull(fmt);
 
     var start = new GregorianDate({
-		year: 2011,
-		month: 11,
-		day: 20,
-		hour: 13,
-		minute: 45,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 11,
+        day: 20,
+        hour: 13,
+        minute: 45,
+        second: 0,
+        millisecond: 0
+    });
     var end = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 31,
-		hour: 14,
-		minute: 30,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 31,
+        hour: 14,
+        minute: 30,
+        second: 0,
+        millisecond: 0
+    });
     assertEquals("11–11–20 – 12–31", fmt.format(start, end));
 }
 function testDateRngFmtAZRangeNextMonthMedium() {
@@ -339,23 +339,23 @@ function testDateRngFmtAZRangeNextMonthMedium() {
     assertNotNull(fmt);
 
     var start = new GregorianDate({
-		year: 2011,
-		month: 11,
-		day: 20,
-		hour: 13,
-		minute: 45,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 11,
+        day: 20,
+        hour: 13,
+        minute: 45,
+        second: 0,
+        millisecond: 0
+    });
     var end = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 31,
-		hour: 14,
-		minute: 30,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 31,
+        hour: 14,
+        minute: 30,
+        second: 0,
+        millisecond: 0
+    });
     assertEquals("2011–noy–20 – dek–31", fmt.format(start, end));
 }
 function testDateRngFmtAZRangeNextMonthLong() {
@@ -363,23 +363,23 @@ function testDateRngFmtAZRangeNextMonthLong() {
     assertNotNull(fmt);
 
     var start = new GregorianDate({
-		year: 2011,
-		month: 11,
-		day: 20,
-		hour: 13,
-		minute: 45,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 11,
+        day: 20,
+        hour: 13,
+        minute: 45,
+        second: 0,
+        millisecond: 0
+    });
     var end = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 31,
-		hour: 14,
-		minute: 30,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 31,
+        hour: 14,
+        minute: 30,
+        second: 0,
+        millisecond: 0
+    });
     assertEquals("2011–noyabr–20 – dekabr–31", fmt.format(start, end));
 }
 function testDateRngFmtAZRangeNextMonthFull() {
@@ -387,23 +387,23 @@ function testDateRngFmtAZRangeNextMonthFull() {
     assertNotNull(fmt);
 
     var start = new GregorianDate({
-		year: 2011,
-		month: 11,
-		day: 20,
-		hour: 13,
-		minute: 45,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 11,
+        day: 20,
+        hour: 13,
+        minute: 45,
+        second: 0,
+        millisecond: 0
+    });
     var end = new GregorianDate({
-		year: 2011,
-		month: 12,
-		day: 31,
-		hour: 14,
-		minute: 30,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 12,
+        day: 31,
+        hour: 14,
+        minute: 30,
+        second: 0,
+        millisecond: 0
+    });
     assertEquals("2011–noyabr–20 – dekabr–31", fmt.format(start, end));
 }
 
@@ -412,23 +412,23 @@ function testDateRngFmtAZRangeNextYearShort() {
     assertNotNull(fmt);
 
     var start = new GregorianDate({
-		year: 2011,
-		month: 11,
-		day: 20,
-		hour: 13,
-		minute: 45,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 11,
+        day: 20,
+        hour: 13,
+        minute: 45,
+        second: 0,
+        millisecond: 0
+    });
     var end = new GregorianDate({
-		year: 2012,
-		month: 1,
-		day: 31,
-		hour: 14,
-		minute: 30,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2012,
+        month: 1,
+        day: 31,
+        hour: 14,
+        minute: 30,
+        second: 0,
+        millisecond: 0
+    });
     assertEquals("11–11–20 – 12–01–31", fmt.format(start, end));
 }
 function testDateRngFmtAZRangeNextYearMedium() {
@@ -436,23 +436,23 @@ function testDateRngFmtAZRangeNextYearMedium() {
     assertNotNull(fmt);
 
     var start = new GregorianDate({
-		year: 2011,
-		month: 11,
-		day: 20,
-		hour: 13,
-		minute: 45,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 11,
+        day: 20,
+        hour: 13,
+        minute: 45,
+        second: 0,
+        millisecond: 0
+    });
     var end = new GregorianDate({
-		year: 2012,
-		month: 1,
-		day: 31,
-		hour: 14,
-		minute: 30,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2012,
+        month: 1,
+        day: 31,
+        hour: 14,
+        minute: 30,
+        second: 0,
+        millisecond: 0
+    });
     assertEquals("2011–noy–20 – 2012–yan–31", fmt.format(start, end));
 }
 function testDateRngFmtAZRangeNextYearLong() {
@@ -460,23 +460,23 @@ function testDateRngFmtAZRangeNextYearLong() {
     assertNotNull(fmt);
 
     var start = new GregorianDate({
-		year: 2011,
-		month: 11,
-		day: 20,
-		hour: 13,
-		minute: 45,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 11,
+        day: 20,
+        hour: 13,
+        minute: 45,
+        second: 0,
+        millisecond: 0
+    });
     var end = new GregorianDate({
-		year: 2012,
-		month: 1,
-		day: 31,
-		hour: 14,
-		minute: 30,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2012,
+        month: 1,
+        day: 31,
+        hour: 14,
+        minute: 30,
+        second: 0,
+        millisecond: 0
+    });
     assertEquals("2011–noyabr–20 – 2012–yanvar–31", fmt.format(start, end));
 }
 function testDateRngFmtAZRangeNextYearFull() {
@@ -484,23 +484,23 @@ function testDateRngFmtAZRangeNextYearFull() {
     assertNotNull(fmt);
 
     var start = new GregorianDate({
-		year: 2011,
-		month: 11,
-		day: 20,
-		hour: 13,
-		minute: 45,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 11,
+        day: 20,
+        hour: 13,
+        minute: 45,
+        second: 0,
+        millisecond: 0
+    });
     var end = new GregorianDate({
-		year: 2012,
-		month: 1,
-		day: 31,
-		hour: 14,
-		minute: 30,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2012,
+        month: 1,
+        day: 31,
+        hour: 14,
+        minute: 30,
+        second: 0,
+        millisecond: 0
+    });
     assertEquals("2011–noyabr–20 – 2012–yanvar–31", fmt.format(start, end));
 }
 
@@ -509,23 +509,23 @@ function testDateRngFmtAZRangeMultiYearShort() {
     assertNotNull(fmt);
 
     var start = new GregorianDate({
-		year: 2011,
-		month: 11,
-		day: 20,
-		hour: 13,
-		minute: 45,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 11,
+        day: 20,
+        hour: 13,
+        minute: 45,
+        second: 0,
+        millisecond: 0
+    });
     var end = new GregorianDate({
-		year: 2014,
-		month: 1,
-		day: 31,
-		hour: 14,
-		minute: 30,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2014,
+        month: 1,
+        day: 31,
+        hour: 14,
+        minute: 30,
+        second: 0,
+        millisecond: 0
+    });
     assertEquals("11–11 – 14–01", fmt.format(start, end));
 }
 function testDateRngFmtAZRangeMultiYearMedium() {
@@ -533,23 +533,23 @@ function testDateRngFmtAZRangeMultiYearMedium() {
     assertNotNull(fmt);
 
     var start = new GregorianDate({
-		year: 2011,
-		month: 11,
-		day: 20,
-		hour: 13,
-		minute: 45,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 11,
+        day: 20,
+        hour: 13,
+        minute: 45,
+        second: 0,
+        millisecond: 0
+    });
     var end = new GregorianDate({
-		year: 2014,
-		month: 1,
-		day: 31,
-		hour: 14,
-		minute: 30,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2014,
+        month: 1,
+        day: 31,
+        hour: 14,
+        minute: 30,
+        second: 0,
+        millisecond: 0
+    });
     assertEquals("2011–noy – 2014–yan", fmt.format(start, end));
 }
 function testDateRngFmtAZRangeMultiYearLong() {
@@ -557,23 +557,23 @@ function testDateRngFmtAZRangeMultiYearLong() {
     assertNotNull(fmt);
 
     var start = new GregorianDate({
-		year: 2011,
-		month: 11,
-		day: 20,
-		hour: 13,
-		minute: 45,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 11,
+        day: 20,
+        hour: 13,
+        minute: 45,
+        second: 0,
+        millisecond: 0
+    });
     var end = new GregorianDate({
-		year: 2014,
-		month: 1,
-		day: 31,
-		hour: 14,
-		minute: 30,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2014,
+        month: 1,
+        day: 31,
+        hour: 14,
+        minute: 30,
+        second: 0,
+        millisecond: 0
+    });
     assertEquals("2011–noyabr – 2014–yanvar", fmt.format(start, end));
 }
 function testDateRngFmtAZRangeMultiYearFull() {
@@ -581,23 +581,23 @@ function testDateRngFmtAZRangeMultiYearFull() {
     assertNotNull(fmt);
 
     var start = new GregorianDate({
-		year: 2011,
-		month: 11,
-		day: 20,
-		hour: 13,
-		minute: 45,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 11,
+        day: 20,
+        hour: 13,
+        minute: 45,
+        second: 0,
+        millisecond: 0
+    });
     var end = new GregorianDate({
-		year: 2014,
-		month: 1,
-		day: 31,
-		hour: 14,
-		minute: 30,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2014,
+        month: 1,
+        day: 31,
+        hour: 14,
+        minute: 30,
+        second: 0,
+        millisecond: 0
+    });
     assertEquals("2011–noyabr – 2014–yanvar", fmt.format(start, end));
 }
 function testDateRngFmtAZManyYearsFull() {
@@ -605,22 +605,22 @@ function testDateRngFmtAZManyYearsFull() {
     assertNotNull(fmt);
 
     var start = new GregorianDate({
-		year: 2011,
-		month: 11,
-		day: 20,
-		hour: 13,
-		minute: 45,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2011,
+        month: 11,
+        day: 20,
+        hour: 13,
+        minute: 45,
+        second: 0,
+        millisecond: 0
+    });
     var end = new GregorianDate({
-		year: 2064,
-		month: 1,
-		day: 31,
-		hour: 14,
-		minute: 30,
-		second: 0,
-		millisecond: 0
-	});
+        year: 2064,
+        month: 1,
+        day: 31,
+        hour: 14,
+        minute: 30,
+        second: 0,
+        millisecond: 0
+    });
     assertEquals("2011 – 2064", fmt.format(start, end));
 }
