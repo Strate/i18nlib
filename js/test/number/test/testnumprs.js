@@ -1,7 +1,7 @@
 /*
  * testnumprs.js - test the number parsing routines
  *
- * Copyright © 2012-2015, JEDLSoft
+ * Copyright © 2012-2016, JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ function testNumberGetLocaleDefault() {
 
 function testNumberGetLocaleOther() {
     var num = new INumber("3.4", {
-    	locale: "de-DE"
+        locale: "de-DE"
     });
     assertNotNull(num);
 
@@ -265,12 +265,12 @@ function testNumberCurrencyForLocale() {
 
     var cur = num.getCurrency();
     assertNotUndefined(cur);
-    assertEquals("EGP", cur.getCode());
+    assertEquals("GBP", cur.getCode());
 }
 
 function testNumberFloatDE() {
     var num = new INumber("3,4", {
-    	locale: "de-DE"
+        locale: "de-DE"
     });
     assertNotNull(num);
 
@@ -279,7 +279,7 @@ function testNumberFloatDE() {
 
 function testNumberFloatDENegative() {
     var num = new INumber("-3,4", {
-    	locale: "de-DE"
+        locale: "de-DE"
     });
     assertNotNull(num);
 
@@ -288,7 +288,7 @@ function testNumberFloatDENegative() {
 
 function testNumberFloatDEThousands() {
     var num = new INumber("1.233,4", {
-    	locale: "de-DE"
+        locale: "de-DE"
     });
     assertNotNull(num);
 
@@ -297,7 +297,7 @@ function testNumberFloatDEThousands() {
 
 function testNumberFloatDEThousandsNegative() {
     var num = new INumber("-1.233,4", {
-    	locale: "de-DE"
+        locale: "de-DE"
     });
     assertNotNull(num);
 
@@ -306,7 +306,7 @@ function testNumberFloatDEThousandsNegative() {
 
 function testNumberFloatDEWithDashForZeros() {
     var num = new INumber("3,-", {
-    	locale: "de-DE"
+        locale: "de-DE"
     });
     assertNotNull(num);
 
@@ -315,7 +315,7 @@ function testNumberFloatDEWithDashForZeros() {
 
 function testNumberFloatDEStartsWithDecimal() {
     var num = new INumber(",4342", {
-    	locale: "de-DE"
+        locale: "de-DE"
     });
     assertNotNull(num);
 
@@ -324,7 +324,7 @@ function testNumberFloatDEStartsWithDecimal() {
 
 function testNumberFloatDEStartsWithZero() {
     var num = new INumber("0,4342", {
-    	locale: "de-DE"
+        locale: "de-DE"
     });
     assertNotNull(num);
 
@@ -333,7 +333,7 @@ function testNumberFloatDEStartsWithZero() {
 
 function testNumberFloatDEStartsWithDecimalNegative() {
     var num = new INumber("-,4342", {
-    	locale: "de-DE"
+        locale: "de-DE"
     });
     assertNotNull(num);
 
@@ -342,7 +342,7 @@ function testNumberFloatDEStartsWithDecimalNegative() {
 
 function testNumberFloatDEStartsWithZeroNegative() {
     var num = new INumber("-0,4342", {
-    	locale: "de-DE"
+        locale: "de-DE"
     });
     assertNotNull(num);
 
@@ -351,7 +351,7 @@ function testNumberFloatDEStartsWithZeroNegative() {
 
 function testNumberFloatDEStartsWithPeriodIgnore() {
     var num = new INumber(".4342", {
-    	locale: "de-DE"
+        locale: "de-DE"
     });
     assertNotNull(num);
 
@@ -360,7 +360,7 @@ function testNumberFloatDEStartsWithPeriodIgnore() {
 
 function testNumberFloatDEWithMDashForZeros() {
     var num = new INumber("3,—", {
-    	locale: "de-DE"
+        locale: "de-DE"
     });
     assertNotNull(num);
 
@@ -369,7 +369,7 @@ function testNumberFloatDEWithMDashForZeros() {
 
 function testNumberIntDE() {
     var num = new INumber("123", {
-    	locale: "de-DE"
+        locale: "de-DE"
     });
     assertNotNull(num);
 
@@ -378,7 +378,7 @@ function testNumberIntDE() {
 
 function testNumberIntDEThousands() {
     var num = new INumber("123.456", {
-    	locale: "de-DE"
+        locale: "de-DE"
     });
     assertNotNull(num);
 
@@ -387,7 +387,7 @@ function testNumberIntDEThousands() {
 
 function testNumberInvalidDE() {
     var num = new INumber("123,234,234", {
-    	locale: "de-DE"
+        locale: "de-DE"
     });
     assertNotNull(num);
 
@@ -396,7 +396,7 @@ function testNumberInvalidDE() {
 
 function testNumberEmptyDE() {
     var num = new INumber("", {
-    	locale: "de-DE"
+        locale: "de-DE"
     });
     assertNotNull(num);
 
@@ -405,8 +405,8 @@ function testNumberEmptyDE() {
 
 function testNumberPercentageDE() {
     var num = new INumber("58,4 %", {
-    	locale: "de-DE",
-    	type: "percentage"
+        locale: "de-DE",
+        type: "percentage"
     });
     assertNotNull(num);
 
@@ -415,7 +415,7 @@ function testNumberPercentageDE() {
 
 function testNumberPercentageDENoTypeSpecified() {
     var num = new INumber("58,4 %", {
-    	locale: "de-DE"
+        locale: "de-DE"
     });
     assertNotNull(num);
 
@@ -424,8 +424,8 @@ function testNumberPercentageDENoTypeSpecified() {
 
 function testNumberCurrencyDEValue() {
     var num = new INumber("5,84 €", {
-    	locale: "de-DE",
-    	type: "currency"
+        locale: "de-DE",
+        type: "currency"
     });
     assertNotNull(num);
 
@@ -434,8 +434,8 @@ function testNumberCurrencyDEValue() {
 
 function testNumberCurrencyDEType() {
     var num = new INumber("5,84 €", {
-    	locale: "de-DE",
-    	type: "currency"
+        locale: "de-DE",
+        type: "currency"
     });
     assertNotNull(num);
 
@@ -446,7 +446,7 @@ function testNumberCurrencyDEType() {
 
 function testNumberCurrencyDENoTypeSpecified() {
     var num = new INumber("5,84 €", {
-    	locale: "de-DE"
+        locale: "de-DE"
     });
     assertNotNull(num);
 
@@ -455,8 +455,8 @@ function testNumberCurrencyDENoTypeSpecified() {
 
 function testNumberCurrencyDETypeUsingISOCode() {
     var num = new INumber("5,84 EUR", {
-    	locale: "de-DE",
-    	type: "currency"
+        locale: "de-DE",
+        type: "currency"
     });
     assertNotNull(num);
 
@@ -467,7 +467,7 @@ function testNumberCurrencyDETypeUsingISOCode() {
 
 function testNumberZH() {
     var num = new INumber("12,3234", {
-    	locale: "zh-CN"
+        locale: "zh-CN"
     });
     assertNotNull(num);
 
@@ -476,7 +476,7 @@ function testNumberZH() {
 
 function testNumberZHDecimal() {
     var num = new INumber("12,3234.324", {
-    	locale: "zh-CN"
+        locale: "zh-CN"
     });
     assertNotNull(num);
 
@@ -485,34 +485,34 @@ function testNumberZHDecimal() {
 
 
 function testNumberParseAsync() {
-	var callbackCalled = false;
+    var callbackCalled = false;
     new INumber("-0,4342", {
-    	locale: "de-DE",
-    	sync: false,
-    	onLoad: function (num) {
-    		assertNotNull(num);
+        locale: "de-DE",
+        sync: false,
+        onLoad: function (num) {
+            assertNotNull(num);
 
-    	    assertEquals(-0.4342, num.valueOf());
-    	    callbackCalled = true;
-    	}
+            assertEquals(-0.4342, num.valueOf());
+            callbackCalled = true;
+        }
     });
     assertTrue(callbackCalled);
 }
 
 function testNumberParseAsyncCurrency() {
-	var callbackCalled = false;
+    var callbackCalled = false;
     new INumber("5,84 EUR", {
-    	locale: "de-DE",
-    	type: "currency",
-    	sync: false,
-    	onLoad: function (num) {
-    		assertNotNull(num);
+        locale: "de-DE",
+        type: "currency",
+        sync: false,
+        onLoad: function (num) {
+            assertNotNull(num);
 
-    	    var cur = num.getCurrency();
-    	    assertNotUndefined(cur);
-    	    assertEquals("EUR", cur.getCode());
-    	    callbackCalled = true;
-    	}
+            var cur = num.getCurrency();
+            assertNotUndefined(cur);
+            assertEquals("EUR", cur.getCode());
+            callbackCalled = true;
+        }
     });
     assertTrue(callbackCalled);
 }
@@ -520,7 +520,7 @@ function testNumberParseAsyncCurrency() {
 /*Test cases for Afrikaans*/
 function testNumberFloatAF() {
     var num = new INumber("3,4", {
-    	locale: "af-ZA"
+        locale: "af-ZA"
     });
     assertNotNull(num);
 
@@ -529,7 +529,7 @@ function testNumberFloatAF() {
 
 function testNumberFloatAFNegative() {
     var num = new INumber("-3,4", {
-    	locale: "af-ZA"
+        locale: "af-ZA"
     });
     assertNotNull(num);
 
@@ -538,7 +538,7 @@ function testNumberFloatAFNegative() {
 
 function testNumberFloatAFThousands() {
     var num = new INumber("1.233,4", {
-    	locale: "af-ZA"
+        locale: "af-ZA"
     });
     assertNotNull(num);
 
@@ -547,7 +547,7 @@ function testNumberFloatAFThousands() {
 
 function testNumberFloatAFThousandsNegative() {
     var num = new INumber("-1.233,4", {
-    	locale: "af-ZA"
+        locale: "af-ZA"
     });
     assertNotNull(num);
 
@@ -556,7 +556,7 @@ function testNumberFloatAFThousandsNegative() {
 
 function testNumberFloatAFWithDashForZeros() {
     var num = new INumber("3,-", {
-    	locale: "af-ZA"
+        locale: "af-ZA"
     });
     assertNotNull(num);
 
@@ -565,7 +565,7 @@ function testNumberFloatAFWithDashForZeros() {
 
 function testNumberFloatAFStartsWithDecimal() {
     var num = new INumber(",4342", {
-    	locale: "af-ZA"
+        locale: "af-ZA"
     });
     assertNotNull(num);
 
@@ -574,7 +574,7 @@ function testNumberFloatAFStartsWithDecimal() {
 
 function testNumberFloatAFStartsWithZero() {
     var num = new INumber("0,4342", {
-    	locale: "af-ZA"
+        locale: "af-ZA"
     });
     assertNotNull(num);
 
@@ -583,7 +583,7 @@ function testNumberFloatAFStartsWithZero() {
 
 function testNumberFloatAFStartsWithDecimalNegative() {
     var num = new INumber("-,4342", {
-    	locale: "af-ZA"
+        locale: "af-ZA"
     });
     assertNotNull(num);
 
@@ -592,7 +592,7 @@ function testNumberFloatAFStartsWithDecimalNegative() {
 
 function testNumberFloatAFStartsWithZeroNegative() {
     var num = new INumber("-0,4342", {
-    	locale: "af-ZA"
+        locale: "af-ZA"
     });
     assertNotNull(num);
 
@@ -601,7 +601,7 @@ function testNumberFloatAFStartsWithZeroNegative() {
 
 function testNumberFloatAFStartsWithPeriodIgnore() {
     var num = new INumber(".4342", {
-    	locale: "af-ZA"
+        locale: "af-ZA"
     });
     assertNotNull(num);
 
@@ -610,7 +610,7 @@ function testNumberFloatAFStartsWithPeriodIgnore() {
 
 function testNumberFloatAFWithMDashForZeros() {
     var num = new INumber("3,—", {
-    	locale: "af-ZA"
+        locale: "af-ZA"
     });
     assertNotNull(num);
 
@@ -619,7 +619,7 @@ function testNumberFloatAFWithMDashForZeros() {
 
 function testNumberIntAF() {
     var num = new INumber("123", {
-    	locale: "af-ZA"
+        locale: "af-ZA"
     });
     assertNotNull(num);
 
@@ -628,7 +628,7 @@ function testNumberIntAF() {
 
 function testNumberIntAFThousands() {
     var num = new INumber("123.456", {
-    	locale: "af-ZA"
+        locale: "af-ZA"
     });
     assertNotNull(num);
 
@@ -637,7 +637,7 @@ function testNumberIntAFThousands() {
 
 function testNumberInvalidAF() {
     var num = new INumber("123,234,234", {
-    	locale: "af-ZA"
+        locale: "af-ZA"
     });
     assertNotNull(num);
 
@@ -646,7 +646,7 @@ function testNumberInvalidAF() {
 
 function testNumberEmptyAF() {
     var num = new INumber("", {
-    	locale: "af-ZA"
+        locale: "af-ZA"
     });
     assertNotNull(num);
 
@@ -655,8 +655,8 @@ function testNumberEmptyAF() {
 
 function testNumberPercentageAF() {
     var num = new INumber("58,4 %", {
-    	locale: "af-ZA",
-    	type: "percentage"
+        locale: "af-ZA",
+        type: "percentage"
     });
     assertNotNull(num);
 
@@ -665,7 +665,7 @@ function testNumberPercentageAF() {
 
 function testNumberPercentageAFNoTypeSpecified() {
     var num = new INumber("58,4 %", {
-    	locale: "af-ZA"
+        locale: "af-ZA"
     });
     assertNotNull(num);
 
@@ -674,8 +674,8 @@ function testNumberPercentageAFNoTypeSpecified() {
 
 function testNumberCurrencyAFValue() {
     var num = new INumber("R5,84", {
-    	locale: "af-ZA",
-    	type: "currency"
+        locale: "af-ZA",
+        type: "currency"
     });
     assertNotNull(num);
 
@@ -684,8 +684,8 @@ function testNumberCurrencyAFValue() {
 
 function testNumberCurrencyAFType() {
     var num = new INumber("R5,84", {
-    	locale: "af-ZA",
-    	type: "currency"
+        locale: "af-ZA",
+        type: "currency"
     });
     assertNotNull(num);
 
@@ -696,7 +696,7 @@ function testNumberCurrencyAFType() {
 
 function testNumberCurrencyAFNoTypeSpecified() {
     var num = new INumber("5,84 €", {
-    	locale: "af-ZA"
+        locale: "af-ZA"
     });
     assertNotNull(num);
 
@@ -705,8 +705,8 @@ function testNumberCurrencyAFNoTypeSpecified() {
 
 function testNumberCurrencyAFTypeUsingISOCode() {
     var num = new INumber("5,84 ZAR", {
-    	locale: "af-ZA",
-    	type: "currency"
+        locale: "af-ZA",
+        type: "currency"
     });
     assertNotNull(num);
 
@@ -718,7 +718,7 @@ function testNumberCurrencyAFTypeUsingISOCode() {
 /*Test cases for Afrikaans*/
 function testNumberFloatNA() {
     var num = new INumber("3,4", {
-    	locale: "af-NA"
+        locale: "af-NA"
     });
     assertNotNull(num);
 
@@ -727,7 +727,7 @@ function testNumberFloatNA() {
 
 function testNumberFloatNANegative() {
     var num = new INumber("-3,4", {
-    	locale: "af-NA"
+        locale: "af-NA"
     });
     assertNotNull(num);
 
@@ -736,7 +736,7 @@ function testNumberFloatNANegative() {
 
 function testNumberFloatNAThousands() {
     var num = new INumber("1.233,4", {
-    	locale: "af-NA"
+        locale: "af-NA"
     });
     assertNotNull(num);
 
@@ -745,7 +745,7 @@ function testNumberFloatNAThousands() {
 
 function testNumberFloatNAThousandsNegative() {
     var num = new INumber("-1.233,4", {
-    	locale: "af-NA"
+        locale: "af-NA"
     });
     assertNotNull(num);
 
@@ -754,7 +754,7 @@ function testNumberFloatNAThousandsNegative() {
 
 function testNumberFloatNAWithDashForZeros() {
     var num = new INumber("3,-", {
-    	locale: "af-NA"
+        locale: "af-NA"
     });
     assertNotNull(num);
 
@@ -763,7 +763,7 @@ function testNumberFloatNAWithDashForZeros() {
 
 function testNumberFloatNAStartsWithDecimal() {
     var num = new INumber(",4342", {
-    	locale: "af-NA"
+        locale: "af-NA"
     });
     assertNotNull(num);
 
@@ -772,7 +772,7 @@ function testNumberFloatNAStartsWithDecimal() {
 
 function testNumberFloatNAStartsWithZero() {
     var num = new INumber("0,4342", {
-    	locale: "af-NA"
+        locale: "af-NA"
     });
     assertNotNull(num);
 
@@ -781,7 +781,7 @@ function testNumberFloatNAStartsWithZero() {
 
 function testNumberFloatNAStartsWithDecimalNegative() {
     var num = new INumber("-,4342", {
-    	locale: "af-NA"
+        locale: "af-NA"
     });
     assertNotNull(num);
 
@@ -790,7 +790,7 @@ function testNumberFloatNAStartsWithDecimalNegative() {
 
 function testNumberFloatNAStartsWithZeroNegative() {
     var num = new INumber("-0,4342", {
-    	locale: "af-NA"
+        locale: "af-NA"
     });
     assertNotNull(num);
 
@@ -799,7 +799,7 @@ function testNumberFloatNAStartsWithZeroNegative() {
 
 function testNumberFloatNAStartsWithPeriodIgnore() {
     var num = new INumber(".4342", {
-    	locale: "af-NA"
+        locale: "af-NA"
     });
     assertNotNull(num);
 
@@ -808,7 +808,7 @@ function testNumberFloatNAStartsWithPeriodIgnore() {
 
 function testNumberFloatNAWithMDashForZeros() {
     var num = new INumber("3,—", {
-    	locale: "af-NA"
+        locale: "af-NA"
     });
     assertNotNull(num);
 
@@ -817,7 +817,7 @@ function testNumberFloatNAWithMDashForZeros() {
 
 function testNumberIntNA() {
     var num = new INumber("123", {
-    	locale: "af-NA"
+        locale: "af-NA"
     });
     assertNotNull(num);
 
@@ -826,7 +826,7 @@ function testNumberIntNA() {
 
 function testNumberIntNAThousands() {
     var num = new INumber("123.456", {
-    	locale: "af-NA"
+        locale: "af-NA"
     });
     assertNotNull(num);
 
@@ -835,7 +835,7 @@ function testNumberIntNAThousands() {
 
 function testNumberInvalidNA() {
     var num = new INumber("123,234,234", {
-    	locale: "af-NA"
+        locale: "af-NA"
     });
     assertNotNull(num);
 
@@ -844,7 +844,7 @@ function testNumberInvalidNA() {
 
 function testNumberEmptyNA() {
     var num = new INumber("", {
-    	locale: "af-NA"
+        locale: "af-NA"
     });
     assertNotNull(num);
 
@@ -853,8 +853,8 @@ function testNumberEmptyNA() {
 
 function testNumberPercentageNA() {
     var num = new INumber("58,4 %", {
-    	locale: "af-NA",
-    	type: "percentage"
+        locale: "af-NA",
+        type: "percentage"
     });
     assertNotNull(num);
 
@@ -863,7 +863,7 @@ function testNumberPercentageNA() {
 
 function testNumberPercentageNANoTypeSpecified() {
     var num = new INumber("58,4 %", {
-    	locale: "af-NA"
+        locale: "af-NA"
     });
     assertNotNull(num);
 
@@ -872,8 +872,8 @@ function testNumberPercentageNANoTypeSpecified() {
 
 function testNumberCurrencyNAValue() {
     var num = new INumber("5,84 $", {
-    	locale: "af-NA",
-    	type: "currency"
+        locale: "af-NA",
+        type: "currency"
     });
     assertNotNull(num);
 
@@ -882,8 +882,8 @@ function testNumberCurrencyNAValue() {
 
 function testNumberCurrencyNAType() {
     var num = new INumber("$5,84", {
-    	locale: "af-NA",
-    	type: "currency"
+        locale: "af-NA",
+        type: "currency"
     });
     assertNotNull(num);
 
@@ -894,7 +894,7 @@ function testNumberCurrencyNAType() {
 
 function testNumberCurrencyNANoTypeSpecified() {
     var num = new INumber("5,84 $", {
-    	locale: "af-NA"
+        locale: "af-NA"
     });
     assertNotNull(num);
 
@@ -903,8 +903,8 @@ function testNumberCurrencyNANoTypeSpecified() {
 
 function testNumberCurrencyNATypeUsingISOCode() {
     var num = new INumber("5,84 NAD", {
-    	locale: "af-NA",
-    	type: "currency"
+        locale: "af-NA",
+        type: "currency"
     });
     assertNotNull(num);
 
@@ -916,7 +916,7 @@ function testNumberCurrencyNATypeUsingISOCode() {
 // number parsing test cases for Hausa
 function testNumberFloat_ha_Latn_NG() {
     var num = new INumber("3.4", {
-    	locale: "ha-Latn-NG"
+        locale: "ha-Latn-NG"
     });
     assertNotNull(num);
 
@@ -925,7 +925,7 @@ function testNumberFloat_ha_Latn_NG() {
 
 function testNumberFloat_ha_Latn_NG_Negative() {
     var num = new INumber("-3.4", {
-    	locale: "ha-Latn-NG"
+        locale: "ha-Latn-NG"
     });
     assertNotNull(num);
 
@@ -934,7 +934,7 @@ function testNumberFloat_ha_Latn_NG_Negative() {
 
 function testNumberFloat_ha_Latn_NG_Thousands() {
     var num = new INumber("1,233.4", {
-    	locale: "ha-Latn-NG"
+        locale: "ha-Latn-NG"
     });
     assertNotNull(num);
 
@@ -943,7 +943,7 @@ function testNumberFloat_ha_Latn_NG_Thousands() {
 
 function testNumberFloat_ha_Latn_NG_ThousandsNegative() {
     var num = new INumber("-1,233.4", {
-    	locale: "ha-Latn-NG"
+        locale: "ha-Latn-NG"
     });
     assertNotNull(num);
 
@@ -952,7 +952,7 @@ function testNumberFloat_ha_Latn_NG_ThousandsNegative() {
 
 function testNumberFloat_ha_Latn_NG_WithDashForZeros() {
     var num = new INumber("3.-", {
-    	locale: "ha-Latn-NG"
+        locale: "ha-Latn-NG"
     });
     assertNotNull(num);
 
@@ -961,7 +961,7 @@ function testNumberFloat_ha_Latn_NG_WithDashForZeros() {
 
 function testNumberFloat_ha_Latn_NG_StartsWithDecimal() {
     var num = new INumber(".4342", {
-    	locale: "ha-Latn-NG"
+        locale: "ha-Latn-NG"
     });
     assertNotNull(num);
 
@@ -970,7 +970,7 @@ function testNumberFloat_ha_Latn_NG_StartsWithDecimal() {
 
 function testNumberFloat_ha_Latn_NG_StartsWithZero() {
     var num = new INumber("0.4342", {
-    	locale: "ha-Latn-NG"
+        locale: "ha-Latn-NG"
     });
     assertNotNull(num);
 
@@ -979,7 +979,7 @@ function testNumberFloat_ha_Latn_NG_StartsWithZero() {
 
 function testNumberFloat_ha_Latn_NG_StartsWithDecimalNegative() {
     var num = new INumber("-.4342", {
-    	locale: "ha-Latn-NG"
+        locale: "ha-Latn-NG"
     });
     assertNotNull(num);
 
@@ -988,7 +988,7 @@ function testNumberFloat_ha_Latn_NG_StartsWithDecimalNegative() {
 
 function testNumberFloat_ha_Latn_NG_StartsWithZeroNegative() {
     var num = new INumber("-0.4342", {
-    	locale: "ha-Latn-NG"
+        locale: "ha-Latn-NG"
     });
     assertNotNull(num);
 
@@ -997,7 +997,7 @@ function testNumberFloat_ha_Latn_NG_StartsWithZeroNegative() {
 
 function testNumberFloat_ha_Latn_NG_StartsWithPeriodIgnore() {
     var num = new INumber(",4342", {
-    	locale: "ha-Latn-NG"
+        locale: "ha-Latn-NG"
     });
     assertNotNull(num);
 
@@ -1006,7 +1006,7 @@ function testNumberFloat_ha_Latn_NG_StartsWithPeriodIgnore() {
 
 function testNumberFloat_ha_Latn_NG_WithMDashForZeros() {
     var num = new INumber("3.—", {
-    	locale: "ha-Latn-NG"
+        locale: "ha-Latn-NG"
     });
     assertNotNull(num);
 
@@ -1015,7 +1015,7 @@ function testNumberFloat_ha_Latn_NG_WithMDashForZeros() {
 
 function testNumberInt_ha_Latn_NG_() {
     var num = new INumber("123", {
-    	locale: "ha-Latn-NG"
+        locale: "ha-Latn-NG"
     });
     assertNotNull(num);
 
@@ -1024,7 +1024,7 @@ function testNumberInt_ha_Latn_NG_() {
 
 function testNumberInt_ha_Latn_NG_Thousands() {
     var num = new INumber("123,456", {
-    	locale: "ha-Latn-NG"
+        locale: "ha-Latn-NG"
     });
     assertNotNull(num);
 
@@ -1033,7 +1033,7 @@ function testNumberInt_ha_Latn_NG_Thousands() {
 
 function testNumberInvalid_ha_Latn_NG_() {
     var num = new INumber("123.234.234", {
-    	locale: "ha-Latn-NG"
+        locale: "ha-Latn-NG"
     });
     assertNotNull(num);
 
@@ -1042,7 +1042,7 @@ function testNumberInvalid_ha_Latn_NG_() {
 
 function testNumberEmpty_ha_Latn_NG_() {
     var num = new INumber("", {
-    	locale: "ha-Latn-NG"
+        locale: "ha-Latn-NG"
     });
     assertNotNull(num);
 
@@ -1051,8 +1051,8 @@ function testNumberEmpty_ha_Latn_NG_() {
 
 function testNumberPercentage_ha_Latn_NG_() {
     var num = new INumber("58.4 %", {
-    	locale: "ha-Latn-NG",
-    	type: "percentage"
+        locale: "ha-Latn-NG",
+        type: "percentage"
     });
     assertNotNull(num);
 
@@ -1061,7 +1061,7 @@ function testNumberPercentage_ha_Latn_NG_() {
 
 function testNumberPercentage_ha_Latn_NG_NoTypeSpecified() {
     var num = new INumber("58.4 %", {
-    	locale: "ha-Latn-NG"
+        locale: "ha-Latn-NG"
     });
     assertNotNull(num);
 
@@ -1070,8 +1070,8 @@ function testNumberPercentage_ha_Latn_NG_NoTypeSpecified() {
 
 function testNumberCurrency_ha_Latn_NG_Value() {
     var num = new INumber("5.84 ₦", {
-    	locale: "ha-Latn-NG",
-    	type: "currency"
+        locale: "ha-Latn-NG",
+        type: "currency"
     });
     assertNotNull(num);
 
@@ -1080,8 +1080,8 @@ function testNumberCurrency_ha_Latn_NG_Value() {
 
 function testNumberCurrency_ha_Latn_NG_Type() {
     var num = new INumber("5.84 ₦", {
-    	locale: "ha-Latn-NG",
-    	type: "currency"
+        locale: "ha-Latn-NG",
+        type: "currency"
     });
     assertNotNull(num);
 
@@ -1092,7 +1092,7 @@ function testNumberCurrency_ha_Latn_NG_Type() {
 
 function testNumberCurrency_ha_Latn_NG_NoTypeSpecified() {
     var num = new INumber("5.84 ₦", {
-    	locale: "ha-Latn-NG"
+        locale: "ha-Latn-NG"
     });
     assertNotNull(num);
 
@@ -1101,8 +1101,8 @@ function testNumberCurrency_ha_Latn_NG_NoTypeSpecified() {
 
 function testNumberCurrency_ha_Latn_NG_TypeUsingISOCode() {
     var num = new INumber("5.84 NGN", {
-    	locale: "ha-Latn-NG",
-    	type: "currency"
+        locale: "ha-Latn-NG",
+        type: "currency"
     });
     assertNotNull(num);
 
@@ -1114,7 +1114,7 @@ function testNumberCurrency_ha_Latn_NG_TypeUsingISOCode() {
 // number parsing test cases for Oriya
 function testNumberFloat_or_IN() {
     var num = new INumber("3.4", {
-    	locale: "or-IN"
+        locale: "or-IN"
     });
     assertNotNull(num);
 
@@ -1123,7 +1123,7 @@ function testNumberFloat_or_IN() {
 
 function testNumberFloat_or_INNegative() {
     var num = new INumber("-3.4", {
-    	locale: "or-IN"
+        locale: "or-IN"
     });
     assertNotNull(num);
 
@@ -1132,7 +1132,7 @@ function testNumberFloat_or_INNegative() {
 
 function testNumberFloat_or_IN_Thousands() {
     var num = new INumber("1,233.4", {
-    	locale: "or-IN"
+        locale: "or-IN"
     });
     assertNotNull(num);
 
@@ -1141,7 +1141,7 @@ function testNumberFloat_or_IN_Thousands() {
 
 function testNumberFloat_or_IN_ThousandsNegative() {
     var num = new INumber("-1,233.4", {
-    	locale: "or-IN"
+        locale: "or-IN"
     });
     assertNotNull(num);
 
@@ -1150,7 +1150,7 @@ function testNumberFloat_or_IN_ThousandsNegative() {
 
 function testNumberFloat_or_IN_WithDashForZeros() {
     var num = new INumber("3.-", {
-    	locale: "or-IN"
+        locale: "or-IN"
     });
     assertNotNull(num);
 
@@ -1159,7 +1159,7 @@ function testNumberFloat_or_IN_WithDashForZeros() {
 
 function testNumberFloat_or_IN_StartsWithDecimal() {
     var num = new INumber(".4342", {
-    	locale: "or-IN"
+        locale: "or-IN"
     });
     assertNotNull(num);
 
@@ -1168,7 +1168,7 @@ function testNumberFloat_or_IN_StartsWithDecimal() {
 
 function testNumberFloat_or_IN_StartsWithZero() {
     var num = new INumber("0.4342", {
-    	locale: "or-IN"
+        locale: "or-IN"
     });
     assertNotNull(num);
 
@@ -1177,7 +1177,7 @@ function testNumberFloat_or_IN_StartsWithZero() {
 
 function testNumberFloat_or_IN_StartsWithDecimalNegative() {
     var num = new INumber("-.4342", {
-    	locale: "or-IN"
+        locale: "or-IN"
     });
     assertNotNull(num);
 
@@ -1186,7 +1186,7 @@ function testNumberFloat_or_IN_StartsWithDecimalNegative() {
 
 function testNumberFloat_or_IN_StartsWithZeroNegative() {
     var num = new INumber("-0.4342", {
-    	locale: "or-IN"
+        locale: "or-IN"
     });
     assertNotNull(num);
 
@@ -1195,7 +1195,7 @@ function testNumberFloat_or_IN_StartsWithZeroNegative() {
 
 function testNumberFloat_or_IN_StartsWithPeriodIgnore() {
     var num = new INumber(",4342", {
-    	locale: "or-IN"
+        locale: "or-IN"
     });
     assertNotNull(num);
 
@@ -1204,7 +1204,7 @@ function testNumberFloat_or_IN_StartsWithPeriodIgnore() {
 
 function testNumberFloat_or_IN_WithMDashForZeros() {
     var num = new INumber("3.—", {
-    	locale: "or-IN"
+        locale: "or-IN"
     });
     assertNotNull(num);
 
@@ -1213,7 +1213,7 @@ function testNumberFloat_or_IN_WithMDashForZeros() {
 
 function testNumberInt_or_IN_() {
     var num = new INumber("123", {
-    	locale: "or-IN"
+        locale: "or-IN"
     });
     assertNotNull(num);
 
@@ -1222,7 +1222,7 @@ function testNumberInt_or_IN_() {
 
 function testNumberInt_or_IN_Thousands() {
     var num = new INumber("123,456", {
-    	locale: "or-IN"
+        locale: "or-IN"
     });
     assertNotNull(num);
 
@@ -1231,7 +1231,7 @@ function testNumberInt_or_IN_Thousands() {
 
 function testNumberInvalid_or_IN_() {
     var num = new INumber("123.234.234", {
-    	locale: "or-IN"
+        locale: "or-IN"
     });
     assertNotNull(num);
 
@@ -1240,7 +1240,7 @@ function testNumberInvalid_or_IN_() {
 
 function testNumberEmpty_or_IN_() {
     var num = new INumber("", {
-    	locale: "or-IN"
+        locale: "or-IN"
     });
     assertNotNull(num);
 
@@ -1249,8 +1249,8 @@ function testNumberEmpty_or_IN_() {
 
 function testNumberPercentage_or_IN_() {
     var num = new INumber("58.4 %", {
-    	locale: "or-IN",
-    	type: "percentage"
+        locale: "or-IN",
+        type: "percentage"
     });
     assertNotNull(num);
 
@@ -1259,7 +1259,7 @@ function testNumberPercentage_or_IN_() {
 
 function testNumberPercentage_or_IN_NoTypeSpecified() {
     var num = new INumber("58.4 %", {
-    	locale: "or-IN"
+        locale: "or-IN"
     });
     assertNotNull(num);
 
@@ -1268,8 +1268,8 @@ function testNumberPercentage_or_IN_NoTypeSpecified() {
 
 function testNumberCurrency_or_IN_Value() {
     var num = new INumber("5.84 ₹", {
-    	locale: "or-IN",
-    	type: "currency"
+        locale: "or-IN",
+        type: "currency"
     });
     assertNotNull(num);
 
@@ -1278,8 +1278,8 @@ function testNumberCurrency_or_IN_Value() {
 
 function testNumberCurrency_or_IN_Type() {
     var num = new INumber("5.84 ₹", {
-    	locale: "or-IN",
-    	type: "currency"
+        locale: "or-IN",
+        type: "currency"
     });
     assertNotNull(num);
 
@@ -1290,7 +1290,7 @@ function testNumberCurrency_or_IN_Type() {
 
 function testNumberCurrency_or_IN_NoTypeSpecified() {
     var num = new INumber("5.84 ₹", {
-    	locale: "or-IN"
+        locale: "or-IN"
     });
     assertNotNull(num);
 
@@ -1299,8 +1299,8 @@ function testNumberCurrency_or_IN_NoTypeSpecified() {
 
 function testNumberCurrency_or_IN_TypeUsingISOCode() {
     var num = new INumber("5.84 IND", {
-    	locale: "or-IN",
-    	type: "currency"
+        locale: "or-IN",
+        type: "currency"
     });
     assertNotNull(num);
 
@@ -1311,7 +1311,7 @@ function testNumberCurrency_or_IN_TypeUsingISOCode() {
 /*Amharic test cases */
 function testNumberFloatET() {
     var num = new INumber("3.4", {
-    	locale: "am-ET"
+        locale: "am-ET"
     });
     assertNotNull(num);
 
@@ -1320,7 +1320,7 @@ function testNumberFloatET() {
 
 function testNumberFloatETNegative() {
     var num = new INumber("-3.4", {
-    	locale: "am-ET"
+        locale: "am-ET"
     });
     assertNotNull(num);
 
@@ -1329,7 +1329,7 @@ function testNumberFloatETNegative() {
 
 function testNumberFloatETThousands() {
     var num = new INumber("1.233.4", {
-    	locale: "am-ET"
+        locale: "am-ET"
     });
     assertNotNull(num);
 
@@ -1338,7 +1338,7 @@ function testNumberFloatETThousands() {
 
 function testNumberFloatETThousandsNegative() {
     var num = new INumber("-1.2334", {
-    	locale: "am-ET"
+        locale: "am-ET"
     });
     assertNotNull(num);
 
@@ -1347,7 +1347,7 @@ function testNumberFloatETThousandsNegative() {
 
 function testNumberFloatETWithDashForZeros() {
     var num = new INumber("3.-", {
-    	locale: "am-ET"
+        locale: "am-ET"
     });
     assertNotNull(num);
 
@@ -1356,7 +1356,7 @@ function testNumberFloatETWithDashForZeros() {
 
 function testNumberFloatETStartsWithDecimal() {
     var num = new INumber(".4342", {
-    	locale: "am-ET"
+        locale: "am-ET"
     });
     assertNotNull(num);
 
@@ -1365,7 +1365,7 @@ function testNumberFloatETStartsWithDecimal() {
 
 function testNumberFloatETStartsWithZero() {
     var num = new INumber("0.4342", {
-    	locale: "am-ET"
+        locale: "am-ET"
     });
     assertNotNull(num);
 
@@ -1374,7 +1374,7 @@ function testNumberFloatETStartsWithZero() {
 
 function testNumberFloatETStartsWithDecimalNegative() {
     var num = new INumber("-.4342", {
-    	locale: "am-ET"
+        locale: "am-ET"
     });
     assertNotNull(num);
 
@@ -1383,7 +1383,7 @@ function testNumberFloatETStartsWithDecimalNegative() {
 
 function testNumberFloatETStartsWithZeroNegative() {
     var num = new INumber("-0.4342", {
-    	locale: "am-ET"
+        locale: "am-ET"
     });
     assertNotNull(num);
 
@@ -1392,7 +1392,7 @@ function testNumberFloatETStartsWithZeroNegative() {
 
 function testNumberFloatETStartsWithPeriodIgnore() {
     var num = new INumber("4342", {
-    	locale: "am-ET"
+        locale: "am-ET"
     });
     assertNotNull(num);
 
@@ -1401,7 +1401,7 @@ function testNumberFloatETStartsWithPeriodIgnore() {
 
 function testNumberFloatETWithMDashForZeros() {
     var num = new INumber("3.—", {
-    	locale: "am-ET"
+        locale: "am-ET"
     });
     assertNotNull(num);
 
@@ -1410,7 +1410,7 @@ function testNumberFloatETWithMDashForZeros() {
 
 function testNumberIntET() {
     var num = new INumber("123", {
-    	locale: "am-ET"
+        locale: "am-ET"
     });
     assertNotNull(num);
 
@@ -1419,7 +1419,7 @@ function testNumberIntET() {
 
 function testNumberIntETThousands() {
     var num = new INumber("123,456", {
-    	locale: "am-ET"
+        locale: "am-ET"
     });
     assertNotNull(num);
 
@@ -1428,7 +1428,7 @@ function testNumberIntETThousands() {
 
 function testNumberInvalidET() {
     var num = new INumber("123.234.234", {
-    	locale: "am-ET"
+        locale: "am-ET"
     });
     assertNotNull(num);
 
@@ -1437,7 +1437,7 @@ function testNumberInvalidET() {
 
 function testNumberEmptyET() {
     var num = new INumber("", {
-    	locale: "am-ET"
+        locale: "am-ET"
     });
     assertNotNull(num);
 
@@ -1446,8 +1446,8 @@ function testNumberEmptyET() {
 
 function testNumberPercentageET() {
     var num = new INumber("58.4 %", {
-    	locale: "am-ET",
-    	type: "percentage"
+        locale: "am-ET",
+        type: "percentage"
     });
     assertNotNull(num);
 
@@ -1456,7 +1456,7 @@ function testNumberPercentageET() {
 
 function testNumberPercentageETNoTypeSpecified() {
     var num = new INumber("58.4 %", {
-    	locale: "am-ET"
+        locale: "am-ET"
     });
     assertNotNull(num);
 
@@ -1465,8 +1465,8 @@ function testNumberPercentageETNoTypeSpecified() {
 
 function testNumberCurrencyETValue() {
     var num = new INumber("5.84 Br", {
-    	locale: "am-ET",
-    	type: "currency"
+        locale: "am-ET",
+        type: "currency"
     });
     assertNotNull(num);
 
@@ -1475,8 +1475,8 @@ function testNumberCurrencyETValue() {
 
 function testNumberCurrencyETType() {
     var num = new INumber("Br 5.84", {
-    	locale: "am-ET",
-    	type: "currency"
+        locale: "am-ET",
+        type: "currency"
     });
     assertNotNull(num);
 
@@ -1487,7 +1487,7 @@ function testNumberCurrencyETType() {
 
 function testNumberCurrencyETNoTypeSpecified() {
     var num = new INumber("5.84 €", {
-    	locale: "am-ET"
+        locale: "am-ET"
     });
     assertNotNull(num);
 
@@ -1496,8 +1496,8 @@ function testNumberCurrencyETNoTypeSpecified() {
 
 function testNumberCurrencyETTypeUsingISOCode() {
     var num = new INumber("5.84 ETB", {
-    	locale: "am-ET",
-    	type: "currency"
+        locale: "am-ET",
+        type: "currency"
     });
     assertNotNull(num);
 
