@@ -1,7 +1,7 @@
 /*
  * testcurrency.js - test the currency routines
  *
- * Copyright © 2012-2015, JEDLSoft
+ * Copyright © 2012-2016, JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -93,7 +93,7 @@ function testCurrencyGetBySignUnambiguous() {
 
 function testCurrencyGetBySignAmbiguousCurrentLocale() {
     var cur = new Currency({
-    	locale: "en-CA",
+        locale: "en-CA",
         sign: "$"
     });
     assertNotNull(cur);
@@ -108,7 +108,7 @@ function testCurrencyGetBySignAmbiguousCurrentLocale() {
 
 function testCurrencyGetBySignAmbiguousNotCurrentLocale() {
     var cur = new Currency({
-    	locale: "en-GB",
+        locale: "en-GB",
         sign: "$"
     });
     assertNotNull(cur);
@@ -117,15 +117,14 @@ function testCurrencyGetBySignAmbiguousNotCurrentLocale() {
     assertEquals(2, cur.getFractionDigits());
     assertEquals("$", cur.getSign());
     assertEquals("US Dollar", cur.getName());
-    console.log(cur.getName());
     var locale = cur.getLocale();
     assertEquals("en-GB", locale.toString());
 }
 
 function testCurrencyAsync() {
-	var callbackCalled = false;
+    var callbackCalled = false;
     new Currency({
-    	locale: "en-GB",
+        locale: "en-GB",
         sign: "$",
         sync: false,
         onLoad: function (cur) {
