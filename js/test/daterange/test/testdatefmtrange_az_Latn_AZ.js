@@ -41,7 +41,7 @@ function testDateRngFmtAZRangeInDayShort() {
         second: 0,
         millisecond: 0
     });
-    assertEquals("13:45 – 14:30 11-12-31", fmt.format(start, end));
+    assertEquals("11-12-31 13:45 – 14:30", fmt.format(start, end));
 }
 function testDateRngFmtAZRangeInDayMedium() {
     var fmt = new DateRngFmt({locale: "az-Latn-AZ", length: "medium"});
@@ -65,7 +65,7 @@ function testDateRngFmtAZRangeInDayMedium() {
         second: 0,
         millisecond: 0
     });
-    assertEquals("13:45 – 14:30 31 dek, 2011", fmt.format(start, end));
+    assertEquals("31 dek, 2011 13:45 – 14:30", fmt.format(start, end));
 }
 function testDateRngFmtAZRangeInDayLong() {
     var fmt = new DateRngFmt({locale: "az-Latn-AZ", length: "long"});
@@ -89,7 +89,7 @@ function testDateRngFmtAZRangeInDayLong() {
         second: 0,
         millisecond: 0
     });
-    assertEquals("13:45 – 14:30 31 dekabr, 2011", fmt.format(start, end));
+    assertEquals("31 dekabr, 2011 13:45 – 14:30", fmt.format(start, end));
 }
 function testDateRngFmtAZRangeInDayFull() {
     var fmt = new DateRngFmt({locale: "az-Latn-AZ", length: "full"});
@@ -113,7 +113,7 @@ function testDateRngFmtAZRangeInDayFull() {
         second: 0,
         millisecond: 0
     });
-    assertEquals("13:45 – 14:30 31, dekabr, 2011", fmt.format(start, end));
+    assertEquals("31, dekabr, 2011 13:45 – 14:30", fmt.format(start, end));
 }
 
 function testDateRngFmtAZRangeNextDayShort() {
@@ -138,7 +138,7 @@ function testDateRngFmtAZRangeNextDayShort() {
         second: 0,
         millisecond: 0
     });
-    assertEquals("13:45 11–12–30 – 14:30 31", fmt.format(start, end));
+    assertEquals("11–12–30 13:45 – 31 14:30", fmt.format(start, end));
 }
 function testDateRngFmtAZRangeNextDayMedium() {
     var fmt = new DateRngFmt({locale: "az-Latn-AZ", length: "medium"});
@@ -162,7 +162,7 @@ function testDateRngFmtAZRangeNextDayMedium() {
         second: 0,
         millisecond: 0
     });
-    assertEquals("13:45 2011–dek–30 – 14:30 31", fmt.format(start, end));
+    assertEquals("2011–dek–30 13:45 – 31 14:30", fmt.format(start, end));
 }
 function testDateRngFmtAZRangeNextDayLong() {
     var fmt = new DateRngFmt({locale: "az-Latn-AZ", length: "long"});
@@ -186,7 +186,7 @@ function testDateRngFmtAZRangeNextDayLong() {
         second: 0,
         millisecond: 0
     });
-    assertEquals("13:45 2011–dekabr–30 – 14:30 31", fmt.format(start, end));
+    assertEquals("2011–dekabr–30 13:45 – 31 14:30", fmt.format(start, end));
 }
 function testDateRngFmtAZRangeNextDayFull() {
     var fmt = new DateRngFmt({locale: "az-Latn-AZ", length: "full"});
@@ -210,7 +210,7 @@ function testDateRngFmtAZRangeNextDayFull() {
         second: 0,
         millisecond: 0
     });
-    assertEquals("13:45 2011–dekabr–30 – 14:30 31", fmt.format(start, end));
+    assertEquals("2011–dekabr–30 13:45 – 31 14:30", fmt.format(start, end));
 }
 
 function testDateRngFmtAZRangeMultiDayShort() {
