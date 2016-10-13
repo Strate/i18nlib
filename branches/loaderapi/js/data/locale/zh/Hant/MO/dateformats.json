@@ -1,0 +1,87 @@
+{
+    "gregorian": {
+        "date": {
+            "dmwy": {
+                "f": "yyyy年MM月dd日EEEE",
+                "l": "yyyy年MM月dd日EEE",
+                "m": "yyyy年M月d日EE",
+                "s": "yy年M月d日E"
+            },
+            "dmy": {
+                "f": "yyyy年MM月dd日",
+                "l": "yyyy年MM月dd日",
+                "s": "yy年M月d日"
+            },
+            "dmw": {
+                "f": "MM月dd日EEEE",
+                "l": "MM月dd日EEE",
+                "m": "M月d日EE",
+                "s": "M月d日E"
+            },
+            "dm": {
+                "f": "MM月dd日",
+                "l": "MM月dd日",
+                "s": "M月d日"
+            },
+            "my": {
+                "f": "yyyy年MM月",
+                "l": "yyyy年MM月",
+                "s": "yy年M月"
+            },
+            "dw": {
+                "f": "dd日EEEE",
+                "l": "dd日EEE",
+                "m": "d日EE",
+                "s": "d日E"
+            },
+            "d": {
+                "f": "dd",
+                "l": "dd"
+            },
+            "m": {
+                "f": "MM",
+                "l": "MM"
+            },
+            "y": {
+                "s": "yy"
+            },
+            "a": {
+                "f": "dd日",
+                "l": "dd日"
+            },
+            "l": {
+                "f": "MM月",
+                "l": "MM月"
+            },
+            "r": {
+                "s": "yy年"
+            }
+        },
+        "range": {
+            "c00": {
+                "s": "{sy}年{sm}月{sd}日 {st}至{et}"
+            },
+            "c01": {
+                "s": "{sy}年{sm}月{sd}日{st}至{ed}日{et}"
+            },
+            "c02": {
+                "s": "{sy}年{sm}月{sd}日{st}至{em}月{ed}日{et}"
+            },
+            "c03": {
+                "s": "{sy}年{sm}月{sd}日{st}至{ey}年{em}月{ed}日{et}"
+            },
+            "c10": {
+                "s": "{sy}年{sm}月{sd}日至{ed}日"
+            },
+            "c11": {
+                "s": "{sy}年{sm}月{sd}日至{em}月{ed}日"
+            },
+            "c12": {
+                "s": "{sy}年{sm}月{sd}日至{ey}年{em}月{ed}日"
+            },
+            "c20": {
+                "s": "{sy}年{sm}月至{ey}年{em}月"
+            }
+        }
+    }
+}

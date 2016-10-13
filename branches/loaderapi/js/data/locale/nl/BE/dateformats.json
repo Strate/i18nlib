@@ -1,0 +1,32 @@
+{
+    "gregorian": {
+        "date": {
+            "dmwy": {
+                "m": "EE d-MMM-yyyy",
+                "s": "E d/MM/yy"
+            },
+            "dmy": {
+                "m": "d-MMM-yyyy",
+                "s": "d/MM/yy"
+            },
+            "dmw": {
+                "m": "EE d-MMM",
+                "s": "E d/MM"
+            },
+            "dm": {
+                "m": "d-MMM",
+                "s": "d/MM"
+            },
+            "my": {
+                "m": "LLL-yyyy",
+                "s": "MM/yy"
+            },
+            "dw": {
+                "s": "E d"
+            },
+            "d": {
+                "s": "d"
+            }
+        }
+    }
+}

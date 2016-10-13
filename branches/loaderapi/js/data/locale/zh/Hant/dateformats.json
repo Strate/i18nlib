@@ -1,0 +1,53 @@
+{
+    "gregorian": {
+        "date": {
+            "dmwy": {
+                "f": "yyyy年M月d日 EEEE",
+                "l": "yyyy年M月d日 EEE",
+                "m": "yyyy年M月d日 EE",
+                "s": "yyyy/M/d E"
+            },
+            "dmy": {
+                "s": "yyyy/M/d"
+            },
+            "dmw": {
+                "f": "M月d日 EEEE",
+                "l": "M月d日 EEE",
+                "m": "M月d日 EE",
+                "s": "M/d E"
+            },
+            "my": {
+                "s": "yyyy/M"
+            },
+            "dw": {
+                "f": "d日 EEEE",
+                "l": "d日 EEE",
+                "m": "d日 EE",
+                "s": "d E"
+            },
+            "y": {
+                "s": "yyyy"
+            },
+            "r": {
+                "s": "yyyy年"
+            }
+        },
+        "time": {
+            "12": {
+                "ah": "ah時",
+                "hmz": "h:mm [z]",
+                "ahmz": "ah:mm [z]",
+                "hmsz": "h:mm:ss [z]",
+                "ahmsz": "ah:mm:ss [z]"
+            },
+            "24": {
+                "h": "H時",
+                "ah": "H時",
+                "hmz": "H:mm [z]",
+                "ahmz": "H:mm [z]",
+                "hmsz": "H:mm:ss [z]",
+                "ahmsz": "H:mm:ss [z]"
+            }
+        }
+    }
+}

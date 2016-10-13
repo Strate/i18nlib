@@ -1,0 +1,73 @@
+{
+    "gregorian": {
+        "date": {
+            "dmwy": {
+                "m": "EE, yyyy-MM-dd",
+                "s": "E, yy-MM-dd"
+            },
+            "dmy": {
+                "m": "yyyy-MM-dd",
+                "s": "yy-MM-dd"
+            },
+            "dmw": {
+                "m": "EE, MM-dd",
+                "s": "E, MM-dd"
+            },
+            "dm": {
+                "m": "MM-dd",
+                "s": "MM-dd"
+            },
+            "my": {
+                "f": "LLLL yyyy.",
+                "l": "LLLL yyyy.",
+                "m": "yyyy-MM",
+                "s": "yy-MM"
+            },
+            "dw": {
+                "s": "E, dd"
+            },
+            "d": {
+                "s": "dd"
+            },
+            "m": {
+                "s": "MM"
+            },
+            "e": {
+                "f": "cccc",
+                "l": "ccc",
+                "m": "cc",
+                "s": "c"
+            },
+            "l": {
+                "f": "LLLL",
+                "l": "LLLL",
+                "m": "LL",
+                "s": "LL"
+            }
+        },
+        "time": {
+            "12": {
+                "hm": "hh:mm",
+                "ms": "mm:ss",
+                "ahm": "hh:mm a",
+                "hms": "hh:mm:ss",
+                "hmz": "hh:mm z",
+                "ahmz": "hh:mm a z",
+                "ahms": "hh:mm:ss a",
+                "hmsz": "hh:mm:ss z",
+                "ahmsz": "hh:mm:ss a z"
+            },
+            "24": {
+                "hm": "HH:mm",
+                "ms": "mm:ss",
+                "ahm": "HH:mm",
+                "hms": "HH:mm:ss",
+                "hmz": "HH:mm z",
+                "ahmz": "HH:mm z",
+                "ahms": "HH:mm:ss",
+                "hmsz": "HH:mm:ss z",
+                "ahmsz": "HH:mm:ss z"
+            }
+        }
+    }
+}

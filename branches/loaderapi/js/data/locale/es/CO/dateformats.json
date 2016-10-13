@@ -1,0 +1,60 @@
+{
+    "gregorian": {
+        "date": {
+            "dmwy": {
+                "m": "EE, d/MM/yyyy",
+                "s": "E, d/MM/yy"
+            },
+            "dmy": {
+                "m": "d/MM/yyyy",
+                "s": "d/MM/yy"
+            },
+            "dmw": {
+                "m": "EE, d/MM",
+                "s": "E, d/MM"
+            },
+            "dm": {
+                "m": "d/MM",
+                "s": "d/MM"
+            },
+            "my": {
+                "m": "MM/yyyy",
+                "s": "MM/yy"
+            },
+            "m": {
+                "m": "MM",
+                "s": "MM"
+            },
+            "l": {
+                "m": "LL",
+                "s": "LL"
+            }
+        },
+        "range": {
+            "c00": {
+                "m": "{sd}/{sm}/{sy} {st} - {et}"
+            },
+            "c01": {
+                "m": "{sd}/{sm}/{sy} {st} - {ed}/{em}/{ey} {et}"
+            },
+            "c02": {
+                "m": "{sd}/{sm}/{sy} {st} - {ed}/{em}/{ey} {et}"
+            },
+            "c03": {
+                "m": "{sd}/{sm}/{sy} {st} - {ed}/{em}/{ey} {et}"
+            },
+            "c10": {
+                "m": "{sd} - {ed}/{sm}/{sy}"
+            },
+            "c11": {
+                "m": "{sd}/{sm} - {ed}/{em}/{ey}"
+            },
+            "c12": {
+                "m": "{sd}/{sm}/{sy} - {ed}/{em}/{ey}"
+            },
+            "c20": {
+                "m": "{sm}/{sy} - {em}/{ey}"
+            }
+        }
+    }
+}

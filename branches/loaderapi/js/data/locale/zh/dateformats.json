@@ -1,0 +1,168 @@
+{
+    "gregorian": {
+        "order": "{date} {time}",
+        "date": {
+            "dmwy": {
+                "f": "yyyy年M月d日EEEE",
+                "l": "yyyy年M月d日EEE",
+                "m": "yyyy年M月d日EE",
+                "s": "yy/M/dE"
+            },
+            "dmy": {
+                "f": "yyyy年M月d日",
+                "l": "yyyy年M月d日",
+                "m": "yyyy年M月d日",
+                "s": "yy/M/d"
+            },
+            "dmw": {
+                "f": "M月d日EEEE",
+                "l": "M月d日EEE",
+                "m": "M月d日EE",
+                "s": "M/dE"
+            },
+            "dm": {
+                "f": "M月d日",
+                "l": "M月d日",
+                "m": "M月d日",
+                "s": "M/d"
+            },
+            "my": {
+                "f": "yyyy年M月",
+                "l": "yyyy年M月",
+                "m": "yyyy年M月",
+                "s": "yy/M"
+            },
+            "dw": {
+                "f": "d日EEEE",
+                "l": "d日EEE",
+                "m": "d日EE",
+                "s": "dE"
+            },
+            "w": {
+                "f": "EEEE",
+                "l": "EEE",
+                "m": "EE",
+                "s": "E"
+            },
+            "d": {
+                "f": "d",
+                "l": "d",
+                "m": "d",
+                "s": "d"
+            },
+            "m": {
+                "f": "M",
+                "l": "M",
+                "m": "M",
+                "s": "M"
+            },
+            "y": {
+                "f": "yyyy",
+                "l": "yyyy",
+                "m": "yyyy",
+                "s": "yy"
+            },
+            "a": {
+                "f": "d日",
+                "l": "d日",
+                "m": "d日",
+                "s": "d日"
+            },
+            "l": {
+                "f": "M月",
+                "l": "M月",
+                "m": "M月",
+                "s": "M月"
+            },
+            "r": {
+                "f": "yyyy年",
+                "l": "yyyy年",
+                "m": "yyyy年",
+                "s": "yy年"
+            }
+        },
+        "time": {
+            "12": {
+                "h": "h",
+                "m": "mm",
+                "s": "ss",
+                "ah": "ah时",
+                "hm": "h:mm",
+                "ms": "mm:ss",
+                "ahm": "ah:mm",
+                "hms": "h:mm:ss",
+                "hmz": "zh:mm",
+                "ahmz": "zah:mm",
+                "ahms": "ah:mm:ss",
+                "hmsz": "zh:mm:ss",
+                "ahmsz": "zah:mm:ss"
+            },
+            "24": {
+                "h": "H时",
+                "m": "mm",
+                "s": "ss",
+                "ah": "H时",
+                "hm": "H:mm",
+                "ms": "mm:ss",
+                "ahm": "H:mm",
+                "hms": "H:mm:ss",
+                "hmz": "zH:mm",
+                "ahmz": "zH:mm",
+                "ahms": "H:mm:ss",
+                "hmsz": "zH:mm:ss",
+                "ahmsz": "zH:mm:ss"
+            }
+        },
+        "range": {
+            "c00": {
+                "s": "{sy}/{sm}/{sd} {st}至{et}",
+                "m": "{sy}年{sm}月{sd}日 {st}至{et}",
+                "l": "{sy}年{sm}月{sd}日 {st}至{et}",
+                "f": "{sy}年{sm}月{sd}日 {st}至{et}"
+            },
+            "c01": {
+                "s": "{sy}/{sm}/{sd} {st}至{ey}/{em}/{ed} {et}",
+                "m": "{sy}年{sm}月{sd}日{st}至{ed}日{et}",
+                "l": "{sy}年{sm}月{sd}日{st}至{ed}日{et}",
+                "f": "{sy}年{sm}月{sd}日{st}至{ed}日{et}"
+            },
+            "c02": {
+                "s": "{sy}/{sm}/{sd} {st}至{ey}/{em}/{ed} {et}",
+                "m": "{sy}年{sm}月{sd}日{st}至{em}月{ed}日{et}",
+                "l": "{sy}年{sm}月{sd}日{st}至{em}月{ed}日{et}",
+                "f": "{sy}年{sm}月{sd}日{st}至{em}月{ed}日{et}"
+            },
+            "c03": {
+                "s": "{sy}/{sm}/{sd} {st}至{ey}/{em}/{ed} {et}",
+                "m": "{sy}年{sm}月{sd}日{st}至{ey}年{em}月{ed}日{et}",
+                "l": "{sy}年{sm}月{sd}日{st}至{ey}年{em}月{ed}日{et}",
+                "f": "{sy}年{sm}月{sd}日{st}至{ey}年{em}月{ed}日{et}"
+            },
+            "c10": {
+                "s": "{sy}/{sm}/{sd}至{ed}",
+                "m": "{sy}年{sm}月{sd}日至{ed}日",
+                "l": "{sy}年{sm}月{sd}日至{ed}日",
+                "f": "{sy}年{sm}月{sd}日至{ed}日"
+            },
+            "c11": {
+                "s": "{sy}/{sm}/{sd}至{em}/{ed}",
+                "m": "{sy}年{sm}月{sd}日至{em}月{ed}日",
+                "l": "{sy}年{sm}月{sd}日至{em}月{ed}日",
+                "f": "{sy}年{sm}月{sd}日至{em}月{ed}日"
+            },
+            "c12": {
+                "s": "{sy}/{sm}/{sd}至{ey}/{em}/{ed}",
+                "m": "{sy}年{sm}月{sd}日至{ey}年{em}月{ed}日",
+                "l": "{sy}年{sm}月{sd}日至{ey}年{em}月{ed}日",
+                "f": "{sy}年{sm}月{sd}日至{ey}年{em}月{ed}日"
+            },
+            "c20": {
+                "s": "{sy}/{sm}至{ey}/{em}",
+                "m": "{sy}年{sm}月至{ey}年{em}月",
+                "l": "{sy}年{sm}月至{ey}年{em}月",
+                "f": "{sy}年{sm}月至{ey}年{em}月"
+            },
+            "c30": "{sy}年至{ey}年"
+        }
+    }
+}
