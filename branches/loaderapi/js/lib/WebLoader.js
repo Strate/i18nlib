@@ -1,7 +1,7 @@
 /*
  * WebLoader.js - loader implementation for web apps. 
  * 
- * Copyright © 2015, JEDLSoft
+ * Copyright © 2015-2016, JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,8 @@
 var Path = require("./Path.js");
 var ilib = require("./ilib.js");
 var Loader = require("./Loader.js");
+
+var Locale = require("./Locale.js");
 
 /**
  * @class
@@ -148,5 +150,74 @@ WebLoader.prototype._regularLoadFile = function (pathname, sync, cb) {
 	
 	return text;
 };
+
+WebLoader.prototype.getProperPath = function(params) {
+	var loc, language, script, region;
+	var isExist, returnPath, dir;
+	var baseResDir = "resources";
+
+	if (!params.name) {
+		return undefined;
+	}
+
+	if (params) {
+		if (params.locale){
+			this.locale = (typeof(params.locale) === 'string') ? new Locale(params.locale) : params.locale;
+		}
+
+		if (params.name) {
+			this.name = params.name;
+		}
+
+		if (params.baseResDir) {
+			baseResDir = params.baseResDir;
+		}
+		
+		loc = this.locale || new Locale();
+		
+		language = loc.getLanguage();
+		script = loc.getScript();
+		region = loc.getRegion();
+
+		this.listAvailableFiles();
+
+		if (language) {
+			dir = language +"/" + this.name;
+			isExist = this.checkAvailability(dir);
+			if (isExist) {
+				returnPath = dir;
+			}
+		}
+
+		if (script) {
+			dir = language +"/" + script + "/" + this.name;
+			isExist = this.checkAvailability(dir);
+			if (isExist) {
+				returnPath = dir;
+			}
+		}
+
+		if (region) {
+			if (script) {
+				dir = language +"/" + script + "/"  + region + "/" + this.name;	
+			} else {
+				dir = language +"/" + region + "/" + this.name;	
+			}
+
+			isExist = this.checkAvailability(dir);
+			if (isExist) {
+				returnPath = dir;
+			}
+		}
+
+		if (!returnPath) {
+			returnPath = this.name;
+		}
+		
+	} else {
+		return undefined;
+	}
+	return baseResDir + "/" + returnPath;
+}
 
 module.exports = WebLoader;
