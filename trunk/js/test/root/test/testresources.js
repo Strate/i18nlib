@@ -357,6 +357,59 @@ function testResBundleGetStringOtherBundlePsuedoXml() {
     assertEquals("Ĝŕëëţíñğš fŕõm {city} íñ {country}", rb.getString("Greetings from {city} in {country}").toString());
 }
 
+function testResBundleGetStringOtherBundlePsuedoC() {
+    var rb = new ResBundle({
+        name: "tester",
+        locale: "zxx-XX",
+        type: "c",
+        lengthen: true
+    });
+    
+    assertNotNull(rb);
+    
+    // should not pseudo-ize the C style replacement parameters
+	assertEquals("àçţüàľ %s 43210", rb.getStringJS("actual %s "));
+	assertEquals("àçţüàľ %b 43210", rb.getStringJS("actual %b "));
+	assertEquals("àçţüàľ %h 43210", rb.getStringJS("actual %h "));
+	assertEquals("àçţüàľ %c 43210", rb.getStringJS("actual %c "));
+	assertEquals("àçţüàľ %d 43210", rb.getStringJS("actual %d "));
+	assertEquals("àçţüàľ %o 43210", rb.getStringJS("actual %o "));
+	assertEquals("àçţüàľ %x 43210", rb.getStringJS("actual %x "));
+	assertEquals("àçţüàľ %e 43210", rb.getStringJS("actual %e "));
+	assertEquals("àçţüàľ %f 43210", rb.getStringJS("actual %f "));
+	assertEquals("àçţüàľ %g 43210", rb.getStringJS("actual %g "));
+	assertEquals("àçţüàľ %a 43210", rb.getStringJS("actual %a "));
+	assertEquals("àçţüàľ %t 43210", rb.getStringJS("actual %t "));
+	assertEquals("àçţüàľ %% 43210", rb.getStringJS("actual %% "));
+	assertEquals("àçţüàľ %n 43210", rb.getStringJS("actual %n "));
+	
+	assertEquals("àçţüàľ %S 43210", rb.getStringJS("actual %S "));
+	assertEquals("àçţüàľ %B 43210", rb.getStringJS("actual %B "));
+	assertEquals("àçţüàľ %H 43210", rb.getStringJS("actual %H "));
+	assertEquals("àçţüàľ %C 43210", rb.getStringJS("actual %C "));
+	assertEquals("àçţüàľ %X 43210", rb.getStringJS("actual %X "));
+	assertEquals("àçţüàľ %E 43210", rb.getStringJS("actual %E "));
+	assertEquals("àçţüàľ %G 43210", rb.getStringJS("actual %G "));
+	assertEquals("àçţüàľ %A 43210", rb.getStringJS("actual %A "));
+	assertEquals("àçţüàľ %T 43210", rb.getStringJS("actual %T "));
+	assertEquals("àçţüàľ %% 43210", rb.getStringJS("actual %% "));
+	
+	assertEquals("àçţüàľ %2$s 543210", rb.getStringJS("actual %2$s "));
+	assertEquals("àçţüàľ %-d 543210", rb.getStringJS("actual %-d "));
+	assertEquals("àçţüàľ %#d 543210", rb.getStringJS("actual %#d "));
+	assertEquals("àçţüàľ %+d 543210", rb.getStringJS("actual %+d "));
+	assertEquals("àçţüàľ % d 543210", rb.getStringJS("actual % d "));
+	assertEquals("àçţüàľ %02d 543210", rb.getStringJS("actual %02d "));
+	assertEquals("àçţüàľ %.2d 543210", rb.getStringJS("actual %.2d "));
+	assertEquals("àçţüàľ %(2d 543210", rb.getStringJS("actual %(2d "));
+	assertEquals("àçţüàľ %4$-2.2d 76543210", rb.getStringJS("actual %4$-2.2d "));
+	
+	assertEquals("àçţüàľ %Ň 43210", rb.getStringJS("actual %N "));
+	assertEquals("àçţüàľ %F 43210", rb.getStringJS("actual %F "));
+	assertEquals("àçţüàľ %Ð 43210", rb.getStringJS("actual %D "));
+	assertEquals("àçţüàľ %Ø 43210", rb.getStringJS("actual %O "));
+}
+
 function testResBundleGetStringOtherBundlePsuedoDefault() {
     var rb = new ResBundle({
         name: "tester",
