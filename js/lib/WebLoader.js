@@ -211,7 +211,7 @@ WebLoader.prototype.getProperPath = function(params) {
 		}
 
 		if (!returnPath) {
-			returnPath = this.name;
+			return this.name;
 		}
 		
 	} else {
