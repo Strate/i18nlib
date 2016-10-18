@@ -42,8 +42,11 @@ var WebLoader = function(ilib, sync, onLoad) {
 	
 	var scripts = document.getElementsByTagName("script");
 
-	pos = window.location.href.lastIndexOf('/');
+	pos = window.location.href.lastIndexOf("html");
 	this.root = window.location.href.substring(0, pos);
+	pos = this.root.lastIndexOf("/");
+	this.root = this.root.substring(0, pos);
+
 	colon = this.root.indexOf('://');
 	this.root = Path.normalize(Path.join(this.root.substring(colon+3)));
 	
